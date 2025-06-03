@@ -6,10 +6,10 @@
 class GLobject
 {
 private:
-	GLuint VAO;
-	GLuint VBO;
-	GLuint EBO;
-	GLuint ProgramID;
+	GLuint VAO = 0;
+	GLuint VBO = 0;
+	GLuint EBO = 0;
+	GLuint ProgramID = 0;
 	unsigned int verticesSize;
 	unsigned int indicesSize;
 

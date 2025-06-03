@@ -1,4 +1,3 @@
-#include <glad/glad.h>
 #include "FragmentShader.h"
 
 FragmentShader::FragmentShader(const char* source) {

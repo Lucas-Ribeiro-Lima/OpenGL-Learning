@@ -6,7 +6,7 @@ class Shader
 {	
 protected:
 	char infoLog[512];
-	std::string shaderSource;
+	const char* shaderSource;
 	GLuint ID;
 	int sucess;
 

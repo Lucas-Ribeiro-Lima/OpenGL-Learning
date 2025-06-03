@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\lucas.lima\source\libs\glad\include;C:\Users\lucas.lima\source\libs\glfw-3.4\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\lucas.lima\source\libs\glfw-3.4\build\src\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\lucas\source\libs\glad\include;C:\Users\lucas\source\libs\glfw-3.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\lucas.\source\libs\glfw-3.4\build\src\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -129,16 +129,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\libs\glad\src\glad.c" />
+    <ClCompile Include="..\..\libs\glad\src\glad.c" />
+    <ClCompile Include="FragmentShader.cpp" />
+    <ClCompile Include="GLobject.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Program.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="VertexShader.cpp" />
     <ClCompile Include="WindowGl.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FragmentShader.h" />
+    <ClInclude Include="GLobject.h" />
+    <ClInclude Include="GLSLShaders.h" />
+    <ClInclude Include="Program.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="VertexShader.h" />
     <ClInclude Include="WindowGl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OpenGL Learning.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

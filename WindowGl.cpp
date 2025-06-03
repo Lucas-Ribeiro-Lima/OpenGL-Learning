@@ -63,14 +63,14 @@ void WindowGl::processInput(GLFWwindow* window) {
 	}
 }
 
-void WindowGl::render(GLuint VAO, GLuint program) {
+void WindowGl::render(GLuint VAO, Program program) {
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(program);
+		glUseProgram(program.getId());
 		glBindVertexArray(VAO);
 
 		glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -79,6 +79,8 @@ void WindowGl::render(GLuint VAO, GLuint program) {
 
 		glfwPollEvents();
 	}
+
+	glfwTerminate();
 }
 
 int WindowGl::hasErrors() {

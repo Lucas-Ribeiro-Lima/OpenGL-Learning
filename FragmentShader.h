@@ -1,11 +1,14 @@
 #pragma once
 #include <glad/glad.h>
+
 #include "Shader.h"
-class VertexShader :
+class FragmentShader :
     public Shader
 {
+private:
+    GLuint ID;
 public:
-    VertexShader(const char* source);
+    FragmentShader(const char* source);
     GLuint getId();
 };
 

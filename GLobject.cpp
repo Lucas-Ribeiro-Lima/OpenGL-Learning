@@ -1,7 +1,8 @@
 #include "GLobject.h"
+#include <GLFW/glfw3.h>
 
 
-GLobject::GLobject(std::vector<float> vertices) {
+GLobject::GLobject(std::vector<float>& vertices) {
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
@@ -13,7 +14,7 @@ GLobject::GLobject(std::vector<float> vertices) {
 	glBufferData(GL_ARRAY_BUFFER, verticesSize * sizeof(float), vertices.data(), GL_STATIC_DRAW);
 }
 
-GLobject::GLobject(std::vector<float> vertices, std::vector<GLuint> indices)
+GLobject::GLobject(std::vector<float>& vertices, std::vector<GLuint>& indices)
 	: GLobject::GLobject(vertices) {
 
 	indicesSize = indices.size();
@@ -25,7 +26,7 @@ GLobject::GLobject(std::vector<float> vertices, std::vector<GLuint> indices)
 }
 
 
-GLobject::GLobject(std::vector<float> vertices, std::vector<GLuint> indices, Program& program)
+GLobject::GLobject(std::vector<float>& vertices, std::vector<GLuint>& indices, Program& program)
 	: GLobject::GLobject(vertices, indices) {
 	ProgramID = program.getId();
 }
@@ -58,7 +59,14 @@ GLobject::~GLobject() {
 }
 
 void GLobject::draw() {
+	float timeValue = glfwGetTime();
+	float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+
+	int vertexColorLocation = glGetUniformLocation(ProgramID, "ourcolor");
+
 	glUseProgram(ProgramID);
+	glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
 	glBindVertexArray(VAO);
 
 	glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_INT, 0);

@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include "FragmentShader.h"
 #include "VertexShader.h"
+#include <string>
 
 class Program
 {
@@ -10,7 +11,7 @@ private:
 	int sucess;
 	GLuint ID;
 public:
-	Program(const char* shaderSrc, const char* fragmentSrc);
+	Program(std::string& shaderSrc, std::string& fragmentSrc);
 	~Program();
 	GLuint getId();
 	void errors();

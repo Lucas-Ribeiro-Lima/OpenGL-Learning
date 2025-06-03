@@ -13,12 +13,12 @@ private:
 	unsigned int verticesSize;
 	unsigned int indicesSize;
 
-	GLobject(std::vector<float> vertices);
+	GLobject(std::vector<float>& vertices);
 	void saveBuffer();
 
 public:
-	GLobject(std::vector<float> vertices, std::vector<GLuint> indices);
-	GLobject(std::vector<float> vertices, std::vector<GLuint> indices, Program& Program);
+	GLobject(std::vector<float>& vertices, std::vector<GLuint>& indices);
+	GLobject(std::vector<float>& vertices, std::vector<GLuint>& indices, Program& Program);
 	~GLobject();
 	GLuint getID();
 	GLuint getProgramID();

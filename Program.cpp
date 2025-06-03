@@ -3,9 +3,12 @@
 #include "VertexShader.h"
 #include <iostream>
 
-Program::Program(const char* shaderSrc, const char* fragmentSrc) {
-	VertexShader shader = VertexShader(shaderSrc);
-	FragmentShader fragment = FragmentShader(fragmentSrc);
+Program::Program(std::string& shaderSrc, std::string& fragmentSrc) {
+	const char* shaderptr = shaderSrc.c_str();
+	const char* fragmentptr = fragmentSrc.c_str();
+
+	VertexShader shader(shaderptr);
+	FragmentShader fragment(fragmentptr);
 
 	ID = glCreateProgram();
 	GLuint shaderId = shader.getId();

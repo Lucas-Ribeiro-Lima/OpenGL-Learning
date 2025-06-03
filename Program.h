@@ -10,7 +10,7 @@ private:
 	int sucess;
 	GLuint ID;
 public:
-	Program(VertexShader shader, FragmentShader fragment);
+	Program(const char* shaderSrc, const char* fragmentSrc);
 	~Program();
 	GLuint getId();
 	void errors();

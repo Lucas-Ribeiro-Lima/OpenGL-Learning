@@ -31,6 +31,7 @@ void WindowGl::gladConfiguration() {
 	}
 
 	glViewport(0, 0, width, height);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void WindowGl::glfwConfiguration() {
@@ -39,7 +40,7 @@ void WindowGl::glfwConfiguration() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 }
 
 void WindowGl::windowInicialization() {
@@ -63,17 +64,16 @@ void WindowGl::processInput(GLFWwindow* window) {
 	}
 }
 
-void WindowGl::render(GLuint VAO, Program program) {
+void WindowGl::render(GLobject* objects[]) {
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(program.getId());
-		glBindVertexArray(VAO);
-
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		for (int i = 0; i < 2; i++) {
+			objects[i]->draw();
+		}
 
 		glfwSwapBuffers(window);
 

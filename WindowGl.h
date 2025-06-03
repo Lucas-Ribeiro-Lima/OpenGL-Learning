@@ -1,7 +1,7 @@
 #pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "Program.h"
+#include "GLobject.h"
 
 class WindowGl
 {
@@ -23,7 +23,7 @@ private:
 
 public:
 	WindowGl(int width, int height);
-	void render(GLuint VAO, Program program);
+	void render(GLobject* objects[]);
 	int hasErrors();
 };
 

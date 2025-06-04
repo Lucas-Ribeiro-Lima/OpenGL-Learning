@@ -3,6 +3,7 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 
+const int colorSystem[4] = { GL_RED, NULL, GL_RGB, GL_RGBA };
 
 GLobject::GLobject(std::vector<float>& vertices, std::vector<GLuint>& indices, Program& program): PROG(program) {
 	genVertexArrayBuffer();
@@ -53,6 +54,8 @@ void GLobject::genTextureBuffer(const char* path) {
 	int width, heigth, nrChannels;
 	unsigned char* data = Utils::loadTexture(path, width, heigth, nrChannels);
 
+
+
 	glGenTextures(1, &TEX);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, TEX);
@@ -63,7 +66,7 @@ void GLobject::genTextureBuffer(const char* path) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, heigth, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, colorSystem[nrChannels - 1], width, heigth, 0, colorSystem[nrChannels - 1], GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else {

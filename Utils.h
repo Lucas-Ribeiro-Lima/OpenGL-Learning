@@ -2,6 +2,6 @@
 #include <string>
 namespace Utils
 {
-	std::string readShader(const char* shaderName);
+	std::string readFile(const char path[]);
 };
 

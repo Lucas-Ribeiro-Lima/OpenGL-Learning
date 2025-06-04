@@ -7,11 +7,11 @@
 class Program
 {
 private:
-	char infoLog[512];
-	int sucess;
-	GLuint ID;
+	char infoLog[512] = {};
+	int sucess = 0;
+	GLuint ID  = 0;
 public:
-	Program(std::string& shaderSrc, std::string& fragmentSrc);
+	Program(const char shaderSrc[], const char fragmentSrc[]);
 	~Program();
 	GLuint getId();
 	void errors();

@@ -10,8 +10,8 @@ private:
 	GLuint VBO = 0;
 	GLuint EBO = 0;
 	GLuint ProgramID = 0;
-	unsigned int verticesSize;
-	unsigned int indicesSize;
+	unsigned int verticesSize = 0;
+	unsigned int indicesSize = 0;
 
 	GLobject(std::vector<float>& vertices);
 	void saveBuffer();

@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\lucas.lima\source\libs\glad\include;C:\Users\lucas.lima\source\libs\glfw-3.4\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\lucas.lima\source\libs\glfw-3.4\build\src\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\lucas\source\libs\glad\include;C:\Users\lucas\source\libs\glfw-3.4\include;C:\Users\lucas.lima\source\libs\glad\include;C:\Users\lucas.lima\source\libs\glfw-3.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\lucas\source\libs\glfw-3.4\build\src\Release;C:\Users\lucas.lima\source\libs\glfw-3.4\build\src\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -130,8 +130,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\libs\glad\src\glad.c" />
     <ClCompile Include="FragmentShader.cpp" />
+    <ClCompile Include="glad.c" />
     <ClCompile Include="GLobject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Program.cpp" />

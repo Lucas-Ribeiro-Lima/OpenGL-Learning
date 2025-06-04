@@ -1,14 +1,13 @@
 #include "Program.h"
 #include "FragmentShader.h"
 #include "VertexShader.h"
+#include "Utils.h"
 #include <iostream>
 
-Program::Program(std::string& shaderSrc, std::string& fragmentSrc) {
-	const char* shaderptr = shaderSrc.c_str();
-	const char* fragmentptr = fragmentSrc.c_str();
+Program::Program(const char shaderSrc[], const char fragmentSrc[]) {
 
-	VertexShader shader(shaderptr);
-	FragmentShader fragment(fragmentptr);
+	VertexShader shader(Utils::readFile(shaderSrc).c_str());
+	FragmentShader fragment(Utils::readFile(fragmentSrc).c_str());
 
 	ID = glCreateProgram();
 	GLuint shaderId = shader.getId();

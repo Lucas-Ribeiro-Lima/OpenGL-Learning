@@ -1,18 +1,24 @@
 #include "Utils.h"
-#include <streambuf>
 #include <fstream>
 #include <sstream>
 
 namespace Utils {
-	std::string readShader(const char* shaderName) {
-		std::ifstream file(shaderName);
+	std::string readFile(const char shaderName[]) {
+		try {
+			std::ifstream file(shaderName);
+			
+			file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+			
+			std::stringstream buffer;
 
-		if (!file) throw std::runtime_error("Error loading shader ");
+			buffer << file.rdbuf();
 
-		std::stringstream buffer;
+			return buffer.str();
+		}
+		catch(const std::ifstream::failure& e) {
 
-		buffer << file.rdbuf();
+			throw std::runtime_error(e.what());
 
-		return buffer.str();
+		}
 	}
 }

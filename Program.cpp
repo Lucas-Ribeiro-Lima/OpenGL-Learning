@@ -43,6 +43,14 @@ void Program::errors() {
 	}
 }
 
-GLuint Program::getId() {
-	return ID;
+void Program::use() {
+	glUseProgram(ID);
+}
+
+void Program::setUniform1I(const char name[], GLint value) const {
+	glUniform1i(glGetUniformLocation(ID, name), value);
+}
+
+void Program::setUniform1f(const char name[], GLfloat value) const {
+	glUniform1f(glGetUniformLocation(ID, name), value);
 }

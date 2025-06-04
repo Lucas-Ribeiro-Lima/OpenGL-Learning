@@ -71,7 +71,8 @@ void WindowGl::render(GLobject* objects[]) {
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		for (int i = 0; i < 2; i++) {
+		int len = sizeof(objects) / 8;
+		for (int i = 0; i < len; i++) {
 			objects[i]->draw();
 		}
 

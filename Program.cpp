@@ -1,8 +1,4 @@
 #include "Program.h"
-#include "FragmentShader.h"
-#include "VertexShader.h"
-#include "Utils.h"
-#include <iostream>
 
 Program::Program(const char shaderSrc[], const char fragmentSrc[]) {
 
@@ -45,6 +41,27 @@ void Program::errors() {
 
 void Program::use() {
 	glUseProgram(ID);
+	setUniform4fv("transform", tMat4);
+}
+
+Program& Program::resetT() {
+	tMat4 = glm::mat4(1.0f);
+	return *this;
+}
+
+Program& Program::scale(glm::vec3 scaleProps) {
+	tMat4 = glm::scale(tMat4, scaleProps);
+	return *this;
+};
+
+Program& Program::rotate(float degree, glm::vec3 rotateProps) {
+	tMat4 = glm::rotate(tMat4, degree, rotateProps);
+	return *this;
+};
+
+Program& Program::translate(glm::vec3 translateProps) {
+	tMat4 = glm::translate(tMat4, translateProps);
+	return *this;
 }
 
 void Program::setUniform1I(const char name[], GLint value) const {
@@ -53,4 +70,8 @@ void Program::setUniform1I(const char name[], GLint value) const {
 
 void Program::setUniform1f(const char name[], GLfloat value) const {
 	glUniform1f(glGetUniformLocation(ID, name), value);
+}
+
+void Program::setUniform4fv(const char name[], glm::mat4& mat) {
+	glUniformMatrix4fv(glGetUniformLocation(ID, name), 1, GL_FALSE, glm::value_ptr(mat));
 }

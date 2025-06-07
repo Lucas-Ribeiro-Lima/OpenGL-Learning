@@ -1,22 +1,34 @@
 #pragma once
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include "FragmentShader.h"
 #include "VertexShader.h"
+#include "Utils.h"
 #include <string>
+#include <iostream>
+#include <GLM/glm.hpp>
+#include <GLM/gtc/matrix_transform.hpp>
+#include <GLM/gtc/type_ptr.hpp>
 
 class Program
 {
 private:
 	char infoLog[512] = {};
+	glm::mat4 tMat4 = glm::mat4(1.0f);
 	int sucess = 0;
 	GLuint ID  = 0;
 public:
 	Program(const char shaderSrc[], const char fragmentSrc[]);
 	~Program();
+	Program& resetT();
+	Program& scale(glm::vec3 scaleProps);
+	Program& rotate(float degree, glm::vec3 rotateProps);
+	Program& translate(glm::vec3 translateProps);
 	void setUniform1I(const char name[], GLint value) const;
 	void setUniform1UI(const char name[], GLuint value) const;
 	void setUniform1f(const char name[], GLfloat value) const;
 	void setUniform3f(const char name[], GLfloat value[3]) const;
+	void setUniform4fv(const char name[], glm::mat4& mat);
 	void use();
 	void errors();
 };

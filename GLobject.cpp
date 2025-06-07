@@ -109,8 +109,26 @@ GLobject::~GLobject() {
 	}
 }
 
+void GLobject::setTranslate(glm::vec3 axis) {
+	translateAxis = axis;
+}
+
+void GLobject::setRotate(float deg, glm::vec3 axis) {
+	rotateDeg = deg;
+	rotateAxis = axis;
+}
+
+void GLobject::setScale(glm::vec3 axis) {
+	scaleAxis = axis;
+}
+
 void GLobject::draw() {
-	PROG.use();
+	PROG
+		.resetT()
+		.translate(translateAxis)
+		.rotate(rotateDeg, rotateAxis)
+		.scale(scaleAxis)
+		.use();
 
 	glBindVertexArray(VAO);
 

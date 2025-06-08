@@ -1,9 +1,6 @@
 #define STB_IMAGE_IMPLEMENTATION
-
-#include "Utils.h"
 #include "stb_image.h"
-#include <fstream>
-#include <sstream>
+#include "Utils.h"
 
 namespace Utils {
 	std::string readFile(const char shaderName[]) {

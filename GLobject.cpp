@@ -3,6 +3,7 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 
+//Map for the colors system of images of stb_images
 const int colorSystem[4] = { GL_RED, NULL, GL_RGB, GL_RGBA };
 
 GLobject::GLobject(std::vector<float>& vertices, std::vector<GLuint>& indices, Program& program): PROG(program) {
@@ -109,6 +110,7 @@ GLobject::~GLobject() {
 	}
 }
 
+//Set a new translation transformation vetor for the object.
 void GLobject::setTranslate(glm::vec3 axis) {
 	translateAxis = axis;
 }
@@ -118,10 +120,16 @@ void GLobject::setRotate(float deg, glm::vec3 axis) {
 	rotateAxis = axis;
 }
 
+//Set a new scaling transformation vetor for the object.
 void GLobject::setScale(glm::vec3 axis) {
 	scaleAxis = axis;
 }
 
+
+/*
+	Draw function is called every frame in the main loop,
+	applying the transformations of the object.
+*/
 void GLobject::draw() {
 	PROG
 		.resetT()
@@ -136,6 +144,6 @@ void GLobject::draw() {
 }
 
 
-GLuint GLobject::getID() {
+GLuint GLobject::getID() const {
 	return VAO;
 }

@@ -8,4 +8,3 @@ public:
     VertexShader(const char* source);
     GLuint getId();
 };
-

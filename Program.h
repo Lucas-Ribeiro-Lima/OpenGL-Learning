@@ -20,7 +20,7 @@ private:
 	int sucess = 0;
 	GLuint ID  = 0;
 public:
-	Program(const char shaderSrc[], const char fragmentSrc[]);
+	Program(const char* vertex, const char* fragment);
 	~Program();
 	Program& resetT();
 	Program& scale(glm::vec3 scaleProps);
@@ -34,4 +34,3 @@ public:
 	void use();
 	void errors();
 };
-

@@ -1,6 +1,7 @@
 #include "VertexShader.h"
 #include <iostream>
 
+
 VertexShader::VertexShader(const char* source) {
 	shaderSource = source;
 	ID = glCreateShader(GL_VERTEX_SHADER);

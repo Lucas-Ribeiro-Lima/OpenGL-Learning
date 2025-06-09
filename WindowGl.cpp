@@ -32,7 +32,7 @@ void WindowGl::gladConfiguration() {
 
 	glViewport(0, 0, width, height);
 	glEnable(GL_DEPTH_TEST);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void WindowGl::glfwConfiguration() {
@@ -65,11 +65,11 @@ void WindowGl::processInput(GLFWwindow* window) {
 	}
 }
 
-void WindowGl::render(GLobject* objects[]) {
+void WindowGl::render(Object* objects[]) {
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		int len = 1;

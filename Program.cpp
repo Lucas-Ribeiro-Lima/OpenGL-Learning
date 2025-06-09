@@ -1,15 +1,15 @@
 #include "Program.h"
 
-Program::Program(const char shaderSrc[], const char fragmentSrc[]) {
+Program::Program(const char* vertex, const char* fragment) {
 	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 	projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
-	VertexShader shader(Utils::readFile(shaderSrc).c_str());
-	FragmentShader fragment(Utils::readFile(fragmentSrc).c_str());
+	VertexShader vShader(vertex);
+	FragmentShader fShader(fragment);
 
 	ID = glCreateProgram();
-	GLuint shaderId = shader.getId();
-	GLuint fragmentId = fragment.getId();
+	GLuint shaderId = vShader.getId();
+	GLuint fragmentId = fShader.getId();
 
 	glAttachShader(ID, shaderId);
 	glAttachShader(ID, fragmentId);

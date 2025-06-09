@@ -1,6 +1,8 @@
 #include "Program.h"
 
 Program::Program(const char shaderSrc[], const char fragmentSrc[]) {
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
 	VertexShader shader(Utils::readFile(shaderSrc).c_str());
 	FragmentShader fragment(Utils::readFile(fragmentSrc).c_str());
@@ -41,26 +43,28 @@ void Program::errors() {
 
 void Program::use() {
 	glUseProgram(ID);
-	setUniform4fv("transform", tMat4);
+	setUniform4fv("model", model);
+	setUniform4fv("view", view);
+	setUniform4fv("projection", projection);
 }
 
 Program& Program::resetT() {
-	tMat4 = glm::mat4(1.0f);
+	model = glm::mat4(1.0f);
 	return *this;
 }
 
 Program& Program::scale(glm::vec3 scaleProps) {
-	tMat4 = glm::scale(tMat4, scaleProps);
+	model = glm::scale(model, scaleProps);
 	return *this;
 };
 
 Program& Program::rotate(float degree, glm::vec3 rotateProps) {
-	tMat4 = glm::rotate(tMat4, degree, rotateProps);
+	model = glm::rotate(model, glm::radians(degree), rotateProps);
 	return *this;
 };
 
 Program& Program::translate(glm::vec3 translateProps) {
-	tMat4 = glm::translate(tMat4, translateProps);
+	model = glm::translate(model, translateProps);
 	return *this;
 }
 

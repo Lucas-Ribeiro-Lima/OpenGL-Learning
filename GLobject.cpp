@@ -55,8 +55,6 @@ void GLobject::genTextureBuffer(const char* path) {
 	int width, heigth, nrChannels;
 	unsigned char* data = Utils::loadTexture(path, width, heigth, nrChannels);
 
-
-
 	glGenTextures(1, &TEX);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, TEX);

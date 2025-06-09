@@ -14,7 +14,9 @@ class Program
 {
 private:
 	char infoLog[512] = {};
-	glm::mat4 tMat4 = glm::mat4(1.0f);
+	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 view = glm::mat4(1.0f);
+	glm::mat4 projection;
 	int sucess = 0;
 	GLuint ID  = 0;
 public:

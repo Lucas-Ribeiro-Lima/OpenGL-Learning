@@ -31,6 +31,7 @@ void WindowGl::gladConfiguration() {
 	}
 
 	glViewport(0, 0, width, height);
+	glEnable(GL_DEPTH_TEST);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
@@ -69,9 +70,9 @@ void WindowGl::render(GLobject* objects[]) {
 		processInput(window);
 
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		int len = 2;
+		int len = 1;
 		for (int i = 0; i < len; i++) {
 			objects[i]->draw();
 		}

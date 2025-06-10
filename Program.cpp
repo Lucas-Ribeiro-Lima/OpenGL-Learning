@@ -4,8 +4,8 @@ Program::Program(const char* vertex, const char* fragment) {
 	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 	projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
-	VertexShader vShader(vertex);
-	FragmentShader fShader(fragment);
+	VertexShader vShader(Utils::readFile(vertex).c_str());
+	FragmentShader fShader(Utils::readFile(fragment).c_str());
 
 	ID = glCreateProgram();
 	GLuint shaderId = vShader.getId();

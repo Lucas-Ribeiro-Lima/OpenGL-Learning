@@ -5,10 +5,7 @@
 class FragmentShader :
     public Shader
 {
-private:
-    GLuint ID;
 public:
     FragmentShader(const char* source);
-    GLuint getId();
 };
 

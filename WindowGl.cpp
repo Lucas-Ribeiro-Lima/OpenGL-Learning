@@ -65,17 +65,14 @@ void WindowGl::processInput(GLFWwindow* window) {
 	}
 }
 
-void WindowGl::render(Object* objects[]) {
+void WindowGl::render(Instances& instances) {
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		int len = 1;
-		for (int i = 0; i < len; i++) {
-			objects[i]->draw();
-		}
+		instances.drawInstances();
 
 		glfwSwapBuffers(window);
 

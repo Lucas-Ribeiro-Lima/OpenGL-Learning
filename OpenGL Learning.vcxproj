@@ -106,7 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -133,8 +133,8 @@
     <ClCompile Include="FragmentShader.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Instances.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="ObjectDynamic.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -146,8 +146,8 @@
   <ItemGroup>
     <ClInclude Include="FragmentShader.h" />
     <ClInclude Include="Geometry.h" />
+    <ClInclude Include="Instances.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="ObjectDynamic.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Shader.h" />

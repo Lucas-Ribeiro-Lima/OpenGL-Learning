@@ -1,6 +1,5 @@
 #include "WindowGl.h"
 #include "Object.h"
-#include "ObjectDynamic.h"
 #include "Program.h"
 #include "FragmentShader.h"
 #include "VertexShader.h"
@@ -48,6 +47,19 @@ std::vector<GLuint> indexesCube = {
 	0, 1, 5, //11 Bottom
 };
 
+std::vector<glm::vec3> cubePositions = {
+	glm::vec3(0.0f,  0.0f,  0.0f),
+	glm::vec3(2.0f,  5.0f, -15.0f),
+	glm::vec3(-1.5f, -2.2f, -2.5f),
+	glm::vec3(-3.8f, -2.0f, -12.3f),
+	glm::vec3(2.4f, -0.4f, -3.5f),
+	glm::vec3(-1.7f,  3.0f, -7.5f),
+	glm::vec3(1.3f, -2.0f, -2.5f),
+	glm::vec3(1.5f,  2.0f, -2.5f),
+	glm::vec3(1.5f,  0.2f, -1.5f),
+	glm::vec3(-1.3f,  1.0f, -1.5f)
+};
+
 int main() {
 
 	WindowGl window(800, 600);
@@ -61,18 +73,11 @@ int main() {
 	//Default Program
 	Program DEF_PROGRAM(VSHADER_1, FRAG_1);
 
-	ObjectDynamic object(CUBE_GEOMETRY, &TEX_GRASS_CUBE, DEF_PROGRAM);
-	object.setScale([]() {
-		return glm::vec3(0.5f);
-	});
-	object.setRotate([]() {
-		return glfwGetTime() * 50.0f;
-	}, glm::vec3(1.0f, 1.0f, 1.0f));
+	Object cube(CUBE_GEOMETRY, &TEX_GRASS_CUBE, DEF_PROGRAM);
 
-
-	Object* objects[2] = { &object };
-
-	window.render(objects);
+	Instances cubeInstances(cube, cubePositions);
+	
+	window.render(cubeInstances);
 
 	return 0;
 }

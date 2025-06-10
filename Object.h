@@ -31,10 +31,10 @@ public:
 	Object(Geometry& geometry, Texture* texture, Program& Program);
 	~Object();
 	GLuint getID() const;
-	void setProgram(Program& Program);
-	void setTranslate(glm::vec3 axis);
-	void setRotate(float deg, glm::vec3 axis);
-	void setScale(glm::vec3 axis);
+	Object& setProgram(Program& Program);
+	Object& setTranslate(glm::vec3 axis);
+	Object& setRotate(float deg, glm::vec3 axis);
+	Object& setScale(glm::vec3 axis);
 	virtual void draw();
 };
 

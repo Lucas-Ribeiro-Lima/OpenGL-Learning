@@ -32,8 +32,9 @@ void Object::bindTexture() {
 	glBindTexture(GL_TEXTURE_2D, TEX->getTex());
 }
 
-void Object::setProgram(Program& program) {
+Object& Object::setProgram(Program& program) {
 	PROG = program;
+	return *this;
 }
 
 void Object::saveBuffer() {
@@ -55,18 +56,21 @@ Object::~Object() {
 }
 
 //Set a new translation transformation vetor for the object.
-void Object::setTranslate(glm::vec3 axis) {
+Object& Object::setTranslate(glm::vec3 axis) {
 	translateAxis = axis;
+	return *this;
 }
 
-void Object::setRotate(float deg, glm::vec3 axis) {
+Object& Object::setRotate(float deg, glm::vec3 axis) {
 	rotateDeg = deg;
 	rotateAxis = axis;
+	return *this;
 }
 
 //Set a new scaling transformation vetor for the object.
-void Object::setScale(glm::vec3 axis) {
+Object& Object::setScale(glm::vec3 axis) {
 	scaleAxis = axis;
+	return *this;
 }
 
 /*

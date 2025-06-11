@@ -1,6 +1,6 @@
 #include "Instances.h"
 
-Instances::Instances(Object& obj, Positions& pos): Obj(obj), Pos(pos) {};
+Instances::Instances(Object& o, Positions& p): obj(o), Pos(p) {};
 
 void Instances::setInstances(std::vector<glm::vec3> pos) {
 	Pos = pos;
@@ -13,9 +13,9 @@ void Instances::drawInstances() {
 
 		float rotation = i % 3 == 0 ? time : fixedRotate;
 
-		Obj
+		obj
 			.setTranslate(Pos[i])
-			.setRotate(rotation, glm::vec3(1.0f))
+			.setRotate(rotation, glm::vec3(0.0f, 1.0f, 0.0f))
 			.draw();
 	}
 }

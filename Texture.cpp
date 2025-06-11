@@ -5,7 +5,7 @@ const int colorSystem[4] = { GL_RED, NULL, GL_RGB, GL_RGBA };
 
 Texture::Texture(const char* path) {
 	int width, heigth, nrChannels;
-	unsigned char* data = Utils::loadTexture(path, width, heigth, nrChannels);
+	unsigned char* data = Utils::loadTexture(path, width, heigth, nrChannels, true);
 
 	glGenTextures(1, &TEX);
 	glActiveTexture(GL_TEXTURE0);

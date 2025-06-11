@@ -19,6 +19,7 @@ private:
 	glm::mat4 projection;
 	int sucess = 0;
 	GLuint ID  = 0;
+
 public:
 	Program(const char* vertex, const char* fragment);
 	~Program();

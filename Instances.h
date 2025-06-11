@@ -1,13 +1,13 @@
 #pragma once
-#include "Object.h"
 #include <GLM/glm.hpp>
 #include <vector>
+#include "Object.h"
 
 typedef std::vector<glm::vec3> Positions;
 
 class Instances
 {
-	Object& Obj;
+	Object& obj;
 	Positions& Pos;
 public:
 	Instances(Object& obj, Positions& pos);

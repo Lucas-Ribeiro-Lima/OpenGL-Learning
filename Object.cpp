@@ -1,6 +1,6 @@
 #include "Object.h"
 
-Object::Object(Geometry& geometry, Program& program): GEO(geometry), TEX(nullptr), PROG(program) {
+Object::Object(Geometry* geometry, Program* program): GEO(geometry), PROG(program) {
 	genVertexArrayBuffer();
 
 	bindGeometry();
@@ -8,7 +8,7 @@ Object::Object(Geometry& geometry, Program& program): GEO(geometry), TEX(nullptr
 	saveBuffer();
 }
 
-Object::Object(Geometry& geometry, Texture* texture, Program& program)
+Object::Object(Geometry* geometry, Texture* texture, Program* program)
 : GEO(geometry), TEX(texture), PROG(program) {
 	genVertexArrayBuffer();
 
@@ -24,15 +24,15 @@ void Object::genVertexArrayBuffer() {
 }
 
 void Object::bindGeometry() {
-	glBindBuffer(GL_ARRAY_BUFFER, GEO.getVBO());
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GEO.getEBO());
+	glBindBuffer(GL_ARRAY_BUFFER, GEO->getVBO());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GEO->getEBO());
 }
 
 void Object::bindTexture() {
 	glBindTexture(GL_TEXTURE_2D, TEX->getTex());
 }
 
-Object& Object::setProgram(Program& program) {
+Object& Object::setProgram(Program* program) {
 	PROG = program;
 	return *this;
 }
@@ -78,7 +78,14 @@ Object& Object::setScale(glm::vec3 axis) {
 	applying the transformations of the object.
 */
 void Object::draw() {
-	PROG
+	if (wireframe) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
+	(*PROG)
 		.resetT()
 		.translate(translateAxis)
 		.rotate(rotateDeg, rotateAxis)
@@ -87,9 +94,12 @@ void Object::draw() {
 
 	glBindVertexArray(VAO);
 
-	glDrawElements(GL_TRIANGLES, GEO.getIndexSize(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, GEO->getIndexSize(), GL_UNSIGNED_INT, 0);
 }
 
+void Object::setWireframe(bool state) {
+	wireframe = state;
+}
 
 GLuint Object::getID() const {
 	return VAO;

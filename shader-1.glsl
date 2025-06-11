@@ -9,10 +9,12 @@ uniform mat4 projection;
 
 out vec2 TextCoord;
 out vec3 VertColor;
+out float Brightness;
 
 void main()
 {
    gl_Position = projection * view * model * vec4(aPos, 1.0);
    TextCoord = aTextCoord;
+   Brightness = 1.0;
    VertColor = aColor;
 }

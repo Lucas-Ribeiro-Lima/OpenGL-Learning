@@ -130,6 +130,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="FragmentShader.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="glad.c" />
@@ -137,20 +139,26 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="VertexShader.cpp" />
     <ClCompile Include="WindowGl.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="FragmentShader.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Instances.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Program.h" />
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Utils.h" />
@@ -177,7 +185,12 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\earthMap.jpg" />
     <Image Include="assets\grassblockside.png" />
+    <Image Include="assets\water.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="frag-2.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

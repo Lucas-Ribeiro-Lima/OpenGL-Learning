@@ -58,8 +58,8 @@ namespace Utils {
 		writeFile("log.txt", formattedStr);
 	}
 
-	unsigned char* loadTexture(const char path[],	int& width, int& heigth, int& nrChannels) {
-		stbi_set_flip_vertically_on_load(true);
+	unsigned char* loadTexture(const char path[],	int& width, int& heigth, int& nrChannels, bool flip) {
+		stbi_set_flip_vertically_on_load(flip);
 		return stbi_load(path, &width, &heigth, &nrChannels, 0);
 	}
 

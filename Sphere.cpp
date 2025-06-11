@@ -3,7 +3,7 @@
 Sphere::Sphere(float radius)
 	: Object(
 		&getSphereGeometry(radius),
-		&getEarthTexture(Constants::TEX_PLANET_1),
+		&getTexture(Constants::TEX_PLANET_1),
 		&getProgram(Constants::FRAG_1)
 	) {}
 

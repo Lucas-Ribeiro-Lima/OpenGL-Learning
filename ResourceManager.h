@@ -5,6 +5,7 @@
 #include "Constants.h"
 #include "Camera.h"
 #include <vector>
+#include <unordered_map>
 
 Camera& getCamera();
 
@@ -12,7 +13,7 @@ Geometry& getCubeGeometry();
 
 Geometry& getSphereGeometry(float radius);
 
-Texture& getEarthTexture(const char* tex);
+Texture& getTexture(const char* tex);
 
 Program& getDefaultProgram();
 

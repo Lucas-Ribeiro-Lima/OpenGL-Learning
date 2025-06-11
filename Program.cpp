@@ -2,8 +2,6 @@
 #include "ResourceManager.h"
 
 Program::Program(const char* vertex, const char* fragment) {
-	projection = glm::perspective(glm::radians(45.0f), 1280.0f / 920.0f, 0.1f, 100.0f);
-
 	VertexShader vShader(Utils::readFile(vertex).c_str());
 	FragmentShader fShader(Utils::readFile(fragment).c_str());
 
@@ -42,7 +40,10 @@ void Program::errors() {
 }
 
 void Program::use() {
+
 	view = getCamera().getView();
+	projection = getCamera().getPerspective();
+
 	glUseProgram(ID);
 	setUniform4fv("model", model);
 	setUniform4fv("view", view);

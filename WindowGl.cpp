@@ -1,17 +1,20 @@
 #include "WindowGl.h"
-#include <iostream>
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 void mouseCallback(GLFWwindow* window, double xPos, double yPos);
+void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
+float deltaTime = 0;
+float lastFrame = 0;
+
+bool firstMouse = true;
 float lastX = 400.0f, lastY = 300.0f;
 float sensitivity = 0.1f;
 float xOffset = 0.0f;
 float yOffset = 0.0f;
 float yaw = -90.0f, pitch = 0.0f;
 
-bool firstMouse = true;
-
+float fov = 1.0f;
 
 enum ERRORS {
 	NONE = 0x0000,
@@ -19,18 +22,10 @@ enum ERRORS {
 	FAIL_INIT_GLAD = 0x0010,
 };
 
-WindowGl::WindowGl(int w, int h, float& d, Camera* c): deltaTime(d), cam(c) {
+WindowGl::WindowGl(int w, int h, Camera* c):  cam(c) {
 	width = w;
 	height = h;
 	errors = NONE;
-
-	w_lastX = &lastX;
-	w_lastY = &lastY;
-	w_sensitivity = &sensitivity;
-	w_xOffset = &xOffset;
-	w_yOffset = &yOffset;
-	w_pitch = &pitch;
-	w_yaw = &yaw;
 
 	glfwConfiguration();
 
@@ -43,7 +38,7 @@ WindowGl::WindowGl(int w, int h, float& d, Camera* c): deltaTime(d), cam(c) {
 
 void WindowGl::gladConfiguration() {
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		std::cout << "Failed to initialize GLAD" << std::endl;
+		Utils::logger("Failed to initialize GLAD");
 		errors = FAIL_INIT_GLAD;
 		return;
 	}
@@ -66,7 +61,7 @@ void WindowGl::windowInicialization() {
 	window = w;
 
 	if (window == NULL) {
-		std::cout << "Failed to create GLFW window" << std::endl;
+		Utils::logger("Failed to create GLFW window");
 		errors = FAIL_CREATE_WINDOW;
 		glfwTerminate();
 		return;
@@ -100,8 +95,9 @@ void WindowGl::processInput(GLFWwindow* window) {
 void WindowGl::render(std::vector<Instances*> data) {
 	while (!glfwWindowShouldClose(window)) {
 		calculateDeltaTime();
+
+		cam->update(yaw, pitch, fov);
 		processInput(window);
-		cam->updateFront(yaw, pitch);
 
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -151,6 +147,17 @@ void mouseCallback(GLFWwindow* window, double xPos, double yPos) {
 	}
 	if (pitch < -89.0f) {
 		pitch = -89.0f;
+	}
+}
+
+void scrollCallback(GLFWwindow* window, double xOffset, double yOffset) {
+	fov -= (float) yOffset;
+
+	if (fov < 1.0f) {
+		fov = 1.0f;
+	}
+	if (fov > 45.0f) {
+		fov = 45.0f;
 	}
 }
 

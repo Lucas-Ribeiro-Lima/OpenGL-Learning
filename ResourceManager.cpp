@@ -47,6 +47,12 @@ Geometry& getCubeGeometry() {
 }
 
 Geometry& getSphereGeometry(float radius) {
+    std::unordered_map<float, Geometry*> radiusMap;
+
+    if (radiusMap.find(radius) != radiusMap.end()) {
+        return *radiusMap[radius];
+    }
+
     std::vector<GLfloat> vertexesSphere;
     std::vector<GLuint> indexesSphere;
 
@@ -74,8 +80,8 @@ Geometry& getSphereGeometry(float radius) {
             vertexesSphere.push_back(1.0f);
 
             // coordenadas de textura
-            vertexesSphere.push_back((float)j / slices);
-            vertexesSphere.push_back((float)i / stacks);
+            vertexesSphere.push_back(1.0f - ((float)j / slices));
+            vertexesSphere.push_back(1.0f - ((float) i / stacks));
         }
     }
 
@@ -96,10 +102,12 @@ Geometry& getSphereGeometry(float radius) {
     }
 
     static Geometry instance{ vertexesSphere, indexesSphere };
+    radiusMap.insert({ radius, &instance });
+
     return instance;
 }
 
-Texture& getEarthTexture(const char* tex) {
+Texture& getTexture(const char* tex) {
     static Texture instance{ tex };
     return instance;
 }

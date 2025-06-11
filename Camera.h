@@ -2,6 +2,7 @@
 #include <GLM/glm.hpp>
 #include <GLM/gtc/matrix_transform.hpp>
 #include <GLM/gtc/type_ptr.hpp>
+#include "Utils.h"
 
 enum Directions {
 	front = 1,
@@ -19,15 +20,19 @@ private:
 	glm::vec3 up{ 0.0f, 1.0f, 0.0f };
 
 	glm::mat4 view = glm::lookAt(pos, pos + front, up);
+	glm::mat4 perspective = glm::perspective(45.0f, 1280.0f / 920.0f, 0.1f, 100.f);
 
+	float fov = 45.0f;
 	float yaw = -90.0f;
 	float pitch = 0.0f;
 
 public:
 	Camera();
 	glm::mat4 getView();
-	void update();
-	void updateFront(float yaw, float pitch);
+	glm::mat4 getPerspective();
+	void updateView();
+	void updatePerspective();
+	void update(float yaw, float pitch, float fov);
 	void setFrontBack(float value, Directions dir);
 	void setLeftRight(float value, Directions dir);
 };

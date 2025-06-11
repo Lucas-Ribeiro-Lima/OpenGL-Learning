@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "Instances.h"
 #include "Camera.h"
+#include "ResourceManager.h"
 
 class WindowGl
 {
@@ -12,12 +13,6 @@ private:
 	int height;
 	int width;
 	int errors;
-
-	float& deltaTime;
-	float lastFrame = 0.0f;
-
-	//Mouse controls
-	float *w_lastX, *w_lastY, *w_sensitivity, *w_xOffset, *w_yOffset, *w_yaw, *w_pitch;
 
 	//Glad startup;
 	void gladConfiguration();
@@ -31,7 +26,7 @@ private:
 
 	void calculateDeltaTime();
 public:
-	WindowGl(int width, int height, float& deltaVar, Camera* cam);
+	WindowGl(int width, int height, Camera* cam);
 	void render(std::vector<Instances*> instances);
 	int hasErrors();
 };

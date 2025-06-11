@@ -58,6 +58,15 @@ namespace Utils {
 		writeFile("log.txt", formattedStr);
 	}
 
+	void genPlanetsOrbit(std::vector<glm::vec3>& positions) {
+		for (int i = 0; i < Constants::DISTANCES_PLANETS.size(); i++) {
+			float angle = glm::radians(i * 360.0f / Constants::DISTANCES_PLANETS.size());
+			float x = cos(angle) * Constants::DISTANCES_PLANETS[i];
+			float z = sin(angle) * Constants::DISTANCES_PLANETS[i];
+			positions.push_back(glm::vec3(x, 0.0f, z));
+		}
+	}
+
 	unsigned char* loadTexture(const char path[],	int& width, int& heigth, int& nrChannels, bool flip) {
 		stbi_set_flip_vertically_on_load(flip);
 		return stbi_load(path, &width, &heigth, &nrChannels, 0);

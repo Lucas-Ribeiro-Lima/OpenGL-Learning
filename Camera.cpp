@@ -35,7 +35,7 @@ void Camera::updateView() {
 }
 
 void Camera::updatePerspective() {
-	perspective = glm::perspective(fov, 1280.0f / 960.0f, 0.1f, 100.0f);
+	perspective = glm::perspective(fov, 1280.0f / 960.0f, 0.1f, 300.0f);
 }
 
 void Camera::update(float y, float p, float f) {

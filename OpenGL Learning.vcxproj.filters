@@ -28,6 +28,12 @@
     <Filter Include="Header Files\Objects">
       <UniqueIdentifier>{9ea15356-6181-4341-859c-1047ab9edb6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{e4835a29-a68b-4bde-bbee-eb5030e2ee9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{5ac093f6-ec00-42ff-9cb5-ec8b93e74615}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -77,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +137,9 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Planet.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OpenGL Learning.rc">
@@ -168,6 +180,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\venus.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\neptune.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\uranus.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

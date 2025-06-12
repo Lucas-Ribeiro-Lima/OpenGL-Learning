@@ -138,6 +138,7 @@
     <ClCompile Include="Instances.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Planet.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Instances.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Planet.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Shader.h" />
@@ -190,8 +192,10 @@
     <Image Include="assets\jupiter.jpg" />
     <Image Include="assets\mars.jpg" />
     <Image Include="assets\mercury.jpg" />
+    <Image Include="assets\neptune.jpg" />
     <Image Include="assets\saturn.jpg" />
     <Image Include="assets\sun.jpg" />
+    <Image Include="assets\uranus.jpg" />
     <Image Include="assets\venus.jpg" />
     <Image Include="assets\water.jpg" />
   </ItemGroup>

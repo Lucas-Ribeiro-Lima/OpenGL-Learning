@@ -71,6 +71,7 @@ void WindowGl::windowInicialization() {
 	glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, mouseCallback);
+	glfwSetScrollCallback(window, scrollCallback);
 }
 
 void WindowGl::processInput(GLFWwindow* window) {

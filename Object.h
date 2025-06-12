@@ -32,7 +32,6 @@ protected:
 public:
 	Object(Geometry* geometry, Program* Program);
 	Object(Geometry* geometry, Texture* texture, Program* Program);
-	~Object();
 	GLuint getID() const;
 	Object& setProgram(Program* Program);
 	Object& setTranslate(glm::vec3 axis);

@@ -26,10 +26,6 @@ Program::Program(const char* vertex, const char* fragment) {
 	glDeleteShader(fragmentId);
 }
 
-Program::~Program() {
-	glDeleteProgram(ID);
-}
-
 void Program::errors() {
 	glGetProgramiv(ID, GL_LINK_STATUS, &sucess);
 

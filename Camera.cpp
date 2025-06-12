@@ -4,20 +4,20 @@ Camera::Camera() {};
 
 void Camera::setFrontBack(float value, Directions dir) {
 	if (dir == 1) {
-		pos += front * value;
+		pos += front * cameraSpeed * value;
 	}
 	else {
-		pos -= front * value;
+		pos -= front * cameraSpeed * value;
 	}
 	updateView();
 }
 
 void Camera::setLeftRight(float value, Directions dir) {
 	if (dir == 1) {
-		pos += glm::normalize(glm::cross(front, up)) * value;
+		pos += glm::normalize(glm::cross(front, up)) * cameraSpeed * value;
 ;	}
 	else {
-		pos -= glm::normalize(glm::cross(front, up)) * value;
+		pos -= glm::normalize(glm::cross(front, up)) * cameraSpeed * value;
 	}
 	updateView();
 }

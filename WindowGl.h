@@ -27,7 +27,7 @@ private:
 	void calculateDeltaTime();
 public:
 	WindowGl(int width, int height, Camera* cam);
-	void render(std::vector<Instances*> instances);
+	void render(std::vector<Instances> instances);
 	int hasErrors();
 };
 

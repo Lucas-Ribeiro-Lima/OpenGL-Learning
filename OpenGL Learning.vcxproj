@@ -185,8 +185,14 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\earthMap.jpg" />
+    <Image Include="assets\earth.jpg" />
     <Image Include="assets\grassblockside.png" />
+    <Image Include="assets\jupiter.jpg" />
+    <Image Include="assets\mars.jpg" />
+    <Image Include="assets\mercury.jpg" />
+    <Image Include="assets\saturn.jpg" />
+    <Image Include="assets\sun.jpg" />
+    <Image Include="assets\venus.jpg" />
     <Image Include="assets\water.jpg" />
   </ItemGroup>
   <ItemGroup>

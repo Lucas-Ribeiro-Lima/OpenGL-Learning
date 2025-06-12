@@ -22,7 +22,6 @@ private:
 
 public:
 	Program(const char* vertex, const char* fragment);
-	~Program();
 	Program& resetT();
 	Program& scale(glm::vec3 scaleProps);
 	Program& rotate(float degree, glm::vec3 rotateProps);

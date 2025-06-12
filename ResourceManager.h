@@ -11,10 +11,10 @@ Camera& getCamera();
 
 Geometry& getCubeGeometry();
 
-Geometry& getSphereGeometry(float radius);
+Geometry* getSphereGeometry(float radius);
 
-Texture& getTexture(const char* tex);
+Texture* getTexture(const char* tex);
 
 Program& getDefaultProgram();
 
-Program& getProgram(const char* frag);
+Program* getProgram(const char* frag);

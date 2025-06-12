@@ -46,11 +46,11 @@ Geometry& getCubeGeometry() {
     return instance;
 }
 
-Geometry& getSphereGeometry(float radius) {
-    std::unordered_map<float, Geometry*> radiusMap;
+Geometry* getSphereGeometry(float radius) {
+    static std::unordered_map<float, Geometry*> radiusMap;
 
     if (radiusMap.find(radius) != radiusMap.end()) {
-        return *radiusMap[radius];
+        return radiusMap[radius];
     }
 
     std::vector<GLfloat> vertexesSphere;
@@ -101,15 +101,20 @@ Geometry& getSphereGeometry(float radius) {
         }
     }
 
-    static Geometry instance{ vertexesSphere, indexesSphere };
-    radiusMap.insert({ radius, &instance });
+    radiusMap.insert({ radius,  new Geometry{ vertexesSphere, indexesSphere } });
 
-    return instance;
+    return radiusMap[radius];
 }
 
-Texture& getTexture(const char* tex) {
-    static Texture instance{ tex };
-    return instance;
+Texture* getTexture(const char* tex) {
+    static std::unordered_map<const char*, Texture*> texMap;
+
+    if (texMap.find(tex) != texMap.end()) {
+        return texMap[tex];
+    }
+
+    texMap.insert({ tex, new Texture{ tex } });
+    return texMap[tex];
 }
 
 Program& getDefaultProgram() {
@@ -117,7 +122,14 @@ Program& getDefaultProgram() {
     return instance;
 }
 
-Program& getProgram(const char* frag) {
-    static Program instance{ Constants::VSHADER_1, frag };
-    return instance;
+Program* getProgram(const char* frag) {
+    static std::unordered_map<const char*, Program*> progMap;
+
+    if (progMap.find(frag) != progMap.end()) {
+        return progMap[frag];
+    }
+
+    progMap.insert({ frag, new Program{ Constants::VSHADER_1, frag } });
+
+    return progMap[frag];
 }

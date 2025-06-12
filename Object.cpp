@@ -48,13 +48,6 @@ void Object::saveBuffer() {
 	glEnableVertexAttribArray(2);
 }
 
-
-Object::~Object() {
-	if (glIsVertexArray(VAO)) {
-		glDeleteVertexArrays(1, &VAO);
-	}
-}
-
 //Set a new translation transformation vetor for the object.
 Object& Object::setTranslate(glm::vec3 axis) {
 	translateAxis = axis;
@@ -91,6 +84,10 @@ void Object::draw() {
 		.rotate(rotateDeg, rotateAxis)
 		.scale(scaleAxis)
 		.use();
+
+	if (TEX) {
+		glBindTexture(GL_TEXTURE_2D, TEX->getTex());
+	}
 
 	glBindVertexArray(VAO);
 

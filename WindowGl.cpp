@@ -74,25 +74,24 @@ void WindowGl::windowInicialization() {
 }
 
 void WindowGl::processInput(GLFWwindow* window) {
-	float cameraSpeed = 2.5f * deltaTime;
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		cam->setFrontBack(cameraSpeed, front);
+		cam->setFrontBack(deltaTime, front);
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		cam->setFrontBack(cameraSpeed, back);
+		cam->setFrontBack(deltaTime, back);
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		cam->setLeftRight(cameraSpeed, left);
+		cam->setLeftRight(deltaTime, left);
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		cam->setLeftRight(cameraSpeed, right);
+		cam->setLeftRight(deltaTime, right);
 	}
 }
 
-void WindowGl::render(std::vector<Instances*> data) {
+void WindowGl::render(std::vector<Instances> data) {
 	while (!glfwWindowShouldClose(window)) {
 		calculateDeltaTime();
 
@@ -103,7 +102,7 @@ void WindowGl::render(std::vector<Instances*> data) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		for (int i = 0; i < data.size(); i++) {
-			data[i]->drawInstances();
+			data[i].drawInstances();
 		}
 
 		glfwSwapBuffers(window);

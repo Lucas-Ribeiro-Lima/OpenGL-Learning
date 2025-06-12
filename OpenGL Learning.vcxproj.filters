@@ -149,7 +149,25 @@
     <Image Include="assets\water.jpg">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\earthMap.jpg">
+    <Image Include="assets\earth.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\jupiter.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\mars.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\mercury.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\saturn.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\sun.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\venus.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

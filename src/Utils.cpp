@@ -50,8 +50,7 @@ namespace Utils {
 				localtime_r(&timestamp, &datetime);
 		#endif
 
-		char ascDateTime[26];
-		asctime_s(ascDateTime, &datetime);
+		char* ascDateTime = std::asctime(&datetime);
 
 		std::string formattedStr = std::format("Date: {} - {}", ascDateTime, log);
 

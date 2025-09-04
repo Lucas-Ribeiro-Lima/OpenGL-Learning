@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <GLFW/glfw3.h>
-#include <GLM/glm.hpp>
+#include <glm/glm.hpp>
 #include <fstream>
 #include <sstream>
 #include <format>

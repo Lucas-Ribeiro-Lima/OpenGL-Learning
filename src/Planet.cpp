@@ -1,5 +1,4 @@
 #include "Planet.h"
-
 Planet::Planet(
 	float radius,
 	const char* tex,

@@ -21,7 +21,8 @@ Texture::Texture(const char* path) {
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else {
-		std::cout << "Failed to load texture" << std::endl;
+		std::cout << "Failed to load texture: " << path << std::endl;
+		glDeleteTextures(1, &TEX);
 	}
 
 	Utils::freeTexture(data);

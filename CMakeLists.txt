@@ -32,3 +32,8 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(glfw)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
+
+configure_file(
+    "${PROJECT_SOURCE_DIR}/config.h.in"
+        "${PROJECT_SOURCE_DIR}/include/Config.h"
+)

@@ -1,7 +1,5 @@
 #include "ResourceManager.h"
 
-#define M_PI 3.1415
-
 Camera& getCamera() {
     static Camera cam;
     return cam;
@@ -61,18 +59,18 @@ Geometry* getSphereGeometry(float radius) {
 
     for (int i = 0; i <= stacks; ++i) {
         float phi = (float)i / stacks * M_PI;
-        float y = cosf(phi);
-        float r = sinf(phi);
+        float y = cosf(phi) * radius;
+        float r = sinf(phi) * radius;
 
         for (int j = 0; j <= slices; ++j) {
             float theta = (float)j / slices * 2.0f * M_PI;
             float x = r * cosf(theta);
             float z = r * sinf(theta);
 
-            // posição
-            vertexesSphere.push_back(x * radius);
-            vertexesSphere.push_back(y * radius);
-            vertexesSphere.push_back(z * radius);
+            // posiï¿½ï¿½o
+            vertexesSphere.push_back(x);
+            vertexesSphere.push_back(y);
+            vertexesSphere.push_back(z);
 
             // cor (apontando para fora)
             vertexesSphere.push_back(0.0f);
@@ -85,7 +83,7 @@ Geometry* getSphereGeometry(float radius) {
         }
     }
 
-    // Índices (como um grid 2D que você "costura")
+    // ï¿½ndices (como um grid 2D que vocï¿½ "costura")
     for (int i = 0; i < stacks; ++i) {
         for (int j = 0; j < slices; ++j) {
             int first = (i * (slices + 1)) + j;

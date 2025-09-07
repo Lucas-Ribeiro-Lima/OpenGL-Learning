@@ -21,6 +21,8 @@ void Planet::draw() {
 	};
 
 	translateAxis *= orbit;
+	rotateAxis += glm::vec3(0, 1, 0);
+	rotateDeg = glm::mod(time * rotationScaler, 360.0f);
 
 	Object::draw();
 }

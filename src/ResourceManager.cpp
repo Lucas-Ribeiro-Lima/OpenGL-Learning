@@ -1,5 +1,7 @@
 #include "ResourceManager.h"
 
+constexpr std::pair<std::vector<float>, std::vector<unsigned int>> generateSphereRadiusVector(float radius);
+
 Camera& getCamera() {
     static Camera cam;
     return cam;
@@ -51,19 +53,28 @@ Geometry* getSphereGeometry(float radius) {
         return radiusMap[radius];
     }
 
-    std::vector<GLfloat> vertexesSphere;
-    std::vector<GLuint> indexesSphere;
+    std::pair data = generateSphereRadiusVector(radius);
+
+    radiusMap.insert({ radius,  new Geometry{ data.first, data.second } });
+
+    return radiusMap[radius];
+}
+
+constexpr std::pair<std::vector<float>, std::vector<unsigned int>> generateSphereRadiusVector(const float radius)
+{
+    std::vector<float> vertexesSphere;
+    std::vector<unsigned int> indexesSphere;
 
     int stacks = 40;  // latitude
     int slices = 40;  // longitude
 
     for (int i = 0; i <= stacks; ++i) {
-        float phi = (float)i / stacks * M_PI;
+        float phi = static_cast<float>(i) / stacks * M_PI;
         float y = cosf(phi) * radius;
         float r = sinf(phi) * radius;
 
         for (int j = 0; j <= slices; ++j) {
-            float theta = (float)j / slices * 2.0f * M_PI;
+            float theta = static_cast<float>(j) / slices * 2.0f * M_PI;
             float x = r * cosf(theta);
             float z = r * sinf(theta);
 
@@ -78,12 +89,12 @@ Geometry* getSphereGeometry(float radius) {
             vertexesSphere.push_back(1.0f);
 
             // coordenadas de textura
-            vertexesSphere.push_back(1.0f - ((float)j / slices));
-            vertexesSphere.push_back(1.0f - ((float) i / stacks));
+            vertexesSphere.push_back(1.0f - (static_cast<float>(j) / slices));
+            vertexesSphere.push_back(1.0f - (static_cast<float>(i) / stacks));
         }
     }
 
-    // �ndices (como um grid 2D que voc� "costura")
+    // Indices
     for (int i = 0; i < stacks; ++i) {
         for (int j = 0; j < slices; ++j) {
             int first = (i * (slices + 1)) + j;
@@ -99,9 +110,7 @@ Geometry* getSphereGeometry(float radius) {
         }
     }
 
-    radiusMap.insert({ radius,  new Geometry{ vertexesSphere, indexesSphere } });
-
-    return radiusMap[radius];
+    return std::pair{vertexesSphere, indexesSphere};
 }
 
 Texture* getTexture(const char* tex) {

@@ -1,23 +1,23 @@
 #include "Sphere.h"
 
 Sphere::Sphere(float radius)
-	: Object(
-		getSphereGeometry(radius),
-		getTexture(Constants::TEX_PLANET_1),
+	: Model(
+		getSphereData(radius),
+		getTextureData(Constants::TEX_PLANET_1),
 		getProgram(Constants::FRAG_1)
 	) {}
 
 Sphere::Sphere(float radius, const char* tex)
-	: Object(
-		getSphereGeometry(radius),
-		getTexture(tex),
+	: Model(
+		getSphereData(radius),
+		getTextureData(tex),
 		getProgram(Constants::FRAG_1)
 	) {}
 
 Sphere::Sphere(float radius, bool w)
-	: Object(
-		getSphereGeometry(radius),
-		getProgram(Constants::FRAG_2)
+	: Model(
+		getSphereData(radius),
+		getProgram(Constants::FRAG_LIGHT)
 	) {
 	wireframe = w;
 }

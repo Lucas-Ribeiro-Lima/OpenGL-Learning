@@ -10,7 +10,9 @@ include(FetchContent)
 
 file(GLOB_RECURSE CPP_SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
-add_executable(${PROJECT_NAME} ${CPP_SOURCES} src/glad.c)
+add_executable(${PROJECT_NAME} ${CPP_SOURCES} src/glad.c
+        src/Star.cpp
+        include/Star.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/include")
 

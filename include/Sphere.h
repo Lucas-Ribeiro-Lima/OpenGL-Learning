@@ -1,8 +1,8 @@
 #pragma once
-#include "Object.h"
+#include "Model.h"
 #include "ResourceManager.h"
 
-class Sphere : public Object
+class Sphere : public Model
 {
 public:
 	Sphere(float radius);

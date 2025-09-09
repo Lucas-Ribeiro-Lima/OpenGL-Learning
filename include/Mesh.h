@@ -2,7 +2,7 @@
 #include <glad.h>
 #include <vector>
 
-class Geometry
+class Mesh
 {
 private:
 	unsigned int vertexesSize = 0;
@@ -11,7 +11,7 @@ private:
 	GLuint EBO = 0;
 
 public:
-	Geometry(std::vector<GLfloat>& vertices, std::vector<GLuint>& indices);
+	Mesh(std::vector<GLfloat>& vertices, std::vector<GLuint>& indices);
 	GLuint getVBO() const;
 	GLuint getEBO() const;
 	unsigned int getVertexSize() const;

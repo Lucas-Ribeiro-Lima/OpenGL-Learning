@@ -1,5 +1,5 @@
 #pragma once
-#include "Geometry.h"
+#include "Mesh.h"
 #include "Texture.h"
 #include "Program.h"
 #include "Constants.h"
@@ -9,11 +9,11 @@
 
 Camera& getCamera();
 
-Geometry& getCubeGeometry();
+Mesh& getCubeData();
 
-Geometry* getSphereGeometry(float radius);
+Mesh* getSphereData(float radius);
 
-Texture* getTexture(const char* tex);
+Texture* getTextureData(const char* tex);
 
 Program& getDefaultProgram();
 

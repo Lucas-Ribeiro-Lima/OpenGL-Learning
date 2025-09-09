@@ -1,8 +1,8 @@
 #pragma once
-#include "Object.h"
+#include "Model.h"
 #include "ResourceManager.h"
 
-class Cube : public Object
+class Cube : public Model
 {
 public:
     Cube();

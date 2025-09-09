@@ -1,17 +1,28 @@
-#include "Planet.h"
-Planet::Planet(
+#include "Corp.h"
+Corp::Corp(
 	float radius,
 	const char* tex,
 	float r,
 	float t
-) : Object(
-	getSphereGeometry(radius),
-	getTexture(tex),
+) : Model(
+	getSphereData(radius),
+	getTextureData(tex),
 	getProgram(Constants::FRAG_1)
 ), rotationScaler(r), translationScaler(t) {}
 
+Corp::Corp(
+	float radius,
+	const char* tex,
+	float r,
+	float t,
+	const char* program
+) : Model(
+	getSphereData(radius),
+	getTextureData(tex),
+	getProgram(program)
+), rotationScaler(r), translationScaler(t) {}
 
-void Planet::draw() {
+void Corp::draw() {
 	float time = glfwGetTime();
 
 	glm::vec3 orbit{
@@ -24,5 +35,5 @@ void Planet::draw() {
 	rotateAxis += glm::vec3(0, 1, 0);
 	rotateDeg = glm::mod(time * rotationScaler, 360.0f);
 
-	Object::draw();
+	Model::draw();
 }

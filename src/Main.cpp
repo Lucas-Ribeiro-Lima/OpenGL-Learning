@@ -1,14 +1,16 @@
 #include "WindowGl.h"
 #include "Camera.h"
-#include "Planet.h"
+#include "Corp.h"
 #include "ResourceManager.h"
 #include "Config.h"
 #include <vector>
 
+#include "Star.h"
+
 constexpr unsigned int WIDTH = 800;
 constexpr unsigned int HEIGHT = 600;
 
-struct Corp {
+struct CorpData {
     const char* tex;
     glm::vec3 position;
     float radius;
@@ -16,8 +18,7 @@ struct Corp {
     float translateScaler;
 };
 
-std::vector<Corp> planets{
-            { ASSETS_DIR "sun.jpg",     glm::vec3( 0.0f,   0.0f,   0.0f),     20.0f,  1.0f,  0.0f },   // Sun
+std::vector<CorpData> planets{
             { ASSETS_DIR "mercury.jpg", glm::vec3(-30.0f,  0.0f, -30.0f),      2.0f,  5.0f,  4.8f },   // Mercury
             { ASSETS_DIR "venus.jpg",   glm::vec3( 45.0f,  0.0f,  45.0f),      3.0f,  3.0f,  3.5f },   // Venus
             { ASSETS_DIR "earth.jpg",   glm::vec3(-60.0f,  0.0f, -60.0f),      3.3f,  8.0f,  3.0f },   // Earth
@@ -36,16 +37,22 @@ int main() {
     std::vector<Instances> data;
 
     for (int i = 0; i < planets.size(); i++) {
-        Planet* planet = new Planet{ 
+        Corp* planet = new Corp{
             planets[i].radius, 
             planets[i].tex, 
             planets[i].rotateScaler, 
-            planets[i].translateScaler
+            planets[i].translateScaler,
+
         };
 
         std::vector<glm::vec3> instances{ planets[i].position };
         data.push_back(Instances{ planet, instances });
     }
+
+    Star* sun = new Star{ 20.0f, ASSETS_DIR "sun.jpg", 1.0f,  0.0f };
+    Instances starsInstances{ sun, std::vector<glm::vec3>{glm::vec3{0.0f}  } };
+
+    data.push_back(starsInstances);
 
 	window.render(data);
 

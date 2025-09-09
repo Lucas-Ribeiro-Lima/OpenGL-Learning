@@ -1,11 +1,11 @@
-#include "Geometry.h"
+#include "Mesh.h"
 
-Geometry::Geometry(std::vector<GLfloat>& vertexes, std::vector<GLuint>& indexes) {
+Mesh::Mesh(std::vector<GLfloat>& vertexes, std::vector<GLuint>& indexes) {
 	genVertexBufferObject(vertexes);
 	genElementBufferObject(indexes);
 }
 
-void Geometry::genVertexBufferObject(std::vector<float>& vertexes) {
+void Mesh::genVertexBufferObject(std::vector<float>& vertexes) {
 	vertexesSize = vertexes.size();
 
 	glGenBuffers(1, &VBO);
@@ -13,7 +13,7 @@ void Geometry::genVertexBufferObject(std::vector<float>& vertexes) {
 	glBufferData(GL_ARRAY_BUFFER, vertexesSize * sizeof(float), vertexes.data(), GL_STATIC_DRAW);
 }
 
-void Geometry::genElementBufferObject(std::vector<GLuint>& indexes) {
+void Mesh::genElementBufferObject(std::vector<GLuint>& indexes) {
 	indexesSize = indexes.size();
 
 	glGenBuffers(1, &EBO);
@@ -21,18 +21,18 @@ void Geometry::genElementBufferObject(std::vector<GLuint>& indexes) {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexesSize * sizeof(GLuint), indexes.data(), GL_STATIC_DRAW);
 }
 
-GLuint Geometry::getVBO() const {
+GLuint Mesh::getVBO() const {
 	return VBO;
 }
 
-GLuint Geometry::getEBO() const {
+GLuint Mesh::getEBO() const {
 	return EBO;
 }
 
-unsigned int Geometry::getVertexSize() const {
+unsigned int Mesh::getVertexSize() const {
 	return vertexesSize;
 }
 
-unsigned int Geometry::getIndexSize() const {
+unsigned int Mesh::getIndexSize() const {
 	return indexesSize;
 }

@@ -5,10 +5,10 @@
 #include <vector>
 #include <memory>
 #include "Program.h"
-#include "Geometry.h"
+#include "Mesh.h"
 #include "Texture.h"
 
-class Object
+class Model
 {
 protected:
 	glm::vec3 translateAxis = glm::vec3(0.0f);
@@ -16,13 +16,13 @@ protected:
 	glm::vec3 rotateAxis = glm::vec3(1.0f);
 
 	Program* PROG = nullptr;
-	Geometry* GEO = nullptr;
+	Mesh* GEO = nullptr;
 	Texture* TEX = nullptr;
 
 	GLuint VAO = 0;
 	GLfloat rotateDeg = 0;
 
-	bool wireframe = 0;
+	bool wireframe = false;
 	   
 	void saveBuffer();
 	void genVertexArrayBuffer();
@@ -30,13 +30,13 @@ protected:
 	void bindTexture();
 
 public:
-	Object(Geometry* geometry, Program* Program);
-	Object(Geometry* geometry, Texture* texture, Program* Program);
+	Model(Mesh* geometry, Program* Program);
+	Model(Mesh* geometry, Texture* texture, Program* Program);
 	GLuint getID() const;
-	Object& setProgram(Program* Program);
-	Object& setTranslate(glm::vec3 axis);
-	Object& setRotate(float deg, glm::vec3 axis);
-	Object& setScale(glm::vec3 axis);
+	Model& setProgram(Program* Program);
+	Model& setTranslate(glm::vec3 axis);
+	Model& setRotate(float deg, glm::vec3 axis);
+	Model& setScale(glm::vec3 axis);
 	void setWireframe(bool state);
 	virtual void draw();
 };

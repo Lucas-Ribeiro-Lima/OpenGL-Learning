@@ -1,9 +1,9 @@
 #include "Cube.h"
 
 Cube::Cube()
-	: Object(
-		&getCubeGeometry(),
-		getTexture(Constants::TEX_EARTH_1),
+	: Model(
+		&getCubeData(),
+		getTextureData(Constants::TEX_EARTH_1),
 		&getDefaultProgram()
 	){}
 

@@ -162,7 +162,7 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset) {
 }
 
 void WindowGl::calculateDeltaTime() {
-	float currentFrame = glfwGetTime();
+	auto currentFrame = static_cast<float>(glfwGetTime());
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 }

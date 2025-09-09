@@ -7,7 +7,7 @@ Camera& getCamera() {
     return cam;
 };
 
-Geometry& getCubeGeometry() {
+Mesh& getCubeData() {
     std::vector<GLfloat> vertexesCube = {
 
     -0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 1.0f, 	0.0f, 0.0f, //0
@@ -42,12 +42,12 @@ Geometry& getCubeGeometry() {
             0, 4, 5, //10 Bottom
             0, 1, 5, //11 Bottom
     };
-    static Geometry instance{ vertexesCube, indexesCube };
+    static Mesh instance{ vertexesCube, indexesCube };
     return instance;
 }
 
-Geometry* getSphereGeometry(float radius) {
-    static std::unordered_map<float, Geometry*> radiusMap;
+Mesh* getSphereData(float radius) {
+    static std::unordered_map<float, Mesh*> radiusMap;
 
     if (radiusMap.find(radius) != radiusMap.end()) {
         return radiusMap[radius];
@@ -55,7 +55,7 @@ Geometry* getSphereGeometry(float radius) {
 
     std::pair data = generateSphereRadiusVector(radius);
 
-    radiusMap.insert({ radius,  new Geometry{ data.first, data.second } });
+    radiusMap.insert({ radius,  new Mesh{ data.first, data.second } });
 
     return radiusMap[radius];
 }
@@ -69,12 +69,12 @@ constexpr std::pair<std::vector<float>, std::vector<unsigned int>> generateSpher
     int slices = 40;  // longitude
 
     for (int i = 0; i <= stacks; ++i) {
-        float phi = static_cast<float>(i) / stacks * M_PI;
+        float phi = (static_cast<float>(i) / stacks) * M_PI;
         float y = cosf(phi) * radius;
         float r = sinf(phi) * radius;
 
         for (int j = 0; j <= slices; ++j) {
-            float theta = static_cast<float>(j) / slices * 2.0f * M_PI;
+            float theta = (static_cast<float>(j) / slices) * 2.0f * M_PI;
             float x = r * cosf(theta);
             float z = r * sinf(theta);
 
@@ -113,7 +113,7 @@ constexpr std::pair<std::vector<float>, std::vector<unsigned int>> generateSpher
     return std::pair{vertexesSphere, indexesSphere};
 }
 
-Texture* getTexture(const char* tex) {
+Texture* getTextureData(const char* tex) {
     static std::unordered_map<const char*, Texture*> texMap;
 
     if (texMap.find(tex) != texMap.end()) {

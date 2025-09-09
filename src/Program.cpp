@@ -36,7 +36,6 @@ void Program::errors() {
 }
 
 void Program::use() {
-
 	view = getCamera().getView();
 	projection = getCamera().getPerspective();
 
@@ -72,6 +71,10 @@ void Program::setUniform1I(const char name[], GLint value) const {
 
 void Program::setUniform1f(const char name[], GLfloat value) const {
 	glUniform1f(glGetUniformLocation(ID, name), value);
+}
+
+void Program::setUniform3fv(const char name[], glm::vec3& vec) {
+  glUniform3fv(glGetUniformLocation(ID, name), 1, glm::value_ptr(vec));
 }
 
 void Program::setUniform4fv(const char name[], glm::mat4& mat) {

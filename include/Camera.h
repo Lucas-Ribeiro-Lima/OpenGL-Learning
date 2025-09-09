@@ -20,7 +20,7 @@ private:
 	glm::vec3 up{ 0.0f, 1.0f, 0.0f };
 
 	glm::mat4 view = glm::lookAt(pos, pos + front, up);
-	glm::mat4 perspective = glm::perspective(45.0f, 1280.0f / 920.0f, 0.1f, 500.f);
+	glm::mat4 perspective = glm::perspective(45.0f, 1280.0f / 920.0f, 0.1f, 1000.f);
 
 	float cameraSpeed = 50.0f;
 

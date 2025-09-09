@@ -7,7 +7,6 @@ namespace Utils {
 		try {
 			std::ifstream file(shaderName);
 			
-			
 			file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 			
 			std::stringstream buffer;

@@ -39,6 +39,7 @@ public:
 	Camera();
 	glm::mat4 getView();
 	glm::mat4 getPerspective();
+  glm::vec3 getViewPosition();
 	void updateView();
 	void updatePerspective();
 	void update(float x, float y);

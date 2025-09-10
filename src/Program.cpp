@@ -37,12 +37,14 @@ void Program::errors() {
 
 void Program::use() {
 	view = getCamera().getView();
+  viewPos = getCamera().getViewPosition();
 	projection = getCamera().getPerspective();
 
 	glUseProgram(ID);
 	setUniform4fv("model", model);
 	setUniform4fv("view", view);
 	setUniform4fv("projection", projection);
+  setUniform3fv("viewPos", viewPos);
 }
 
 Program& Program::resetT() {

@@ -41,10 +41,7 @@ void Program::use() {
 	projection = getCamera().getPerspective();
 
 	glUseProgram(ID);
-	setUniform4fv("model", model);
-	setUniform4fv("view", view);
-	setUniform4fv("projection", projection);
-  setUniform3fv("viewPos", viewPos);
+  setCommonUniforms();
 }
 
 Program& Program::resetT() {
@@ -65,6 +62,20 @@ Program& Program::rotate(float degree, glm::vec3 rotateProps) {
 Program& Program::translate(glm::vec3 translateProps) {
 	model = glm::translate(model, translateProps);
 	return *this;
+}
+
+void Program::setCommonUniforms() {
+  //Transformations
+  setUniform4fv("model", model);
+  setUniform4fv("view", view);
+  setUniform4fv("projection", projection);
+  setUniform3fv("viewPos", viewPos);
+
+  //Light position
+  setUniform3fv("light.position", light.position);
+  setUniform3fv("light.ambient", light.ambient);
+  setUniform3fv("light.diffuse", light.diffuse);
+  setUniform3fv("light.specular", light.specular);
 }
 
 void Program::setUniform1I(const char name[], GLint value) const {

@@ -28,13 +28,20 @@ private:
 	float yaw = -90.0f;
 	float pitch = 0.0f;
 
+	float lastX;
+	float lastY;
+
+	float sensitivity = 0.1f;
+
+	bool firstMouse = true;
+
 public:
 	Camera();
 	glm::mat4 getView();
 	glm::mat4 getPerspective();
 	void updateView();
 	void updatePerspective();
-	void update(float yaw, float pitch, float fov);
+	void update(float x, float y);
 	void setFrontBack(float value, Directions dir);
 	void setLeftRight(float value, Directions dir);
 };

@@ -6,15 +6,7 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
 float deltaTime = 0;
 float lastFrame = 0;
-
-bool firstMouse = true;
-float lastX = 400.0f, lastY = 300.0f;
-float sensitivity = 0.1f;
-float xOffset = 0.0f;
-float yOffset = 0.0f;
-float yaw = -90.0f, pitch = 0.0f;
-
-float fov = 1.0f;
+float mouseX = 0.0f, mouseY = 0.0f, deltaScrollY;
 
 enum ERRORS {
 	NONE = 0x0000,
@@ -96,7 +88,7 @@ void WindowGl::render(std::vector<Instances> data) {
 	while (!glfwWindowShouldClose(window)) {
 		calculateDeltaTime();
 
-		cam->update(yaw, pitch, fov);
+		cam->update(mouseX, mouseY);
 		processInput(window);
 
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -123,42 +115,12 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 }
 
 void mouseCallback(GLFWwindow* window, double xPos, double yPos) {
-	if (firstMouse)
-	{
-		lastX = xPos;
-		lastY = yPos;
-		firstMouse = false;
-	}
-
-	xOffset = xPos - lastX;
-	yOffset = lastY - yPos;
-
-	lastX = xPos;
-	lastY = yPos;
-
-	xOffset *= sensitivity;
-	yOffset *= sensitivity;
-
-	yaw += xOffset;
-	pitch += yOffset;
-
-	if (pitch > 89.0f) {
-		pitch = 89.0f;
-	}
-	if (pitch < -89.0f) {
-		pitch = -89.0f;
-	}
+	mouseX = xPos;
+	mouseY = yPos;
 }
 
 void scrollCallback(GLFWwindow* window, double xOffset, double yOffset) {
-	fov -= (float) yOffset;
-
-	if (fov < 1.0f) {
-		fov = 1.0f;
-	}
-	if (fov > 45.0f) {
-		fov = 45.0f;
-	}
+	deltaScrollY = yOffset;
 }
 
 void WindowGl::calculateDeltaTime() {

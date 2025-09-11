@@ -5,6 +5,7 @@
 #ifndef OPENGL_LEARNING_MATERIAL_H
 #define OPENGL_LEARNING_MATERIAL_H
 #include "glm/vec3.hpp"
+#include "Texture.h"
 
 class Material {
   public:

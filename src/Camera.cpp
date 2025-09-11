@@ -15,6 +15,12 @@ void Camera::setLeftRight(float value, Directions dir) {
   updateView();
 }
 
+void Camera::setUpDown(float value, Directions dir) {
+  if (dir == 1) pos += up * cameraSpeed * value;
+  else pos -= up * cameraSpeed * value;
+  updateView();
+}
+
 glm::mat4 Camera::getView() {
   return view;
 }

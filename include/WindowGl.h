@@ -8,10 +8,12 @@
 class WindowGl
 {
 private:
-	GLFWwindow* window;
-	Camera* cam;
-	int height;
-	int width;
+	GLFWwindow* window = nullptr;
+  GLFWmonitor* monitor = nullptr;
+  const GLFWvidmode* vidmode = nullptr;
+	Camera* cam = nullptr;
+	int height = 920;
+	int width = 1280;
 	int errors;
 
 	//Glad startup;
@@ -26,7 +28,7 @@ private:
 
 	void calculateDeltaTime();
 public:
-	WindowGl(int width, int height, Camera* cam);
+	WindowGl();
 	void render(std::vector<Instances> instances);
 	int hasErrors();
 };

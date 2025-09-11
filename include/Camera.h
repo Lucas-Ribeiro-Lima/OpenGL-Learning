@@ -5,11 +5,12 @@
 #include "Utils.h"
 
 enum Directions {
+  up = 1,
 	front = 1,
 	right = 1,
 	left = -1,
 	back = -1,
-	
+	down = -1
 };
 
 class Camera
@@ -45,5 +46,6 @@ public:
 	void update(float x, float y);
 	void setFrontBack(float value, Directions dir);
 	void setLeftRight(float value, Directions dir);
+  void setUpDown(float value, Directions dir );
 };
 

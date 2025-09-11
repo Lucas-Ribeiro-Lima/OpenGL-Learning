@@ -7,9 +7,6 @@
 
 #include "Star.h"
 
-constexpr unsigned int WIDTH = 800;
-constexpr unsigned int HEIGHT = 600;
-
 struct CorpData {
     const char* tex;
     glm::vec3 position;
@@ -30,7 +27,7 @@ std::vector<CorpData> planets{
     };
 
 int main() {
-	WindowGl window(WIDTH, HEIGHT, &getCamera());
+	WindowGl window{};
 
 	if (window.hasErrors()) return -1;
 

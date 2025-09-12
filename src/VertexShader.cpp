@@ -4,7 +4,7 @@
 VertexShader::VertexShader(const char* source) {
 	ID = glCreateShader(GL_VERTEX_SHADER);
 
-	glShaderSource(ID, 1, &source, NULL);
+	glShaderSource(ID, 1, &source, 0);
 	glCompileShader(ID);
 
 	Shader::errors();

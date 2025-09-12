@@ -4,7 +4,7 @@ Instances::Instances(std::unique_ptr<Model> obj, glm::vec3 pos): obj(std::move(o
 	Pos.push_back(pos);
 };
 
-void Instances::setInstances(Positions pos) {
+void Instances::setInstances(std::vector<glm::vec3> pos) {
 	Pos = pos;
 }
 

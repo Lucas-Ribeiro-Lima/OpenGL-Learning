@@ -1,7 +1,7 @@
 #include "Model.h"
 #include <glad.h>
 
-Model::Model(Mesh* geometry, Program* program): GEO(geometry), PROG(program) {
+Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program): mesh(mesh), program(program) {
 	genVertexArrayBuffer();
 
 	bindGeometry();
@@ -9,8 +9,8 @@ Model::Model(Mesh* geometry, Program* program): GEO(geometry), PROG(program) {
 	saveBuffer();
 }
 
-Model::Model(Mesh* geometry, Texture* texture, Program* program)
-	: GEO(geometry), TEX(texture), PROG(program)
+Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Texture> texture, std::shared_ptr<Program> program)
+	: mesh(mesh), texture(texture), program(program)
 {
 	genVertexArrayBuffer();
 
@@ -28,18 +28,18 @@ void Model::genVertexArrayBuffer()
 
 void Model::bindGeometry()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, GEO->getVBO());
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GEO->getEBO());
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->getVBO());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getEBO());
 }
 
 void Model::bindTexture()
 {
-	glBindTexture(GL_TEXTURE_2D, TEX->getTex());
+	glBindTexture(GL_TEXTURE_2D, texture->getTex());
 }
 
-Model& Model::setProgram(Program* program)
+Model& Model::setProgram(std::shared_ptr<Program> prg)
 {
-	PROG = program;
+	program = prg;
 	return *this;
 }
 
@@ -91,20 +91,20 @@ void Model::draw()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
-	(*PROG)
-		.resetT()
+	(*program)
+    .resetT()
 		.translate(translateAxis)
 		.rotate(rotateDeg, rotateAxis)
 		.scale(scaleAxis)
 		.use();
 
-	if (TEX) {
-		glBindTexture(GL_TEXTURE_2D, TEX->getTex());
+	if (texture) {
+		glBindTexture(GL_TEXTURE_2D, texture->getTex());
 	}
 
 	glBindVertexArray(VAO);
 
-	glDrawElements(GL_TRIANGLES, GEO->getIndexSize(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, mesh->getIndexSize(), GL_UNSIGNED_INT, 0);
 }
 
 void Model::setWireframe(bool state) {

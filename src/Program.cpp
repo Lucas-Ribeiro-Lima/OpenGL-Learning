@@ -11,7 +11,8 @@
 
 #include <glad.h>
 
-Program::Program(const char* vertex, const char* fragment)
+Program::Program(const char* vertex, const char* fragment):
+  cam(getCamera())
 {
     VertexShader vShader(Utils::readFile(vertex).c_str());
     FragmentShader fShader(Utils::readFile(fragment).c_str());
@@ -51,9 +52,9 @@ void Program::errors()
 
 void Program::use()
 {
-    view = getCamera()->getView();
-    viewPos = getCamera()->getViewPosition();
-    projection = getCamera()->getPerspective();
+    view = cam.getView();
+    viewPos = cam.getViewPosition();
+    projection = cam.getPerspective();
 
     glUseProgram(ID);
     setCommonUniforms();

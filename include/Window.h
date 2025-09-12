@@ -3,7 +3,6 @@
 #include <vector>
 #include "Instances.h"
 #include "Camera.h"
-#include "ResourceManager.h"
 
 class Window
 {
@@ -11,7 +10,7 @@ private:
 	GLFWwindow* window = nullptr;
   GLFWmonitor* monitor = nullptr;
   const GLFWvidmode* vidmode = nullptr;
-	Camera* cam = getCamera();
+	Camera& cam;
 	int height = 920;
 	int width = 1280;
 	int errors;

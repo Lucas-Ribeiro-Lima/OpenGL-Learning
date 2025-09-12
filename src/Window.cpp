@@ -2,6 +2,7 @@
 
 #include "Window.h"
 #include "Utils.h"
+#include "ResourceManager.h"
 
 void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 
@@ -19,7 +20,9 @@ enum ERRORS {
   FAIL_INIT_GLAD = 0x0010,
 };
 
-Window::Window() {
+Window::Window():
+  cam(getCamera())
+{
   errors = NONE;
 
   glfwConfiguration();
@@ -79,22 +82,22 @@ void Window::processInput(GLFWwindow *window) {
     glfwSetWindowShouldClose(window, true);
   }
   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-    cam->setFrontBack(deltaTime, front);
+    cam.setFrontBack(deltaTime, front);
   }
   if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-    cam->setFrontBack(deltaTime, back);
+    cam.setFrontBack(deltaTime, back);
   }
   if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-    cam->setLeftRight(deltaTime, left);
+    cam.setLeftRight(deltaTime, left);
   }
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-    cam->setLeftRight(deltaTime, right);
+    cam.setLeftRight(deltaTime, right);
   }
   if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-    cam->setUpDown(deltaTime, up);
+    cam.setUpDown(deltaTime, up);
   }
   if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-    cam->setUpDown(deltaTime, down);
+    cam.setUpDown(deltaTime, down);
   }
 }
 
@@ -102,7 +105,7 @@ void Window::render(std::vector<Instances> data) {
   while (!glfwWindowShouldClose(window)) {
     calculateDeltaTime();
 
-    cam->update(mouseX, mouseY);
+    cam.update(mouseX, mouseY);
     processInput(window);
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

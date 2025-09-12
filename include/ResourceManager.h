@@ -4,15 +4,14 @@
 #include "Texture.h"
 #include "Camera.h"
 #include "Program.h"
+#include <memory>
 
-Camera *getCamera();
+Camera &getCamera();
 
-Mesh *getCubeData();
+Mesh &getCubeData();
 
-Mesh *getSphereData(float radius);
+std::shared_ptr<Mesh> getSphereData(float radius);
 
-Texture *getTextureData(const char *tex);
+std::shared_ptr<Texture> getTextureData(const char *tex);
 
-Program *getDefaultProgram();
-
-Program *getProgram(const char *frag);
+std::shared_ptr<Program> getProgram(const char *frag);

@@ -2,12 +2,14 @@
 
 #include <glm/glm.hpp>
 #include "Light.h"
+#include "Camera.h"
 
 class Program
 {
 private:
     char infoLog[512] = {};
     Light light;
+    Camera &cam;
 
     glm::mat4 projection;
     glm::mat4 model = glm::mat4(1.0f);

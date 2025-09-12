@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <memory>
 #include "Program.h"
 #include "Mesh.h"
 #include "Texture.h"
@@ -14,9 +15,9 @@ protected:
 	glm::vec3 scaleAxis = glm::vec3(1.0f); 
 	glm::vec3 rotateAxis = glm::vec3(1.0f);
 
-	Program* PROG = nullptr;
-	Mesh* GEO = nullptr;
-	Texture* TEX = nullptr;
+	std::shared_ptr<Program> program = nullptr;
+	std::shared_ptr<Mesh> mesh = nullptr;
+	std::shared_ptr<Texture> texture = nullptr;
 
 	uint VAO = 0;
 	float rotateDeg = 0;
@@ -29,10 +30,10 @@ protected:
 	void bindTexture();
 
 public:
-	Model(Mesh* geometry, Program* Program);
-	Model(Mesh* geometry, Texture* texture, Program* Program);
+	Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> Program);
+	Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Texture> texture, std::shared_ptr<Program> Program);
 	uint getID() const;
-	Model& setProgram(Program* Program);
+	Model& setProgram(std::shared_ptr<Program> prg);
 	Model& setTranslate(glm::vec3 axis);
 	Model& setRotate(float deg, glm::vec3 axis);
 	Model& setScale(glm::vec3 axis);

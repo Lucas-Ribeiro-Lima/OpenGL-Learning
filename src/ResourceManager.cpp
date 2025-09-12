@@ -1,16 +1,17 @@
 #include "ResourceManager.h"
 #include <vector>
 #include <unordered_map>
+
 #include "Constants.h"
 
 constexpr std::pair<std::vector<float>, std::vector<unsigned int> > generateSphereRadiusVector(float radius);
 
-Camera *getCamera() {
+Camera &getCamera() {
   static Camera cam;
-  return &cam;
+  return cam;
 };
 
-Mesh *getCubeData() {
+Mesh &getCubeData() {
   std::vector<float> vertexesCube = {
 
     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, //0
@@ -45,22 +46,22 @@ Mesh *getCubeData() {
     0, 4, 5, //10 Bottom
     0, 1, 5, //11 Bottom
   };
-  static Mesh instance{vertexesCube, indexesCube};
-  return &instance;
+  static Mesh ptr{vertexesCube, indexesCube};
+  return ptr;
 }
 
-Mesh *getSphereData(float radius) {
-  static std::unordered_map<float, Mesh *> radiusMap;
+std::shared_ptr<Mesh> getSphereData(float radius) {
+  static std::unordered_map<float, std::weak_ptr<Mesh>> radiusMap;
 
-  if (radiusMap.find(radius) != radiusMap.end()) {
-    return radiusMap[radius];
+  if (radiusMap.contains(radius)) {
+    if (std::shared_ptr<Mesh> cashed_ptr = radiusMap[radius].lock()) return cashed_ptr;
   }
 
   std::pair data = generateSphereRadiusVector(radius);
+  std::shared_ptr<Mesh> ptr = std::make_shared<Mesh>(data.first, data.second);
+  radiusMap.insert({radius, ptr});
 
-  radiusMap.insert({radius, new Mesh{data.first, data.second}});
-
-  return radiusMap[radius];
+  return ptr;
 }
 
 constexpr std::pair<std::vector<float>, std::vector<unsigned int> > generateSphereRadiusVector(const float radius) {
@@ -117,30 +118,27 @@ constexpr std::pair<std::vector<float>, std::vector<unsigned int> > generateSphe
   return std::pair{vertexesSphere, indexesSphere};
 }
 
-Texture *getTextureData(const char *tex) {
-  static std::unordered_map<const char *, Texture *> texMap;
+std::shared_ptr<Texture> getTextureData(const char *tex) {
+  static std::unordered_map<const char *, std::weak_ptr<Texture>> texMap;
 
-  if (texMap.find(tex) != texMap.end()) {
-    return texMap[tex];
+  if (texMap.contains(tex)) {
+    if (std::shared_ptr<Texture> cached_ptr = texMap[tex].lock()) return cached_ptr;
   }
 
-  texMap.insert({tex, new Texture{tex}});
-  return texMap[tex];
+  std::shared_ptr<Texture> ptr = std::make_shared<Texture>(tex);
+  texMap.insert({tex, ptr});
+  return ptr;
 }
 
-Program *getDefaultProgram() {
-  static Program instance{Constants::VSHADER_1, Constants::FRAG_1};
-  return &instance;
-}
+std::shared_ptr<Program> getProgram(const char *frag) {
+  static std::unordered_map<const char *, std::weak_ptr<Program>> progMap;
 
-Program *getProgram(const char *frag) {
-  static std::unordered_map<const char *, Program *> progMap;
-
-  if (progMap.find(frag) != progMap.end()) {
-    return progMap[frag];
+  if (progMap.contains(frag)) {
+    if (std::shared_ptr<Program> cached_ptr = progMap[frag].lock()) return cached_ptr;
   }
 
-  progMap.insert({frag, new Program{Constants::VSHADER_1, frag}});
+  std::shared_ptr<Program> ptr = std::make_shared<Program>(Constants::VSHADER_1, frag);
+  progMap.insert({frag, ptr });
 
-  return progMap[frag];
+  return ptr;
 }

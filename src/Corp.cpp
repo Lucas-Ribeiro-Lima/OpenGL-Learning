@@ -1,4 +1,6 @@
 #include "Corp.h"
+#include "GLFW/glfw3.h"
+
 Corp::Corp(
 	float radius,
 	const char* tex,

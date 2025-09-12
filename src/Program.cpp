@@ -1,5 +1,13 @@
 #include "Program.h"
 #include "ResourceManager.h"
+#include "VertexShader.h"
+#include "FragmentShader.h"
+#include "Utils.h"
+
+#include <string>
+#include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 Program::Program(const char* vertex, const char* fragment)
 {
@@ -41,9 +49,9 @@ void Program::errors()
 
 void Program::use()
 {
-    view = getCamera().getView();
-    viewPos = getCamera().getViewPosition();
-    projection = getCamera().getPerspective();
+    view = getCamera()->getView();
+    viewPos = getCamera()->getViewPosition();
+    projection = getCamera()->getPerspective();
 
     glUseProgram(ID);
     setCommonUniforms();

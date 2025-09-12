@@ -16,7 +16,7 @@ enum ERRORS {
   FAIL_INIT_GLAD = 0x0010,
 };
 
-Window::Window() : cam(&getCamera()) {
+Window::Window() {
   errors = NONE;
 
   glfwConfiguration();

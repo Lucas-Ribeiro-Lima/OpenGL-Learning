@@ -2,12 +2,12 @@
 
 constexpr std::pair<std::vector<float>, std::vector<unsigned int> > generateSphereRadiusVector(float radius);
 
-Camera &getCamera() {
+Camera *getCamera() {
   static Camera cam;
-  return cam;
+  return &cam;
 };
 
-Mesh &getCubeData() {
+Mesh *getCubeData() {
   std::vector<GLfloat> vertexesCube = {
 
     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, //0
@@ -43,7 +43,7 @@ Mesh &getCubeData() {
     0, 1, 5, //11 Bottom
   };
   static Mesh instance{vertexesCube, indexesCube};
-  return instance;
+  return &instance;
 }
 
 Mesh *getSphereData(float radius) {
@@ -89,7 +89,6 @@ constexpr std::pair<std::vector<float>, std::vector<unsigned int> > generateSphe
       vertexesSphere.push_back(z);
 
 
-
       // coordenadas de textura
       vertexesSphere.push_back(1.0f - (static_cast<float>(j) / slices));
       vertexesSphere.push_back(1.0f - (static_cast<float>(i) / stacks));
@@ -126,9 +125,9 @@ Texture *getTextureData(const char *tex) {
   return texMap[tex];
 }
 
-Program &getDefaultProgram() {
+Program *getDefaultProgram() {
   static Program instance{Constants::VSHADER_1, Constants::FRAG_1};
-  return instance;
+  return &instance;
 }
 
 Program *getProgram(const char *frag) {

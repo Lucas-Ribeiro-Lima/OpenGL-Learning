@@ -1,20 +1,20 @@
 #pragma once
 #include "Mesh.h"
 #include "Texture.h"
+#include "Camera.h"
 #include "Program.h"
 #include "Constants.h"
-#include "Camera.h"
 #include <vector>
 #include <unordered_map>
 
-Camera& getCamera();
+Camera *getCamera();
 
-Mesh& getCubeData();
+Mesh *getCubeData();
 
-Mesh* getSphereData(float radius);
+Mesh *getSphereData(float radius);
 
-Texture* getTextureData(const char* tex);
+Texture *getTextureData(const char *tex);
 
-Program& getDefaultProgram();
+Program *getDefaultProgram();
 
-Program* getProgram(const char* frag);
+Program *getProgram(const char *frag);

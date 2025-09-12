@@ -11,7 +11,7 @@ private:
 	GLFWwindow* window = nullptr;
   GLFWmonitor* monitor = nullptr;
   const GLFWvidmode* vidmode = nullptr;
-	Camera* cam = nullptr;
+	Camera* cam = getCamera();
 	int height = 920;
 	int width = 1280;
 	int errors;

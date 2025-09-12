@@ -1,6 +1,8 @@
 #include "Instances.h"
 
-Instances::Instances(Model* o, Positions p): obj(o), Pos(p) {};
+Instances::Instances(std::unique_ptr<Model> obj, glm::vec3 pos): obj(std::move(obj)) {
+	Pos.push_back(pos);
+};
 
 void Instances::setInstances(Positions pos) {
 	Pos = pos;

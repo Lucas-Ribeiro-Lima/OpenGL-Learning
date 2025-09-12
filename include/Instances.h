@@ -1,17 +1,19 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <vector>
-#include "Model.h"
+#include <memory>
 
-typedef std::vector<glm::vec3> Positions;
+#include "Model.h"
 
 class Instances
 {
-	Model* obj;
-	Positions Pos;
+	std::unique_ptr<Model> obj;
+	std::vector<glm::vec3>  Pos{};
 public:
-	Instances(Model* obj, Positions pos);
-	void setInstances(Positions inst);
+	Instances(std::unique_ptr<Model>obj, glm::vec3 pos);
+	void setInstances(std::vector<glm::vec3> inst);
+	void addInstances(std::vector<glm::vec3> inst);
+	void deleteInstances(int index);
 	void drawInstances();
 };
 

@@ -1,11 +1,15 @@
 #include "Texture.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 //Map for the colors system of images of stb_images
 const int colorSystem[4] = { GL_RED, NULL, GL_RGB, GL_RGBA };
 
 Texture::Texture(const char* path) {
 	int width, heigth, nrChannels;
-	unsigned char* data = Utils::loadTexture(path, width, heigth, nrChannels, true);
+  stbi_set_flip_vertically_on_load(true);
+	unsigned char* data = stbi_load(path, &width, &heigth, &nrChannels, 0);
 
 	glGenTextures(1, &TEX);
 	glActiveTexture(GL_TEXTURE0);
@@ -21,11 +25,10 @@ Texture::Texture(const char* path) {
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else {
-		std::cout << "Failed to load texture: " << path << std::endl;
 		glDeleteTextures(1, &TEX);
 	}
 
-	Utils::freeTexture(data);
+  stbi_image_free(data);
 }
 
 GLuint Texture::getTex() const {

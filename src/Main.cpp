@@ -1,4 +1,4 @@
-#include "WindowGl.h"
+#include "Window.h"
 #include "Camera.h"
 #include "Corp.h"
 #include "ResourceManager.h"
@@ -27,7 +27,7 @@ std::vector<CorpData> planets{
     };
 
 int main() {
-	WindowGl window{};
+	Window window{};
 
 	if (window.hasErrors()) return -1;
 

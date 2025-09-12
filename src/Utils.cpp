@@ -1,14 +1,12 @@
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
 #include "Utils.h"
 
 namespace Utils {
 	std::string readFile(const char shaderName[]) {
 		try {
 			std::ifstream file(shaderName);
-			
+
 			file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-			
+
 			std::stringstream buffer;
 
 			buffer << file.rdbuf();
@@ -54,14 +52,5 @@ namespace Utils {
 		std::string formattedStr = std::format("Date: {} - {}", ascDateTime, log);
 
 		writeFile("log.txt", formattedStr);
-	}
-
-	unsigned char* loadTexture(const char path[],	int& width, int& heigth, int& nrChannels, bool flip) {
-		stbi_set_flip_vertically_on_load(flip);
-		return stbi_load(path, &width, &heigth, &nrChannels, 0);
-	}
-
-	void freeTexture(unsigned char* data) {
-		stbi_image_free(data);
 	}
 }

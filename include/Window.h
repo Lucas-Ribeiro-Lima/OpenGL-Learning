@@ -5,7 +5,7 @@
 #include "Camera.h"
 #include "ResourceManager.h"
 
-class WindowGl
+class Window
 {
 private:
 	GLFWwindow* window = nullptr;
@@ -28,7 +28,7 @@ private:
 
 	void calculateDeltaTime();
 public:
-	WindowGl();
+	Window();
 	void render(std::vector<Instances> instances);
 	int hasErrors();
 };

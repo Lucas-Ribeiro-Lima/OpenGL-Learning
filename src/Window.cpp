@@ -1,4 +1,4 @@
-#include "WindowGl.h"
+#include "Window.h"
 
 void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 
@@ -16,7 +16,7 @@ enum ERRORS {
   FAIL_INIT_GLAD = 0x0010,
 };
 
-WindowGl::WindowGl() : cam(&getCamera()) {
+Window::Window() : cam(&getCamera()) {
   errors = NONE;
 
   glfwConfiguration();
@@ -28,7 +28,7 @@ WindowGl::WindowGl() : cam(&getCamera()) {
   if ((errors & FAIL_INIT_GLAD) == FAIL_INIT_GLAD) return;
 }
 
-void WindowGl::gladConfiguration() {
+void Window::gladConfiguration() {
   if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
     Utils::logger("Failed to initialize GLAD");
     errors = FAIL_INIT_GLAD;
@@ -39,7 +39,7 @@ void WindowGl::gladConfiguration() {
   glEnable(GL_DEPTH_TEST);
 }
 
-void WindowGl::glfwConfiguration() {
+void Window::glfwConfiguration() {
   glfwInit();
 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -49,7 +49,7 @@ void WindowGl::glfwConfiguration() {
   glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 }
 
-void WindowGl::windowInicialization() {
+void Window::windowInicialization() {
   monitor = glfwGetPrimaryMonitor();
   vidmode = glfwGetVideoMode(monitor);
 
@@ -71,7 +71,7 @@ void WindowGl::windowInicialization() {
   glfwSetScrollCallback(window, scrollCallback);
 }
 
-void WindowGl::processInput(GLFWwindow *window) {
+void Window::processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, true);
   }
@@ -95,7 +95,7 @@ void WindowGl::processInput(GLFWwindow *window) {
   }
 }
 
-void WindowGl::render(std::vector<Instances> data) {
+void Window::render(std::vector<Instances> data) {
   while (!glfwWindowShouldClose(window)) {
     calculateDeltaTime();
 
@@ -117,7 +117,7 @@ void WindowGl::render(std::vector<Instances> data) {
   glfwTerminate();
 }
 
-int WindowGl::hasErrors() {
+int Window::hasErrors() {
   return (errors & (FAIL_CREATE_WINDOW | FAIL_INIT_GLAD)) > 0;
 }
 
@@ -134,7 +134,7 @@ void scrollCallback(GLFWwindow *window, double xOffset, double yOffset) {
   deltaScrollY = yOffset;
 }
 
-void WindowGl::calculateDeltaTime() {
+void Window::calculateDeltaTime() {
   auto currentFrame = static_cast<float>(glfwGetTime());
   deltaTime = currentFrame - lastFrame;
   lastFrame = currentFrame;

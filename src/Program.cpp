@@ -9,6 +9,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <glad.h>
+
 Program::Program(const char* vertex, const char* fragment)
 {
     VertexShader vShader(Utils::readFile(vertex).c_str());

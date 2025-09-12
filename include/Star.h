@@ -6,7 +6,6 @@
 #define OPENGL_LEARNING_STAR_H
 
 #include "Corp.h"
-#include "ResourceManager.h"
 
 class Star : public Corp
 {

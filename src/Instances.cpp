@@ -2,7 +2,7 @@
 
 Instances::Instances(Model* o, Positions p): obj(o), Pos(p) {};
 
-void Instances::setInstances(std::vector<glm::vec3> pos) {
+void Instances::setInstances(Positions pos) {
 	Pos = pos;
 }
 

@@ -1,4 +1,7 @@
 #include "ResourceManager.h"
+#include <vector>
+#include <unordered_map>
+#include "Constants.h"
 
 constexpr std::pair<std::vector<float>, std::vector<unsigned int> > generateSphereRadiusVector(float radius);
 
@@ -8,7 +11,7 @@ Camera *getCamera() {
 };
 
 Mesh *getCubeData() {
-  std::vector<GLfloat> vertexesCube = {
+  std::vector<float> vertexesCube = {
 
     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, //0
     0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, //1
@@ -23,7 +26,7 @@ Mesh *getCubeData() {
 
   };
 
-  std::vector<GLuint> indexesCube = {
+  std::vector<unsigned int> indexesCube = {
     0, 1, 2, //0 Front
     0, 2, 3, //1 Front
 

@@ -1,18 +1,14 @@
 #pragma once
-#include <glad.h>
-#include <iostream>
-#include "Utils.h"
 
-class Shader
-{	
+class Shader {
 protected:
-	char infoLog[512];
-	const char* shaderSource;
-	GLuint ID;
-	int sucess;
+  char infoLog[512];
+  const char *shaderSource;
+  unsigned int ID;
+  int sucess;
 
 public:
-	GLuint getId();
-	void errors();
-};
+  unsigned int getId();
 
+  void errors();
+};

@@ -1,5 +1,7 @@
 #include "Corp.h"
 #include "GLFW/glfw3.h"
+#include "ResourceManager.h"
+#include "Constants.h"
 
 Corp::Corp(
 	float radius,

@@ -1,6 +1,7 @@
 #include "Mesh.h"
+#include <glad.h>
 
-Mesh::Mesh(std::vector<GLfloat>& vertexes, std::vector<GLuint>& indexes) {
+Mesh::Mesh(std::vector<float>& vertexes, std::vector<uint>& indexes) {
 	genVertexBufferObject(vertexes);
 	genElementBufferObject(indexes);
 }
@@ -13,12 +14,12 @@ void Mesh::genVertexBufferObject(std::vector<float>& vertexes) {
 	glBufferData(GL_ARRAY_BUFFER, vertexesSize * sizeof(float), vertexes.data(), GL_STATIC_DRAW);
 }
 
-void Mesh::genElementBufferObject(std::vector<GLuint>& indexes) {
+void Mesh::genElementBufferObject(std::vector<uint>& indexes) {
 	indexesSize = indexes.size();
 
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexesSize * sizeof(GLuint), indexes.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexesSize * sizeof(uint), indexes.data(), GL_STATIC_DRAW);
 }
 
 GLuint Mesh::getVBO() const {

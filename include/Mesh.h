@@ -1,21 +1,27 @@
 #pragma once
-#include <glad.h>
 #include <vector>
 
-class Mesh
-{
+using uint = unsigned int;
+
+class Mesh {
 private:
-	unsigned int vertexesSize = 0;
-	unsigned int indexesSize = 0;
-	GLuint VBO = 0;
-	GLuint EBO = 0;
+  unsigned int vertexesSize = 0;
+  unsigned int indexesSize = 0;
+  uint VBO = 0;
+  uint EBO = 0;
 
 public:
-	Mesh(std::vector<GLfloat>& vertices, std::vector<GLuint>& indices);
-	GLuint getVBO() const;
-	GLuint getEBO() const;
-	unsigned int getVertexSize() const;
-	unsigned int getIndexSize() const;
-	void genVertexBufferObject(std::vector<GLfloat>& vertices);
-	void genElementBufferObject(std::vector<GLuint>& indices);
+  Mesh(std::vector<float> &vertices, std::vector<uint> &indices);
+
+  uint getVBO() const;
+
+  uint getEBO() const;
+
+  unsigned int getVertexSize() const;
+
+  unsigned int getIndexSize() const;
+
+  void genVertexBufferObject(std::vector<float> &vertices);
+
+  void genElementBufferObject(std::vector<uint> &indices);
 };

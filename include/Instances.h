@@ -11,7 +11,7 @@ class Instances
 	Positions Pos;
 public:
 	Instances(Model* obj, Positions pos);
-	void setInstances(std::vector<glm::vec3> inst);
+	void setInstances(Positions inst);
 	void drawInstances();
 };
 

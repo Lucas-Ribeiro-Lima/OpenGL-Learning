@@ -1,4 +1,7 @@
+#include <glad.h>
+
 #include "Window.h"
+#include "Utils.h"
 
 void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 

@@ -1,4 +1,5 @@
 #include "FragmentShader.h"
+#include <glad.h>
 
 FragmentShader::FragmentShader(const char* source) {
 	ID = glCreateShader(GL_FRAGMENT_SHADER);

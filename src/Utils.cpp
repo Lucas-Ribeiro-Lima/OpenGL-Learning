@@ -1,4 +1,8 @@
 #include "Utils.h"
+#include <fstream>
+#include <sstream>
+#include <format>
+#include <ctime>
 
 namespace Utils {
 	std::string readFile(const char shaderName[]) {

@@ -1,4 +1,5 @@
 #include "Model.h"
+#include <glad.h>
 
 Model::Model(Mesh* geometry, Program* program): GEO(geometry), PROG(program) {
 	genVertexArrayBuffer();

@@ -1,11 +1,9 @@
 #pragma once
+
 #include "Mesh.h"
 #include "Texture.h"
 #include "Camera.h"
 #include "Program.h"
-#include "Constants.h"
-#include <vector>
-#include <unordered_map>
 
 Camera *getCamera();
 

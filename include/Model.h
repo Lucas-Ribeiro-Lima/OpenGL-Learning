@@ -1,12 +1,11 @@
 #pragma once
-#include <glad.h>
+
 #include <glm/glm.hpp>
-#include <iostream>
-#include <vector>
-#include <memory>
 #include "Program.h"
 #include "Mesh.h"
 #include "Texture.h"
+
+using uint = unsigned int;
 
 class Model
 {
@@ -19,8 +18,8 @@ protected:
 	Mesh* GEO = nullptr;
 	Texture* TEX = nullptr;
 
-	GLuint VAO = 0;
-	GLfloat rotateDeg = 0;
+	uint VAO = 0;
+	float rotateDeg = 0;
 
 	bool wireframe = false;
 	   
@@ -32,7 +31,7 @@ protected:
 public:
 	Model(Mesh* geometry, Program* Program);
 	Model(Mesh* geometry, Texture* texture, Program* Program);
-	GLuint getID() const;
+	uint getID() const;
 	Model& setProgram(Program* Program);
 	Model& setTranslate(glm::vec3 axis);
 	Model& setRotate(float deg, glm::vec3 axis);

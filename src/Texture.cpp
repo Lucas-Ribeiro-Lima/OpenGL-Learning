@@ -2,6 +2,8 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include "Utils.h"
+#include <glad.h>
 
 //Map for the colors system of images of stb_images
 const int colorSystem[4] = { GL_RED, NULL, GL_RGB, GL_RGBA };

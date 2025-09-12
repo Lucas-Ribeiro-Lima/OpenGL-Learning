@@ -1,8 +1,5 @@
 #pragma once
 #include "Model.h"
-#include "ResourceManager.h"
-#include "Constants.h"
-#include <functional>
 
 class Corp : public Model
 {

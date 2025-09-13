@@ -2,7 +2,7 @@
 #include <vector>
 #include <unordered_map>
 
-#include "Constants.h"
+#include <sstream>
 
 constexpr std::pair<std::vector<float>, std::vector<unsigned int> > generateSphereRadiusVector(float radius);
 
@@ -131,14 +131,19 @@ std::shared_ptr<Texture> getTextureData(const char *tex) {
 }
 
 std::shared_ptr<Program> getProgram(const char* vertex, const char *frag) {
-  static std::unordered_map<const char *, std::weak_ptr<Program>> progMap;
+  static std::unordered_map<std::string, std::weak_ptr<Program>> progMap;
 
-  if (progMap.contains(frag)) {
-    if (std::shared_ptr<Program> cached_ptr = progMap[frag].lock()) return cached_ptr;
+  std::stringstream ss;
+  ss << vertex << "," << frag;
+
+  std::string key = ss.str();
+
+  if (progMap.contains(key)) {
+    if (std::shared_ptr<Program> cached_ptr = progMap[key].lock()) return cached_ptr;
   }
 
   std::shared_ptr<Program> ptr = std::make_shared<Program>(vertex, frag);
-  progMap.insert({frag, ptr });
+  progMap[key] = ptr;
 
   return ptr;
 }

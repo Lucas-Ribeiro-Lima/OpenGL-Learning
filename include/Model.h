@@ -2,9 +2,10 @@
 
 #include <glm/glm.hpp>
 #include <memory>
+
+#include "Material.h"
 #include "Program.h"
 #include "Mesh.h"
-#include "Texture.h"
 
 using uint = unsigned int;
 
@@ -17,7 +18,7 @@ protected:
 
 	std::shared_ptr<Program> program = nullptr;
 	std::shared_ptr<Mesh> mesh = nullptr;
-	std::shared_ptr<Texture> texture = nullptr;
+	Material material{};
 
 	uint VAO = 0;
 	float rotateDeg = 0;
@@ -31,7 +32,7 @@ protected:
 
 public:
 	Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> Program);
-	Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Texture> texture, std::shared_ptr<Program> Program);
+	Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> Program, MaterialData &material_data);
 	uint getID() const;
 	Model& setProgram(std::shared_ptr<Program> prg);
 	Model& setTranslate(glm::vec3 axis);

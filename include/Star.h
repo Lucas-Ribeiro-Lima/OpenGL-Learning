@@ -6,11 +6,12 @@
 #define OPENGL_LEARNING_STAR_H
 
 #include "Corp.h"
+#include "Material.h"
 
 class Star : public Corp
 {
     public:
-        Star(float radius, const char* tex, float r, float t);
+        Star(MaterialData mat, float radius, float r, float t);
 };
 
 

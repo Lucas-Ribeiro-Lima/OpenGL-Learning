@@ -26,9 +26,12 @@ out vec4 FragColor;
 
 void main()
 {
-    vec4 textel = texture(material.diffuse, TextCoord);
-    vec3 texDiff= textel.rgb;
-    float texAlpha = textel.a;
+    vec4 textel1 = texture(material.diffuse, TextCoord);
+    vec3 texDiff= textel1.rgb;
+    float texAlpha = textel1.a;
+
+    vec4 textel2 = texture(material.specular, TextCoord);
+    vec3 texSpec = textel2.rgb;
 
     //Ambient light;
     vec3 ambientColor = light.ambient * texDiff;
@@ -36,15 +39,21 @@ void main()
     //Diffuse calc
     vec3 lightVector = normalize(light.position - FragPosition);
     vec3 normalVector = normalize(Normal);
-    float diffuseFactor = max(dot(lightVector, normalVector), 0.0f);
-    vec3 diffuseColor = light.diffuse * (diffuseFactor * texDiff);
+    float diffuseFactor = dot(lightVector, normalVector);
+    vec3 diffuseColor = light.diffuse * (max(diffuseFactor, 0.0f) * texDiff);
 
     //Specular calc
     vec3 viewVector = normalize(viewPos - FragPosition);
     vec3 reflectVector = reflect(-lightVector, normalVector);
     float specularFactor = pow(max(dot(reflectVector, viewVector), 0.0f), 32);
-    vec3 specularColor = light.specular * (specularFactor * texDiff) * vec3(0.0f);
+    vec3 specularColor = light.specular * (specularFactor * texSpec);
 
-    vec3 fragColor = ambientColor + diffuseColor + specularColor;
+    //Emission calc
+    vec4 textel3 = texture(material.emission, TextCoord);
+    vec3 texEmission = textel3.rgb;
+    float emissionFactor = max(-diffuseFactor, 0.0f);
+    vec3 emissionColor = emissionFactor * texEmission;
+
+    vec3 fragColor = ambientColor + diffuseColor + specularColor + emissionColor;
 	FragColor = vec4(fragColor, texAlpha);
 }

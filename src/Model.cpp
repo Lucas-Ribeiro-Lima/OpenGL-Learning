@@ -9,8 +9,8 @@ Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program): mesh
 	saveBuffer();
 }
 
-Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Texture> texture, std::shared_ptr<Program> program)
-	: mesh(mesh), texture(texture), program(program)
+Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program, MaterialData &material)
+	: mesh(mesh), program(program), material(material)
 {
 	genVertexArrayBuffer();
 
@@ -34,7 +34,7 @@ void Model::bindGeometry()
 
 void Model::bindTexture()
 {
-	glBindTexture(GL_TEXTURE_2D, texture->getTex());
+	material.bindMaterial();
 }
 
 Model& Model::setProgram(std::shared_ptr<Program> prg)
@@ -98,9 +98,7 @@ void Model::draw()
 		.scale(scaleAxis)
 		.use();
 
-	if (texture) {
-		glBindTexture(GL_TEXTURE_2D, texture->getTex());
-	}
+	material.bindMaterial();
 
 	glBindVertexArray(VAO);
 

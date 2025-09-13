@@ -4,26 +4,26 @@
 #include "Constants.h"
 
 Corp::Corp(
+	MaterialData &mat,
 	float radius,
-	const char* tex,
 	float r,
 	float t
 ) : Model(
 	getSphereData(radius),
-	getTextureData(tex),
-	getProgram(Constants::FRAG_1)
+	getProgram(Constants::FRAG_1),
+	mat
 ), rotationScaler(r), translationScaler(t) {}
 
 Corp::Corp(
+	MaterialData &mat,
 	float radius,
-	const char* tex,
 	float r,
 	float t,
 	const char* program
 ) : Model(
 	getSphereData(radius),
-	getTextureData(tex),
-	getProgram(program)
+	getProgram(program),
+	mat
 ), rotationScaler(r), translationScaler(t) {}
 
 void Corp::draw() {

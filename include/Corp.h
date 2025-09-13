@@ -7,8 +7,8 @@ class Corp : public Model
 	float translationScaler;
 
 public:
-	Corp(float radius, const char* tex, float r, float t);
-	Corp(float radius, const char* tex, float r, float t, const char* program);
+	Corp(MaterialData &mat, float radius, float r, float t);
+	Corp(MaterialData &mat, float radius, float r, float t, const char* program);
 	void draw() override;
 };
 

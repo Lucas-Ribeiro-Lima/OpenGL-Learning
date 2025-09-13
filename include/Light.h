@@ -10,7 +10,7 @@
 class Light {
   public:
     glm::vec3 position{ 0.0f };
-    glm::vec3 ambient{ 0.1f };
+    glm::vec3 ambient{ 0.05f };
     glm::vec3 diffuse{0.8f};
     glm::vec3 specular{1.0f};
 };

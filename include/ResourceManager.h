@@ -14,4 +14,4 @@ std::shared_ptr<Mesh> getSphereData(float radius);
 
 std::shared_ptr<Texture> getTextureData(const char *tex);
 
-std::shared_ptr<Program> getProgram(const char *frag);
+std::shared_ptr<Program> getProgram(const char* vertex, const char *frag);

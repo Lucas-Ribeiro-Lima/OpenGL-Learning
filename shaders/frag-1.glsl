@@ -48,12 +48,17 @@ void main()
     float specularFactor = pow(max(dot(reflectVector, viewVector), 0.0f), 32);
     vec3 specularColor = light.specular * (specularFactor * texSpec);
 
+    vec3 fragColor = ambientColor + diffuseColor + specularColor;
+
+    #ifdef USE_EMISSION_TEXTURE
     //Emission calc
     vec4 textel3 = texture(material.emission, TextCoord);
     vec3 texEmission = textel3.rgb;
     float emissionFactor = max(-diffuseFactor, 0.0f);
     vec3 emissionColor = emissionFactor * texEmission;
 
-    vec3 fragColor = ambientColor + diffuseColor + specularColor + emissionColor;
+    fragColor += emissionColor;
+    #endif
+
 	FragColor = vec4(fragColor, texAlpha);
 }

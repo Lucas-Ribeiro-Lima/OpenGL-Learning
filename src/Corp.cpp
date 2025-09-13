@@ -4,40 +4,36 @@
 #include "Constants.h"
 
 Corp::Corp(
-	MaterialData &mat,
-	float radius,
-	float r,
-	float t
+    CorpData &data
 ) : Model(
-	getSphereData(radius),
-	getProgram(Constants::FRAG_1),
-	mat
-), rotationScaler(r), translationScaler(t) {}
+        getSphereData(data.radius),
+        getProgram(Constants::VSHADER_1, Constants::FRAG_1),
+        data.mat
+    ), rotationScaler(data.rotationScaler), translationScaler(data.translationScaler) {
+}
 
 Corp::Corp(
-	MaterialData &mat,
-	float radius,
-	float r,
-	float t,
-	const char* program
+    CorpData &data,
+    ShadersSrc shaders_src
 ) : Model(
-	getSphereData(radius),
-	getProgram(program),
-	mat
-), rotationScaler(r), translationScaler(t) {}
+        getSphereData(data.radius),
+        getProgram(shaders_src.vertex, shaders_src.fragment),
+        data.mat
+    ), rotationScaler(data.rotationScaler), translationScaler(data.translationScaler) {
+}
 
 void Corp::draw() {
-	float time = glfwGetTime();
+    float time = glfwGetTime();
 
-	glm::vec3 orbit{
-		cos(time * translationScaler),
-		0.0f,
-		sin(time * translationScaler)
-	};
+    glm::vec3 orbit{
+        cos(time * translationScaler),
+        0.0f,
+        sin(time * translationScaler)
+    };
 
-	translateAxis *= orbit;
-	rotateAxis += glm::vec3(0, 1, 0);
-	rotateDeg = glm::mod(time * rotationScaler, 360.0f);
+    translateAxis *= orbit;
+    rotateAxis += glm::vec3(0, 1, 0);
+    rotateDeg = glm::mod(time * rotationScaler, 360.0f);
 
-	Model::draw();
+    Model::draw();
 }

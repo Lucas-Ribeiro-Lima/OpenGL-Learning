@@ -1,3 +1,4 @@
+#include <InputLayer.h>
 #include <InputSystem.h>
 
 namespace {
@@ -9,7 +10,7 @@ InputSystem::InputSystem() {};
 
 void InputSystem::processCamera(Camera &camera) {
     for (auto &event : raw_io_event_buffer) {
-        if (event.data[0] == 256)
+        if (input::KeyTranslationLayer::getKey(event.data[0]) == input::Key::Escape)
             commandBuffer.push_back(Command{Target::EngineTarget, Action::Quit});
     }
 

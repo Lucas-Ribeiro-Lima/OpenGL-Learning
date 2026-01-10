@@ -1,14 +1,18 @@
 #pragma once
 
+// clang-format off
 #include <glad.h>
 #include <GLFW/glfw3.h>
+// clang-format on
+#include <InputSystemForward.h>
 
 namespace oriongl::core {
 class WindowSystem {
   public:
     WindowSystem();
-    WindowSystem(const char *title);
 
+    void setTitle(const char *title);
+    void setEventBuffer(EventBuffer *buffer);
     void swapBuffers();
     void closeWindow();
     void update();
@@ -17,8 +21,8 @@ class WindowSystem {
     GLFWwindow *window = nullptr;
     GLFWmonitor *monitor = nullptr;
     const GLFWvidmode *vidmode = nullptr;
-    const char *window_title = "Default title";
-    int height = 920;
+    EventBuffer *eventBuffer = nullptr;
+
     int width = 1280;
     float deltaTime = 0;
     float lastFrame = 0;
@@ -37,6 +41,8 @@ class WindowSystem {
     void calculateDeltaTime();
 
     static void mouseCallback(GLFWwindow *window, double xPos, double yPos);
+
+    static void keyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
 
     static void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 };

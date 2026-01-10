@@ -1,10 +1,8 @@
+#include <Utils.h>
 #include <WindowSystem.h>
 #include <stdexcept>
 
-
 namespace oriongl::core {
-WindowSystem::WindowSystem(const char *title) : WindowSystem() { this->window_title = title; }
-
 WindowSystem::WindowSystem() {
     glfwConfiguration();
     windowInicialization();
@@ -34,7 +32,7 @@ void WindowSystem::windowInicialization() {
     monitor = glfwGetPrimaryMonitor();
     vidmode = glfwGetVideoMode(monitor);
 
-    GLFWwindow *w = glfwCreateWindow(vidmode->width, vidmode->height, this->window_title, nullptr, nullptr);
+    GLFWwindow *w = glfwCreateWindow(vidmode->width, vidmode->height, "Default title", nullptr, nullptr);
     glfwSetWindowUserPointer(w, this);
     window = w;
 
@@ -47,30 +45,39 @@ void WindowSystem::windowInicialization() {
     glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetCursorPosCallback(window, mouseCallback);
-}
-
-void WindowSystem::processInput(GLFWwindow *window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, true);
-    }
+    glfwSetKeyCallback(window, keyboardCallback);
 }
 
 void WindowSystem::swapBuffers() {
     glfwSwapBuffers(window);
     glfwPollEvents();
-}
-
-void WindowSystem::update() {
     calculateDeltaTime();
-    processInput(window);
 }
 
 void WindowSystem::closeWindow() { glfwTerminate(); }
 
+void WindowSystem::setTitle(const char *title) { glfwSetWindowTitle(window, title); }
+
+void WindowSystem::setEventBuffer(EventBuffer *buffer) { eventBuffer = buffer; }
+
 void WindowSystem::framebufferSizeCallback(GLFWwindow *window, int width, int height) { glViewport(0, 0, width, height); }
+
+void WindowSystem::keyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+    auto self = static_cast<WindowSystem *>(glfwGetWindowUserPointer(window));
+    if (!self->eventBuffer) {
+        utils::logger("WARN:: KeyboardCallback:  There isn't an event buffer attached to the Window. SKIPPING");
+        return;
+    }
+    self->eventBuffer->push_back({EventType::Keyboard, {(double)key, 0}});
+}
 
 void WindowSystem::mouseCallback(GLFWwindow *window, double xPos, double yPos) {
     auto self = static_cast<WindowSystem *>(glfwGetWindowUserPointer(window));
+    if (!self->eventBuffer) {
+        utils::logger("WARN:: MouseCallback: There isn't an event buffer attached to the Window. SKIPPING");
+        return;
+    }
+    self->eventBuffer->push_back({EventType::Mouse, {xPos, yPos}});
 }
 
 void WindowSystem::calculateDeltaTime() {

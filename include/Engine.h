@@ -1,6 +1,10 @@
 #pragma once
 
+// clang-format off
 #include <WindowSystem.h>
+// clang-format on
+
+#include <InputSystem.h>
 #include <RenderSystem.h>
 #include <ResourceSystem.h>
 #include <Scene.h>
@@ -18,12 +22,14 @@ class Engine {
     core::WindowSystem windowSystem;
     core::ResourceSystem resourceSystem;
     core::RenderSystem renderSystem;
+    core::InputSystem inputSystem;
 
     core::Scene scene;
+
     EngineStatus status = ENGINE_STOPPED;
 
   public:
-    Engine() = default;
+    Engine();
     void run();
     void loadEntityToScene(std::shared_ptr<graphics::Model> model, std::vector<glm::vec3> instances);
 };

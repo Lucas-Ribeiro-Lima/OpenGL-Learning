@@ -2,22 +2,24 @@
 #include <InputSystem.h>
 
 namespace {
-oriongl::core::CommandBuffer commandBuffer;
+oriongl::core::InputContext ctx;
 }
 
 namespace oriongl::core {
 InputSystem::InputSystem() {};
 
-void InputSystem::processCamera(Camera &camera) {
-    for (auto &event : raw_io_event_buffer) {
+void InputSystem::process() {
+    for (auto &event : ctx.events) {
         if (input::KeyTranslationLayer::getKey(event.data[0]) == input::Key::Escape)
-            commandBuffer.push_back(Command{Target::EngineTarget, Action::Quit});
+            ctx.commands.push_back(Command{Target::EngineTarget, Action::Quit});
     }
 
-    raw_io_event_buffer.clear();
+    ctx.events.clear();
 }
 
-EventBuffer &InputSystem::getIoEventBufferQueue() { return raw_io_event_buffer; }
+void InputSystem::cleanup() { ctx.commands.clear(); }
 
-const CommandBuffer &getCommandBuffer() { return commandBuffer; }
+const CommandBuffer &getCommands() { return ctx.commands; };
+EventBuffer &getEvents() { return ctx.events; };
+
 } // namespace oriongl::core

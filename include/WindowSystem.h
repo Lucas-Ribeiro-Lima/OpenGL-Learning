@@ -12,7 +12,6 @@ class WindowSystem {
     WindowSystem();
 
     void setTitle(const char *title);
-    void setEventBuffer(EventBuffer *buffer);
     void swapBuffers();
     void closeWindow();
     void update();
@@ -21,7 +20,6 @@ class WindowSystem {
     GLFWwindow *window = nullptr;
     GLFWmonitor *monitor = nullptr;
     const GLFWvidmode *vidmode = nullptr;
-    EventBuffer *eventBuffer = nullptr;
 
     int width = 1280;
     float deltaTime = 0;

@@ -35,7 +35,15 @@ struct Command {
 };
 
 typedef std::vector<Command> CommandBuffer;
+typedef CommandBuffer DeferredBuffer;
 
-const CommandBuffer &getCommandBuffer();
+struct InputContext {
+    EventBuffer events;
+    CommandBuffer commands;
+    DeferredBuffer deferred;
+};
+
+const CommandBuffer &getCommands();
+EventBuffer &getEvents();
 
 } // namespace oriongl::core

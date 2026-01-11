@@ -1,3 +1,4 @@
+#include <InputSystemForward.h>
 #include <Utils.h>
 #include <WindowSystem.h>
 #include <stdexcept>
@@ -58,26 +59,18 @@ void WindowSystem::closeWindow() { glfwTerminate(); }
 
 void WindowSystem::setTitle(const char *title) { glfwSetWindowTitle(window, title); }
 
-void WindowSystem::setEventBuffer(EventBuffer *buffer) { eventBuffer = buffer; }
-
 void WindowSystem::framebufferSizeCallback(GLFWwindow *window, int width, int height) { glViewport(0, 0, width, height); }
 
 void WindowSystem::keyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
     auto self = static_cast<WindowSystem *>(glfwGetWindowUserPointer(window));
-    if (!self->eventBuffer) {
-        utils::logger("WARN:: KeyboardCallback:  There isn't an event buffer attached to the Window. SKIPPING");
-        return;
-    }
-    self->eventBuffer->push_back({EventType::Keyboard, {(double)key, 0}});
+    auto events_buffer = &core::getEvents();
+    events_buffer->push_back({EventType::Keyboard, {(double)key, 0}});
 }
 
 void WindowSystem::mouseCallback(GLFWwindow *window, double xPos, double yPos) {
     auto self = static_cast<WindowSystem *>(glfwGetWindowUserPointer(window));
-    if (!self->eventBuffer) {
-        utils::logger("WARN:: MouseCallback: There isn't an event buffer attached to the Window. SKIPPING");
-        return;
-    }
-    self->eventBuffer->push_back({EventType::Mouse, {xPos, yPos}});
+    auto events_buffer = &core::getEvents();
+    events_buffer->push_back({EventType::Mouse, {xPos, yPos}});
 }
 
 void WindowSystem::calculateDeltaTime() {

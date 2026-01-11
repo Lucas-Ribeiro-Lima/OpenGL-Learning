@@ -2,26 +2,28 @@
 
 namespace oriongl {
 
-Engine::Engine() { windowSystem.setEventBuffer(&inputSystem.getIoEventBufferQueue()); }
-
 void Engine::run() {
     status = ENGINE_RUNNING;
     while (status == ENGINE_RUNNING) {
-        inputSystem.processCamera(scene.camera);
+        inputSystem.process();
         renderSystem.render(scene);
         windowSystem.swapBuffers();
 
-        auto command_buffer = core::getCommandBuffer();
-
-        for (auto &command : command_buffer) {
-            if (command.target == core::Target::EngineTarget) {
-                if (command.action == core::Action::Quit)
-                    status = ENGINE_CLOSING;
-            }
-        }
+        processCommands();
+        inputSystem.cleanup();
     }
 
     windowSystem.closeWindow();
+}
+
+void Engine::processCommands() {
+    auto command_buffer = core::getCommands();
+
+    for (auto &command : command_buffer) {
+        if (command.target == core::Target::EngineTarget && command.action == core::Action::Quit) {
+            status = ENGINE_CLOSING;
+        }
+    }
 }
 
 void Engine::loadEntityToScene(std::shared_ptr<graphics::Model> model, std::vector<glm::vec3> instances) {

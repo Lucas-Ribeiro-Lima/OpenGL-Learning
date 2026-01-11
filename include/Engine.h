@@ -28,8 +28,10 @@ class Engine {
 
     EngineStatus status = ENGINE_STOPPED;
 
+
+    void processCommands();
   public:
-    Engine();
+    Engine() = default;
     void run();
     void loadEntityToScene(std::shared_ptr<graphics::Model> model, std::vector<glm::vec3> instances);
 };

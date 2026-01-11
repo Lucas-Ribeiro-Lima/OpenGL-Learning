@@ -5,11 +5,9 @@
 
 namespace oriongl::core {
 class InputSystem {
-    EventBuffer raw_io_event_buffer;
-
   public:
     InputSystem();
-    void processCamera(Camera &camera);
-    EventBuffer &getIoEventBufferQueue();
+    void process();
+    void cleanup();
 };
 } // namespace oriongl::core

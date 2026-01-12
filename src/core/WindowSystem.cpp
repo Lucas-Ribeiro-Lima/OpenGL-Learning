@@ -64,13 +64,13 @@ void WindowSystem::framebufferSizeCallback(GLFWwindow *window, int width, int he
 void WindowSystem::keyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
     auto self = static_cast<WindowSystem *>(glfwGetWindowUserPointer(window));
     auto events_buffer = &core::getEvents();
-    events_buffer->push_back({EventType::Keyboard, {(double)key, 0}});
+    events_buffer->push_back({EventType::Keyboard, {key, action}});
 }
 
 void WindowSystem::mouseCallback(GLFWwindow *window, double xPos, double yPos) {
     auto self = static_cast<WindowSystem *>(glfwGetWindowUserPointer(window));
     auto events_buffer = &core::getEvents();
-    events_buffer->push_back({EventType::Mouse, {xPos, yPos}});
+    events_buffer->push_back({EventType::Mouse, {(int)xPos, (int)yPos}});
 }
 
 void WindowSystem::calculateDeltaTime() {

@@ -6,7 +6,7 @@ namespace oriongl::core {
 
 enum EventType { Mouse, Keyboard };
 
-typedef double EventData[2];
+typedef int EventData[2];
 
 struct Event {
     EventType type;
@@ -21,7 +21,7 @@ enum Action : uint8_t {
     MoveLeftward,
     MoveRightward,
     MoveUpward,
-    ModeDownward,
+    MoveDownward,
 
     Quit,
 };

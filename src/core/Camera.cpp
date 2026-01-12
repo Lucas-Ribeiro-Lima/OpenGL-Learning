@@ -1,32 +1,21 @@
 #include "Camera.h"
+#include <InputSystemForward.h>
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace oriongl::core {
 Camera::Camera() {};
 
-void Camera::setFrontBack(float value, Directions dir) {
-    if (dir == 1)
-        pos += front * cameraSpeed * value;
-    else
-        pos -= front * cameraSpeed * value;
-    updateView();
-}
+void Camera::setFront(float value) { pos += front * cameraSpeed * value; }
 
-void Camera::setLeftRight(float value, Directions dir) {
-    if (dir == 1)
-        pos += glm::normalize(glm::cross(front, up)) * cameraSpeed * value;
-    else
-        pos -= glm::normalize(glm::cross(front, up)) * cameraSpeed * value;
-    updateView();
-}
+void Camera::setBack(float value) { pos -= front * cameraSpeed * value; }
 
-void Camera::setUpDown(float value, Directions dir) {
-    if (dir == 1)
-        pos += up * cameraSpeed * value;
-    else
-        pos -= up * cameraSpeed * value;
-    updateView();
-}
+void Camera::setLeft(float value) { pos -= glm::normalize(glm::cross(front, up)) * cameraSpeed * value; }
+
+void Camera::setRight(float value) { pos += glm::normalize(glm::cross(front, up)) * cameraSpeed * value; }
+
+void Camera::setUp(float value) { pos += up * cameraSpeed * value; }
+
+void Camera::setDown(float value) { pos -= up * cameraSpeed * value; }
 
 glm::mat4 &Camera::getView() { return view; }
 
@@ -68,7 +57,37 @@ void Camera::update(float x, float y) {
     front = glm::normalize(direction);
     lastX = x;
     lastY = y;
-
-    updateView();
 }
+
+void Camera::processCommands() {
+    auto commands = getCommands();
+
+    for (auto command : commands) {
+        if (command.target != Target::CameraTarget)
+            continue;
+
+        switch (command.action) {
+        case Action::MoveForward:
+            setFront(0.05f);
+            break;
+        case Action::MoveBackward:
+            setBack(0.05f);
+            break;
+        case Action::MoveLeftward:
+            setLeft(0.05f);
+            break;
+        case Action::MoveRightward:
+            setRight(0.05f);
+            break;
+        case Action::MoveUpward:
+            setUp(0.05f);
+            break;
+        case Action::MoveDownward:
+            setDown(0.05f);
+            break;
+        default:;
+        }
+    }
+    updateView();
+};
 } // namespace oriongl::core

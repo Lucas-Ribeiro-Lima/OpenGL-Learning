@@ -15,6 +15,8 @@ void RenderSystem::render(Scene &scene) {
     auto &light = scene.light;
     auto &camera = scene.camera;
 
+    camera.processCommands();
+
     for (auto &entitie : scene.data) {
 
         auto &instances = entitie.instances;

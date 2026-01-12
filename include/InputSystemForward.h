@@ -6,11 +6,10 @@ namespace oriongl::core {
 
 enum EventType { Mouse, Keyboard };
 
-typedef int EventData[2];
-
 struct Event {
     EventType type;
-    EventData data;
+    double first;
+    double second;
 };
 
 typedef std::vector<Event> EventBuffer;
@@ -22,16 +21,15 @@ enum Action : uint8_t {
     MoveRightward,
     MoveUpward,
     MoveDownward,
+    
+    LookAt,
 
     Quit,
 };
 
-enum Target : uint8_t { CameraTarget, ActorTarget, EngineTarget };
-
 struct Command {
-    Target target;
     Action action;
-    float value;
+    double value[2];
 };
 
 typedef std::vector<Command> CommandBuffer;

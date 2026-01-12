@@ -4,7 +4,6 @@ namespace {
 using Key = oriongl::core::input::Key;
 using KeyState = oriongl::core::input::KeyState;
 using Command = oriongl::core::Command;
-using Target = oriongl::core::Target;
 using Action = oriongl::core::Action;
 
 oriongl::core::InputContext ctx;
@@ -16,13 +15,10 @@ struct CommandHelper {
 };
 
 CommandHelper command_helper[] = {
-    {Key::Escape, KeyState::Pressed, {Target::EngineTarget, Action::Quit}},
-    {Key::W, KeyState::Pressed, {Target::CameraTarget, Action::MoveForward}},
-    {Key::S, KeyState::Pressed, {Target::CameraTarget, Action::MoveBackward}},
-    {Key::A, KeyState::Pressed, {Target::CameraTarget, Action::MoveLeftward}},
-    {Key::D, KeyState::Pressed, {Target::CameraTarget, Action::MoveRightward}},
-    {Key::Space, KeyState::Pressed, {Target::CameraTarget, Action::MoveUpward}},
-    {Key::Ctrl, KeyState::Pressed, {Target::CameraTarget, Action::MoveDownward}},
+    {Key::Escape, KeyState::Pressed, {Action::Quit}},       {Key::W, KeyState::Pressed, {Action::MoveForward}},
+    {Key::S, KeyState::Pressed, {Action::MoveBackward}},    {Key::A, KeyState::Pressed, {Action::MoveLeftward}},
+    {Key::D, KeyState::Pressed, {Action::MoveRightward}},   {Key::Space, KeyState::Pressed, {Action::MoveUpward}},
+    {Key::Ctrl, KeyState::Pressed, {Action::MoveDownward}},
 };
 
 } // namespace
@@ -47,11 +43,13 @@ void InputSystem::updateCommandBuffer() {
 void InputSystem::updateKeyState() {
     for (auto &event : ctx.events) {
         if (event.type == EventType::Keyboard) {
-            Key key = input::KeyTranslationLayer::getKey(event.data[0]);
-            KeyState state = input::KeyTranslationLayer::getState(event.data[1]);
+            Key key = input::KeyTranslationLayer::getKey(event.first);
+            KeyState state = input::KeyTranslationLayer::getState(event.second);
 
             key_states[key] = state;
         }
+
+        ctx.commands.push_back({Action::LookAt, {(float)event.first, (float)event.second}});
     }
 
     ctx.events.clear();

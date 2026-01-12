@@ -20,7 +20,7 @@ void Engine::processCommands() {
     auto command_buffer = core::getCommands();
 
     for (auto &command : command_buffer) {
-        if (command.target == core::Target::EngineTarget && command.action == core::Action::Quit) {
+        if (command.action == core::Action::Quit) {
             status = ENGINE_CLOSING;
         }
     }

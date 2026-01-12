@@ -40,6 +40,8 @@ class Camera {
 
     void setDown(float value);
 
+    void lookAt(float x, float y);
+
   public:
     Camera();
 
@@ -48,8 +50,6 @@ class Camera {
     glm::mat4 &getPerspective();
 
     glm::vec3 &getViewPosition();
-
-    void update(float x, float y);
 
     void processCommands();
 };

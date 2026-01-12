@@ -27,7 +27,7 @@ void Camera::updateView() { view = glm::lookAt(pos, pos + front, up); }
 
 void Camera::updatePerspective() { perspective = glm::perspective(45.0f, 1280.0f / 960.0f, 0.1f, 300.0f); }
 
-void Camera::update(float x, float y) {
+void Camera::lookAt(float x, float y) {
     if (firstMouse) {
         lastX = x;
         lastY = y;
@@ -63,9 +63,6 @@ void Camera::processCommands() {
     auto commands = getCommands();
 
     for (auto command : commands) {
-        if (command.target != Target::CameraTarget)
-            continue;
-
         switch (command.action) {
         case Action::MoveForward:
             setFront(0.05f);
@@ -85,6 +82,8 @@ void Camera::processCommands() {
         case Action::MoveDownward:
             setDown(0.05f);
             break;
+        case Action::LookAt:
+            lookAt(command.value[0], command.value[1]);
         default:;
         }
     }

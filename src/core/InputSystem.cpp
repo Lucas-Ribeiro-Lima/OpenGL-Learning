@@ -45,11 +45,10 @@ void InputSystem::updateKeyState() {
         if (event.type == EventType::Keyboard) {
             Key key = input::KeyTranslationLayer::getKey(event.first);
             KeyState state = input::KeyTranslationLayer::getState(event.second);
-
             key_states[key] = state;
+        } else {
+            ctx.commands.push_back({Action::LookAt, {(float)event.first, (float)event.second}});
         }
-
-        ctx.commands.push_back({Action::LookAt, {(float)event.first, (float)event.second}});
     }
 
     ctx.events.clear();

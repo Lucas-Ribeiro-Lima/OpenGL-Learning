@@ -5,15 +5,15 @@
 
 const char vertex_shader[] = {
 #embed "assets/vertex_shader.glsl"
-};
+    , '\0'};
 
 const char frag_shader[] = {
 #embed "assets/frag_shader.glsl"
-};
+    , '\0'};
 
 const char frag_light_shader[] = {
 #embed "assets/frag_light_shader.glsl"
-};
+    , '\0'};
 
 int main() {
     oriongl::Engine engine;
@@ -41,11 +41,11 @@ int main() {
     };
 
     auto cube_mesh = oriongl::core::storage::MeshLoaderHelper::getCubeMesh(3.0f);
-    auto cube_shader = oriongl::core::storage::ShaderManager::getProgram(vertex_shader, frag_shader);
+    auto cube_shader = oriongl::core::storage::ShaderManager::getProgram(vertex_shader, frag_shader, {});
     auto cube_model = oriongl::core::storage::ModelManager::getModel(cube_shader, cube_mesh, box_material);
 
     auto sphere_mesh = oriongl::core::storage::MeshLoaderHelper::getSphereMesh(5.0f);
-    auto light_shader = oriongl::core::storage::ShaderManager::getProgram(vertex_shader, frag_light_shader);
+    auto light_shader = oriongl::core::storage::ShaderManager::getProgram(vertex_shader, frag_light_shader, {});
     auto light_model = oriongl::core::storage::ModelManager::getModel(light_shader, sphere_mesh, {});
 
     engine.loadEntityToScene(cube_model, cube_positions);

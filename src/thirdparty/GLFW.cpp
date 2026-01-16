@@ -1,6 +1,104 @@
+// clang-format off
+#include <WindowSystem.h>
+// clang-format on
 #include <GLFW/glfw3.h>
 #include <InputLayer.h>
+#include <InputSystemForward.h>
 #include <array>
+
+namespace oriongl::core {
+class WindowSystem::WindowSystemImpl {
+  public:
+    WindowSystemImpl() {
+        glfwConfiguration();
+        windowInicialization();
+        gladConfiguration();
+    };
+
+    GLFWwindow *window = nullptr;
+    GLFWmonitor *monitor = nullptr;
+    const GLFWvidmode *vidmode = nullptr;
+
+    int width = 1280;
+    float deltaTime = 0;
+    float lastFrame = 0;
+
+    // Glad configuration;
+    void gladConfiguration() {
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+            throw std::runtime_error("Failed to initialize GLAD");
+        }
+
+        glViewport(0, 0, vidmode->width, vidmode->height);
+        glEnable(GL_DEPTH_TEST);
+    };
+
+    // Window configuration
+    void windowInicialization() {
+        monitor = glfwGetPrimaryMonitor();
+        vidmode = glfwGetVideoMode(monitor);
+
+        GLFWwindow *w = glfwCreateWindow(vidmode->width, vidmode->height, "Default title", nullptr, nullptr);
+        glfwSetWindowUserPointer(w, this);
+        window = w;
+
+        if (window == nullptr) {
+            glfwTerminate();
+            throw std::runtime_error("Failed to create GLFW window");
+        }
+
+        glfwMakeContextCurrent(window);
+        glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetCursorPosCallback(window, mouseCallback);
+        glfwSetKeyCallback(window, keyboardCallback);
+    };
+
+    // GLFW start configuration
+    void glfwConfiguration() {
+        glfwInit();
+
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+        glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+    };
+
+    void calculateDeltaTime() {
+        auto currentFrame = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+    };
+
+    static void mouseCallback(GLFWwindow *window, double xPos, double yPos) {
+        auto events_buffer = &core::getEvents();
+        events_buffer->push_back({EventType::Mouse, xPos, yPos});
+    }
+
+    static void keyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+        auto events_buffer = &core::getEvents();
+        events_buffer->push_back({EventType::Keyboard, (double)key, (double)action});
+    };
+
+    static void framebufferSizeCallback(GLFWwindow *window, int width, int height) { glViewport(0, 0, width, height); };
+};
+
+WindowSystem::WindowSystem() : impl(std::make_unique<WindowSystemImpl>()) {};
+
+WindowSystem::~WindowSystem() = default;
+
+void WindowSystem::swapBuffers() {
+    glfwSwapBuffers(impl->window);
+    glfwPollEvents();
+    impl->calculateDeltaTime();
+}
+
+void WindowSystem::closeWindow() { glfwTerminate(); }
+
+void WindowSystem::setTitle(const char *title) { glfwSetWindowTitle(impl->window, title); }
+
+} // namespace oriongl::core
 
 namespace {
 

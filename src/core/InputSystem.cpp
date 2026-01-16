@@ -1,8 +1,8 @@
 #include <InputSystem.h>
 
 namespace {
-using Key = oriongl::core::input::Key;
-using KeyState = oriongl::core::input::KeyState;
+using Key = oriongl::core::Key;
+using KeyState = oriongl::core::KeyState;
 using Command = oriongl::core::Command;
 using Action = oriongl::core::Action;
 
@@ -43,8 +43,8 @@ void InputSystem::updateCommandBuffer() {
 void InputSystem::updateKeyState() {
     for (auto &event : ctx.events) {
         if (event.type == EventType::Keyboard) {
-            Key key = input::KeyTranslationLayer::getKey(event.first);
-            KeyState state = input::KeyTranslationLayer::getState(event.second);
+            Key key = KeyTranslationLayer::getKey(event.first);
+            KeyState state = KeyTranslationLayer::getState(event.second);
             key_states[key] = state;
         } else {
             ctx.commands.push_back({Action::LookAt, {(float)event.first, (float)event.second}});

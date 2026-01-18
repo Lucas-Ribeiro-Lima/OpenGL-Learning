@@ -1,5 +1,4 @@
 #include <Engine.h>
-#include <ResourceManagers.h>
 #include <string>
 #include <vector>
 
@@ -15,43 +14,49 @@ const char frag_light_shader[] = {
 #embed "assets/frag_light_shader.glsl"
     , '\0'};
 
+// clang-format off
+const std::vector<glm::vec3> cube_positions = {
+    {  35.0f,   0.0f,   0.0f },
+    {  24.7f,   8.0f,  24.7f },
+    {   0.0f,  15.0f,  35.0f },
+    { -24.7f,   8.0f,  24.7f },
+    { -35.0f,   0.0f,   0.0f },
+
+    { -24.7f,  -8.0f, -24.7f },
+    {   0.0f, -15.0f, -35.0f },
+    {  24.7f,  -8.0f, -24.7f },
+
+    {  17.5f,  20.0f,  30.3f },
+    { -17.5f, -20.0f, -30.3f }
+};
+
+const std::vector<glm::vec3> light_positions = {
+  { 0.0f, 0.0f, 0.0f },
+};
+// clang-format on
+
+std::vector<std::string> box_material{
+    "assets/container.png",
+    "assets/container_specular.png",
+    "assets/black_pixel.png",
+};
+
 int main() {
     oriongl::Engine engine;
-    // clang-format off
-    const std::vector<glm::vec3> cube_positions = {
-        {  35.0f,   0.0f,   0.0f },
-        {  24.7f,   8.0f,  24.7f },
-        {   0.0f,  15.0f,  35.0f },
-        { -24.7f,   8.0f,  24.7f },
-        { -35.0f,   0.0f,   0.0f },
+    oriongl::core::ResourceSystem resource_system;
 
-        { -24.7f,  -8.0f, -24.7f },
-        {   0.0f, -15.0f, -35.0f },
-        {  24.7f,  -8.0f, -24.7f },
+    auto cube_mesh = resource_system.createCubeMesh(3.0f);
+    auto cube_program = resource_system.createShader(vertex_shader, frag_shader, {});
+    auto cube_material = resource_system.createMaterial(box_material);
+    auto cube_model = resource_system.createModel(cube_program, cube_mesh, cube_material);
 
-        {  17.5f,  20.0f,  30.3f },
-        { -17.5f, -20.0f, -30.3f }
-    };
-    // clang-format on
-
-    std::vector<std::string> box_material{
-        "assets/container.png",
-        "assets/container_specular.png",
-        "assets/black_pixel.png",
-    };
-
-    auto cube_mesh = oriongl::core::storage::MeshLoaderHelper::getCubeMesh(3.0f);
-    auto cube_shader = oriongl::core::storage::ShaderManager::getProgram(vertex_shader, frag_shader, {});
-    auto cube_model = oriongl::core::storage::ModelManager::getModel(cube_shader, cube_mesh, box_material);
-
-    auto sphere_mesh = oriongl::core::storage::MeshLoaderHelper::getSphereMesh(5.0f);
-    auto light_shader = oriongl::core::storage::ShaderManager::getProgram(vertex_shader, frag_light_shader, {});
-    auto light_model = oriongl::core::storage::ModelManager::getModel(light_shader, sphere_mesh, {});
+    auto sphere_mesh = resource_system.createSphereMesh(5.0f);
+    auto sphere_program = resource_system.createShader(vertex_shader, frag_light_shader, {});
+    auto sphere_model = resource_system.createModel(sphere_program, sphere_mesh);
 
     engine.loadEntityToScene(cube_model, cube_positions);
-    engine.loadEntityToScene(light_model, {glm::vec3(0.0f)});
+    engine.loadEntityToScene(sphere_model, light_positions);
 
     engine.run();
-
     return 0;
 }

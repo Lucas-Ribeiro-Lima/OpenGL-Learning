@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <memory>
 
 #include "Camera.h"
 #include "Light.h"
@@ -15,7 +16,7 @@ class Program {
     unsigned int ID = 0;
 
   public:
-    Program(Shader &&vertex, Shader &&fragment);
+    Program(std::shared_ptr<Shader> vertex, std::shared_ptr<Shader> fragment);
 
     Program &scale(glm::vec3 scaleProps);
 

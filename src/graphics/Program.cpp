@@ -8,10 +8,10 @@
 #include <glad.h>
 
 namespace oriongl::graphics {
-Program::Program(Shader &&vertex, Shader &&fragment) {
+Program::Program(std::shared_ptr<Shader> vertex, std::shared_ptr<Shader> fragment) {
     ID = glCreateProgram();
-    glAttachShader(ID, vertex.getId());
-    glAttachShader(ID, fragment.getId());
+    glAttachShader(ID, vertex->getId());
+    glAttachShader(ID, fragment->getId());
     glLinkProgram(ID);
 
     int sucess;

@@ -33,7 +33,7 @@ class ResourceSystem {
                                                     std::vector<std::string> defines);
     std::shared_ptr<graphics::Material> createMaterial(std::vector<std::string> textures);
     std::shared_ptr<graphics::Texture> createTexture(std::string path);
-    std::shared_ptr<graphics::Model> createModel(std::shared_ptr<graphics::Program> program,
+    std::shared_ptr<graphics::Model> createModel(std::string model_id, std::shared_ptr<graphics::Program> program,
                                                  std::shared_ptr<graphics::Mesh> mesh,
                                                  std::shared_ptr<graphics::Material> material = nullptr);
 };

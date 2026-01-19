@@ -47,10 +47,11 @@ std::shared_ptr<graphics::Mesh> ResourceSystem::createMesh(std::string key, grap
     return mesh_manager.createResource(key, vertexes, indexes);
 }
 
-std::shared_ptr<graphics::Model> ResourceSystem::createModel(std::shared_ptr<graphics::Program> program,
+std::shared_ptr<graphics::Model> ResourceSystem::createModel(std::string model_id,
+                                                             std::shared_ptr<graphics::Program> program,
                                                              std::shared_ptr<graphics::Mesh> mesh,
                                                              std::shared_ptr<graphics::Material> material) {
-    auto model = model_manager.createResource(std::move(program));
+    auto model = model_manager.createResource(model_id, program);
     model->loadData(mesh, material);
 
     return model;

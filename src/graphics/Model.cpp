@@ -3,7 +3,7 @@
 #include <glad.h>
 
 namespace oriongl::graphics {
-Model::Model(std::shared_ptr<Program> program) : program(std::move(program)) {}
+Model::Model(std::shared_ptr<Program> program) : program(program) {}
 
 std::shared_ptr<Program> Model::getModelProgram() const { return program; }
 

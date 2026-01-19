@@ -9,7 +9,7 @@ Shader::Shader(ShaderType type, std::string src_raw, const std::vector<std::stri
     : ID(glCreateShader(type)), shaderSource(src_raw), shaderType(type), defines(defines) {
     injectDefines();
     compileShader();
-    errors();
+    getErrors();
 }
 
 void Shader::injectDefines() {
@@ -26,19 +26,25 @@ void Shader::injectDefines() {
 }
 
 void Shader::compileShader() const {
-    const char *raw = &shaderSource[0];
+    const char *raw = shaderSource.c_str();
     glShaderSource(ID, 1, &raw, 0);
     glCompileShader(ID);
 }
 
 Shader::~Shader() { glDeleteShader(this->ID); }
 
-void Shader::errors() {
+std::string Shader::getSource() { return shaderSource; }
+
+void Shader::getErrors() {
+    int success = 0;
+    char infoLog[512];
+
     glGetShaderiv(ID, GL_COMPILE_STATUS, &success);
 
     if (!success) {
         glGetShaderInfoLog(ID, 512, NULL, infoLog);
         utils::logger(std::format("ORIONGL::SHADER::COMPILATION_FAILED + {}", infoLog));
+        throw std::runtime_error{infoLog};
     }
 }
 

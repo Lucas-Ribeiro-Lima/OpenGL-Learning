@@ -26,7 +26,7 @@ TEST(ShaderTest, vertex_create_one_shader) {
 
     EXPECT_NE(fragment_stage.getId(), 0);
     EXPECT_TRUE(glIsShader(fragment_stage.getId()));
-};
+}
 
 TEST(ShaderTest, vertex_create_multiple_shaders) {
     Shader shader_arr[] = {
@@ -37,7 +37,7 @@ TEST(ShaderTest, vertex_create_multiple_shaders) {
 
     for (size_t it = 0; it < 3; it++) {
         EXPECT_NE(shader_arr[it].getId(), 0);
-        EXPECT_TRUE(glIsVertexArray(shader_arr[it].getId()));
+        EXPECT_TRUE(glIsShader(shader_arr[it].getId()));
     }
 
     for (size_t i = 0; i < 2; i++) {
@@ -45,7 +45,7 @@ TEST(ShaderTest, vertex_create_multiple_shaders) {
             EXPECT_NE(shader_arr[i].getId(), shader_arr[j].getId());
         }
     }
-};
+}
 
 TEST(ShaderTest, defines_injection) {
     Shader shader_stage{ShaderType::VERTEX, vertex_src, {"USE_EMISSION_TEXTURE"}};
@@ -55,14 +55,11 @@ TEST(ShaderTest, defines_injection) {
     size_t define_position = src_with_defines.find(std::string{"#define USE_EMISSION_TEXTURE"});
 
     EXPECT_EQ(define_position, second_line);
-};
+}
 
 TEST(ShaderTest, invalid_shader_must_throw) {
-    try {
-        Shader invalid_shader{ShaderType::VERTEX, invalid_vertex_src};
-        FAIL();
-    } catch (std::runtime_error &e) {
-    }
+    EXPECT_ANY_THROW(({ Shader invalid_shader{ShaderType::VERTEX, invalid_vertex_src}; }));
+    EXPECT_ANY_THROW(({ Shader wrong_shader_type{ShaderType::FRAGMENT, vertex_src}; }));
 }
 
 } // namespace oriongl::graphics

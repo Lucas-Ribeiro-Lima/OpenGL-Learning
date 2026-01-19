@@ -4,39 +4,35 @@
 
 namespace oriongl::graphics {
 
-const char *vertex_shader = R"(#version 330 core
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 nPos;
-layout (location = 2) in vec2 aTextCoord;
+const char vertex_src[] = {
+#embed "assets/valid_vertex_src.glsl"
+    , '\0'};
 
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+const char fragment_src[] = {
+#embed "assets/valid_fragment_src.glsl"
+    , '\0'};
 
-out vec3 FragPos;
-out vec3 NormalPos;
-out vec2 TextCoord;
+// Shader missing the version line
+const char invalid_vertex_src[] = {
+#embed "assets/invalid_vertex_src.glsl"
+    , '\0'};
 
-void main()
-{
-  gl_Position = projection * view * model * vec4(aPos, 1.0);
-  FragPos = vec3(model * vec4(aPos, 1.0));
-  NormalPos = mat3(transpose(inverse(model))) * nPos;
-  TextCoord = aTextCoord;
-})";
+TEST(ShaderTest, vertex_create_one_shader) {
+    Shader vertex_stage{ShaderType::VERTEX, vertex_src, {}};
+    Shader fragment_stage{ShaderType::FRAGMENT, fragment_src, {}};
 
-TEST(ShaderTest, create_one_shader) {
-    Shader shader_stage{ShaderType::VERTEX, vertex_shader, {}};
+    EXPECT_NE(vertex_stage.getId(), 0);
+    EXPECT_TRUE(glIsShader(vertex_stage.getId()));
 
-    EXPECT_NE(shader_stage.getId(), 0);
-    EXPECT_TRUE(glIsShader(shader_stage.getId()));
+    EXPECT_NE(fragment_stage.getId(), 0);
+    EXPECT_TRUE(glIsShader(fragment_stage.getId()));
 };
 
-TEST(ShaderTest, create_multiple_shaders) {
+TEST(ShaderTest, vertex_create_multiple_shaders) {
     Shader shader_arr[] = {
-        {ShaderType::VERTEX, vertex_shader, {}},
-        {ShaderType::VERTEX, vertex_shader, {}},
-        {ShaderType::VERTEX, vertex_shader, {}},
+        {ShaderType::VERTEX, vertex_src, {}},
+        {ShaderType::VERTEX, vertex_src, {}},
+        {ShaderType::VERTEX, vertex_src, {}},
     };
 
     for (size_t it = 0; it < 3; it++) {
@@ -50,5 +46,23 @@ TEST(ShaderTest, create_multiple_shaders) {
         }
     }
 };
+
+TEST(ShaderTest, defines_injection) {
+    Shader shader_stage{ShaderType::VERTEX, vertex_src, {"USE_EMISSION_TEXTURE"}};
+    std::string src_with_defines = shader_stage.getSource();
+
+    size_t second_line = std::string{vertex_src}.find("\n") + 1;
+    size_t define_position = src_with_defines.find(std::string{"#define USE_EMISSION_TEXTURE"});
+
+    EXPECT_EQ(define_position, second_line);
+};
+
+TEST(ShaderTest, invalid_shader_must_throw) {
+    try {
+        Shader invalid_shader{ShaderType::VERTEX, invalid_vertex_src};
+        FAIL();
+    } catch (std::runtime_error &e) {
+    }
+}
 
 } // namespace oriongl::graphics

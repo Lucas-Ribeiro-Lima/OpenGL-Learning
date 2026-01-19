@@ -61,7 +61,9 @@ template <typename T> class Manager {
         return ss.str();
     }
 
-    template <typename... Args> std::shared_ptr<T> createResource(Args... args) {
+    template <typename... Args>
+        requires std::constructible_from<T, Args...>
+    std::shared_ptr<T> createResource(Args... args) {
         auto key = concatenateHashKeys(args...);
         auto ptr = tryToLockSmartPointer(key, map_);
 
@@ -71,7 +73,9 @@ template <typename T> class Manager {
         return instanciateAndCache(key, map_, args...);
     };
 
-    template <typename... Args> std::shared_ptr<T> createResource(const char *key, Args... args) {
+    template <typename K, typename... Args>
+        requires(!std::constructible_from<T, K, Args...>)
+    std::shared_ptr<T> createResource(K key, Args... args) {
         std::string key_{key};
         auto ptr = tryToLockSmartPointer(key_, map_);
 

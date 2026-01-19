@@ -25,7 +25,8 @@ class ResourceSystem {
     ResourceSystem() = default;
     std::shared_ptr<graphics::Mesh> createCubeMesh(float side_size);
     std::shared_ptr<graphics::Mesh> createSphereMesh(float radius);
-    std::shared_ptr<graphics::Mesh> createMesh(std::string src);
+    std::shared_ptr<graphics::Mesh> createMesh(std::string key, graphics::vertex_array vertexes,
+                                               graphics::indexes_array indexes);
     std::shared_ptr<graphics::Shader> createShaderStage(graphics::ShaderType type, std::string src,
                                                         std::vector<std::string> defines);
     std::shared_ptr<graphics::Program> createShader(std::string vertex_src, std::string frag_src,

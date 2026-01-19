@@ -42,6 +42,11 @@ std::shared_ptr<graphics::Mesh> ResourceSystem::createSphereMesh(float radius) {
     return mesh_manager.createResource("SPHERE_MESH_KEY", sphere_data.first, sphere_data.second);
 }
 
+std::shared_ptr<graphics::Mesh> ResourceSystem::createMesh(std::string key, graphics::vertex_array vertexes,
+                                                           graphics::indexes_array indexes) {
+    return mesh_manager.createResource(key, vertexes, indexes);
+}
+
 std::shared_ptr<graphics::Model> ResourceSystem::createModel(std::shared_ptr<graphics::Program> program,
                                                              std::shared_ptr<graphics::Mesh> mesh,
                                                              std::shared_ptr<graphics::Material> material) {

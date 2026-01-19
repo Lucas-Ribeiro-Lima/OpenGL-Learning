@@ -9,10 +9,7 @@
 
 namespace oriongl::graphics {
 class Program {
-    char infoLog[512] = {};
     glm::mat4 model = glm::mat4(1.0f);
-
-    int sucess = 0;
     unsigned int ID = 0;
 
   public:
@@ -47,6 +44,8 @@ class Program {
     void setUniform1i(const char name[], int value);
 
     void use();
+
+    unsigned int getId();
 
     void errors();
 };

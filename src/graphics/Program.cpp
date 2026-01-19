@@ -14,26 +14,23 @@ Program::Program(std::shared_ptr<Shader> vertex, std::shared_ptr<Shader> fragmen
     glAttachShader(ID, fragment->getId());
     glLinkProgram(ID);
 
-    int sucess;
-    char infoLog[512];
-    glGetProgramiv(ID, GL_LINK_STATUS, &sucess);
-
-    if (!sucess) {
-        glGetProgramInfoLog(ID, 512, NULL, infoLog);
-        std::cout << "ERROR::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
+    errors();
 }
 
 void Program::errors() {
-    glGetProgramiv(ID, GL_LINK_STATUS, &sucess);
+    int success = 0;
+    char infoLog[512];
+    glGetProgramiv(ID, GL_LINK_STATUS, &success);
 
-    if (!sucess) {
+    if (!success) {
         glGetProgramInfoLog(ID, 512, NULL, infoLog);
-        std::cout << "ERROR::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
+        throw std::runtime_error{infoLog};
     }
 }
 
 void Program::use() { glUseProgram(ID); }
+
+unsigned int Program::getId() { return ID; }
 
 void Program::resetModelMatrix() { model = glm::mat4(1.0f); }
 

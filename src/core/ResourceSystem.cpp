@@ -32,14 +32,16 @@ std::shared_ptr<graphics::Material> ResourceSystem::createMaterial(std::vector<s
 
 std::shared_ptr<graphics::Mesh> ResourceSystem::createCubeMesh(float side_size) {
     auto cube_data = generateCubeMeshData(side_size);
+    auto key = std::string("CUBE_MESH_KEY") + std::to_string(side_size);
 
-    return mesh_manager.createResource("CUBE_MESH_KEY", cube_data.first, cube_data.second);
+    return mesh_manager.createResource(key, cube_data.first, cube_data.second);
 };
 
 std::shared_ptr<graphics::Mesh> ResourceSystem::createSphereMesh(float radius) {
     auto sphere_data = generateSphereMeshData(radius);
+    auto key = std::string("SPHERE_MESH_KEY") + std::to_string(radius);
 
-    return mesh_manager.createResource("SPHERE_MESH_KEY", sphere_data.first, sphere_data.second);
+    return mesh_manager.createResource(key, sphere_data.first, sphere_data.second);
 }
 
 std::shared_ptr<graphics::Mesh> ResourceSystem::createMesh(std::string key, graphics::vertex_array vertexes,

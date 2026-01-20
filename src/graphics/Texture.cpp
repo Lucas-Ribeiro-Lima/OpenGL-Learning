@@ -29,7 +29,7 @@ Texture::Texture(std::string path) {
         glGenerateMipmap(GL_TEXTURE_2D);
     } else {
         glDeleteTextures(1, &TEX);
-        throw std::runtime_error{"Failure loading the texture. ABORTING"};
+        throw std::runtime_error{"Failure loading the texture."};
     }
 
     stbi_image_free(data);

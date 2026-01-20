@@ -24,6 +24,7 @@ void Program::errors() {
 
     if (!success) {
         glGetProgramInfoLog(ID, 512, NULL, infoLog);
+        glDeleteProgram(ID);
         throw std::runtime_error{infoLog};
     }
 }

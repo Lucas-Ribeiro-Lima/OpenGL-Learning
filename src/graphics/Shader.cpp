@@ -43,7 +43,7 @@ void Shader::getErrors() {
 
     if (!success) {
         glGetShaderInfoLog(ID, 512, NULL, infoLog);
-        utils::logger(std::format("ORIONGL::SHADER::COMPILATION_FAILED + {}", infoLog));
+        glDeleteShader(ID);
         throw std::runtime_error{infoLog};
     }
 }

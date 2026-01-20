@@ -48,11 +48,11 @@ int main() {
     auto cube_mesh = resource_system.createCubeMesh(3.0f);
     auto cube_program = resource_system.createShader(vertex_shader, frag_shader, {});
     auto cube_material = resource_system.createMaterial(box_material);
-    auto cube_model = resource_system.createModel(cube_program, cube_mesh, cube_material);
+    auto cube_model = resource_system.createModel("CUBE_MODEL_1", cube_program, cube_mesh, cube_material);
 
+    auto light_program = resource_system.createShader(vertex_shader, frag_light_shader, {});
     auto sphere_mesh = resource_system.createSphereMesh(5.0f);
-    auto sphere_program = resource_system.createShader(vertex_shader, frag_light_shader, {});
-    auto sphere_model = resource_system.createModel(sphere_program, sphere_mesh);
+    auto sphere_model = resource_system.createModel("SPHERE_MODEL_1", light_program, sphere_mesh);
 
     engine.loadEntityToScene(cube_model, cube_positions);
     engine.loadEntityToScene(sphere_model, light_positions);

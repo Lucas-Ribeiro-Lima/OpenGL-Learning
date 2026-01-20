@@ -9,8 +9,6 @@ class Environment : public ::testing::Environment {
     void SetUp() override { ctx = std::make_unique<core::WindowSystem>(); };
 
     void TearDown() override { ctx->closeWindow(); }
-
-    static Environment *ctx_;
 };
 
 } // namespace oriongl::test

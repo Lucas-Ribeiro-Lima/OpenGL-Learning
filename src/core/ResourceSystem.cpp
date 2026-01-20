@@ -7,7 +7,8 @@ std::shared_ptr<graphics::Program> ResourceSystem::createShader(std::string vert
     auto vertex_shader = createShaderStage(graphics::ShaderType::VERTEX, vertex_src, defines);
     auto fragment_shader = createShaderStage(graphics::ShaderType::FRAGMENT, frag_src, defines);
 
-    return program_manager.createResource(std::move(vertex_shader), std::move(fragment_shader));
+    auto key = program_manager.concatenateHashKeys(vertex_src, frag_src, defines);
+    return program_manager.createResource(key, std::move(vertex_shader), std::move(fragment_shader));
 };
 
 std::shared_ptr<graphics::Shader> ResourceSystem::createShaderStage(graphics::ShaderType type, std::string src,

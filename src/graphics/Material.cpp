@@ -7,13 +7,14 @@
 #include <glad.h>
 
 namespace oriongl::graphics {
-#define MAX_TEXTURES 8
+
+constexpr const size_t MAX_TEXTURES_SUPPORT = 8;
 
 Material::Material() {};
 
-void Material::loadTexture(std::shared_ptr<oriongl::graphics::Texture> texture) { 
-  assert(textures.size() < MAX_TEXTURES && "Exceeded maximum number of textures per material");
-  textures.push_back(std::move(texture)); 
+void Material::loadTexture(std::shared_ptr<oriongl::graphics::Texture> texture) {
+    assert(textures.size() < MAX_TEXTURES_SUPPORT && "Exceeded maximum number of textures per material");
+    textures.push_back(std::move(texture));
 }
 
 void Material::bindMaterial() {

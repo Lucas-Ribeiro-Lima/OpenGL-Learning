@@ -9,17 +9,16 @@
 
 #include <memory>
 #include <vector>
-#include <string>
 
 namespace oriongl::graphics {
-    class Material {
-        std::vector<std::shared_ptr<Texture>> textures;
+class Material {
+    std::vector<std::shared_ptr<Texture>> textures;
 
-    public:
-        Material();
-        void loadTexture(std::shared_ptr<Texture> texture);
-        void bindMaterial();
-    };
-}
+  public:
+    Material();
+    void loadTexture(std::shared_ptr<Texture> texture);
+    void bindMaterial();
+};
+} // namespace oriongl::graphics
 
-#endif //OPENGL_LEARNING_MATERIAL_H
+#endif // OPENGL_LEARNING_MATERIAL_H

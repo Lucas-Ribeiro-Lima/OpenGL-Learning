@@ -1,19 +1,8 @@
 #include <ResourceSystem.h>
 #include <gtest/gtest.h>
+#include <test_resources.h>
 
 namespace oriongl::core {
-
-const char vertex_src[] = {
-#embed "assets/valid_vertex_src.glsl"
-    , '\0'};
-
-const char fragment_src[] = {
-#embed "assets/valid_fragment_src.glsl"
-    , '\0'};
-
-const char fragment_light_src[] = {
-#embed "assets/frag_light_shader.glsl"
-    , '\0'};
 
 class ResourceSystemTest : public testing::Test {
   protected:

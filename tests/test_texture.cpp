@@ -1,8 +1,7 @@
 #include <Texture.h>
 #include <glad.h>
 #include <gtest/gtest.h>
-
-#define DUMMY_TEXTURE_PATH "assets/black_pixel.png"
+#include <test_resources.h>
 
 namespace oriongl::graphics {
 

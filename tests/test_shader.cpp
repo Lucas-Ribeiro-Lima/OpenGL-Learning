@@ -1,21 +1,9 @@
 #include <Shader.h>
 #include <glad.h>
 #include <gtest/gtest.h>
+#include <test_resources.h>
 
 namespace oriongl::graphics {
-
-const char vertex_src[] = {
-#embed "assets/valid_vertex_src.glsl"
-    , '\0'};
-
-const char fragment_src[] = {
-#embed "assets/valid_fragment_src.glsl"
-    , '\0'};
-
-// Shader missing the version line
-const char invalid_vertex_src[] = {
-#embed "assets/invalid_vertex_src.glsl"
-    , '\0'};
 
 TEST(ShaderTest, vertex_create_one_shader) {
     Shader vertex_stage{ShaderType::VERTEX, vertex_src, {}};

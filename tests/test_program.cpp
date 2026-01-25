@@ -3,16 +3,9 @@
 #include <glad.h>
 #include <gtest/gtest.h>
 #include <memory.h>
+#include <test_resources.h>
 
 namespace oriongl::graphics {
-
-const char vertex_src[] = {
-#embed "assets/valid_vertex_src.glsl"
-    , '\0'};
-
-const char fragment_src[] = {
-#embed "assets/valid_fragment_src.glsl"
-    , '\0'};
 
 class ProgramTest : public testing::Test {
   protected:

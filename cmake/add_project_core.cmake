@@ -17,3 +17,4 @@ target_include_directories(${PROJECT_CORE_LIB} PUBLIC "${PROJECT_SOURCE_DIR}/inc
 #Third parties
 target_link_libraries(${PROJECT_CORE_LIB} PUBLIC glm)
 target_link_libraries(${PROJECT_CORE_LIB} PUBLIC glfw)
+target_link_libraries(${PROJECT_CORE_LIB} PUBLIC assimp)

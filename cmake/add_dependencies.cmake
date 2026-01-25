@@ -17,6 +17,12 @@ FetchContent_Declare(
         URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
 )
 
+FetchContent_Declare(
+      assimp
+      GIT_REPOSITORY "https://github.com/assimp/assimp.git"
+      GIT_TAG v6.0.4
+)
+
 #Disable installation of sub_directories of Gtest
 set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 set(INSTALL_GMOCK OFF CACHE BOOL "" FORCE)
@@ -24,3 +30,4 @@ set(INSTALL_GMOCK OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(glm)
 FetchContent_MakeAvailable(glfw)
 FetchContent_MakeAvailable(googletest)
+FetchContent_MakeAvailable(assimp)

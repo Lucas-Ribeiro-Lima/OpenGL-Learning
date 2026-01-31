@@ -3,6 +3,7 @@ file(GLOB_RECURSE CPP_SOURCES_CORE "${PROJECT_SOURCE_DIR}/src/core/*.cpp")
 file(GLOB_RECURSE CPP_SOURCES_GRAPHICS "${PROJECT_SOURCE_DIR}/src/graphics/*.cpp")
 file(GLOB_RECURSE CPP_SOURCES_UTILS "${PROJECT_SOURCE_DIR}/src/utils/*.cpp")
 file(GLOB CPP_THIRDPARTY_GLFW "${PROJECT_SOURCE_DIR}/src/thirdparty/GLFW.cpp")
+file(GLOB CPP_THIRDPARTY_ASSIMP "${PROJECT_SOURCE_DIR}/src/thirdparty/Assimp.cpp")
 
 set(PROJECT_CORE_LIB "${PROJECT_NAME}")
 add_library(${PROJECT_CORE_LIB} STATIC
@@ -10,7 +11,9 @@ add_library(${PROJECT_CORE_LIB} STATIC
         ${CPP_SOURCES_GRAPHICS}
         ${CPP_SOURCES_UTILS}
         ${CPP_THIRDPARTY_GLFW}
+        ${CPP_THIRDPARTY_ASSIMP}
         "src/graphics/glad.c")
+
 
 target_include_directories(${PROJECT_CORE_LIB} PUBLIC "${PROJECT_SOURCE_DIR}/include")
 

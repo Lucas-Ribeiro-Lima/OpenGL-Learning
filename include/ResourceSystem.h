@@ -36,5 +36,7 @@ class ResourceSystem {
     std::shared_ptr<graphics::Model> createModel(std::string model_id, std::shared_ptr<graphics::Program> program,
                                                  std::shared_ptr<graphics::Mesh> mesh,
                                                  std::shared_ptr<graphics::Material> material = nullptr);
+    std::shared_ptr<graphics::Model> createModel(std::string model_id, std::shared_ptr<graphics::Program> program,
+                                                 std::string src);
 };
 } // namespace oriongl::core

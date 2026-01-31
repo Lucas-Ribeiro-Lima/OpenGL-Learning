@@ -1,4 +1,7 @@
+#include <ModelLoader.h>
 #include <ResourceSystem.h>
+
+#include <assert.h>
 
 namespace oriongl::core {
 
@@ -59,6 +62,23 @@ std::shared_ptr<graphics::Model> ResourceSystem::createModel(std::string model_i
 
     return model;
 }
+
+std::shared_ptr<graphics::Model> ResourceSystem::createModel(std::string model_id,
+                                                             std::shared_ptr<graphics::Program> program, std::string src) {
+    auto model = model_manager.createResource(model_id, program);
+
+    auto [mesh_data, material_data] = ModelLoader::loadFromFile(src);
+
+    assert(mesh_data.size() == material_data.size() && "Mesh and Materials must be the same size");
+    for (size_t it = 0; it < mesh_data.size(); it++) {
+        auto mesh = createMesh(model_id + std::to_string(it), std::get<0>(mesh_data[it]), std::get<1>(mesh_data[it]));
+        auto material = createMaterial(material_data[it]);
+
+        model->loadData(mesh, material);
+    }
+
+    return model;
+};
 
 std::pair<graphics::vertex_array, graphics::indexes_array> ResourceSystem::generateCubeMeshData(float side_size) {
     // clang-format off

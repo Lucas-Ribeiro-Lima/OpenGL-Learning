@@ -30,7 +30,7 @@ class ResourceSystem {
     std::shared_ptr<graphics::Shader> createShaderStage(graphics::ShaderType type, std::string src,
                                                         std::vector<std::string> defines);
     std::shared_ptr<graphics::Program> createShader(std::string vertex_src, std::string frag_src,
-                                                    std::vector<std::string> defines);
+                                                    std::vector<std::string> defines = {});
     std::shared_ptr<graphics::Material> createMaterial(std::vector<std::string> textures);
     std::shared_ptr<graphics::Texture> createTexture(std::string path);
     std::shared_ptr<graphics::Model> createModel(std::string model_id, std::shared_ptr<graphics::Program> program,

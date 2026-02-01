@@ -18,7 +18,7 @@ int main() {
     auto program = resource_system.createShader(vertex_shader, frag_shader);
     auto backpack = resource_system.createModel("SURVIVAL_BACKPACK", program, backpack_src);
 
-    engine.loadEntityToScene(backpack, std::vector<glm::vec3>{{0.0f, 0.0f, 0.0f}});
+    engine.loadEntityToScene(backpack, std::vector<glm::vec3>{{0.0f, 0.0f, -550.0f}});
 
     engine.run();
     return 0;

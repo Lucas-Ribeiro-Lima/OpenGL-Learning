@@ -15,11 +15,11 @@ int main() {
     oriongl::Engine engine;
     oriongl::core::ResourceSystem resource_system;
 
-    auto program = resource_system.createShader(vertex_shader, frag_shader, {});
-    auto backpack = resource_system.createModel("SURVIVEL_BACKPACK", program, backpack_src);
+    auto program = resource_system.createShader(vertex_shader, frag_shader);
+    auto backpack = resource_system.createModel("SURVIVAL_BACKPACK", program, backpack_src);
 
-    engine.loadEntityToScene(backpack, std::vector<glm::vec3>{{0.0f, 0.0f, 5.0f}});
+    engine.loadEntityToScene(backpack, std::vector<glm::vec3>{{0.0f, 0.0f, 0.0f}});
 
     engine.run();
     return 0;
-};
+}

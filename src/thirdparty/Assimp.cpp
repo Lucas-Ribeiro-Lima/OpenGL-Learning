@@ -5,6 +5,7 @@
 #include <assimp/scene.h>
 
 #include <assert.h>
+#include <filesystem>
 #include <span>
 #include <string>
 
@@ -13,13 +14,15 @@ namespace oriongl::core {
 class ModelLoaderImpl {
     ModelData data;
     const aiScene *scene = nullptr;
+    const std::filesystem::path model_root_path;
 
   public:
-    ModelLoaderImpl() {};
+    ModelLoaderImpl(std::string model_path) : model_root_path(std::filesystem::path(model_path).parent_path()) {};
     ModelData process(const aiScene *sc);
     void processNode(aiNode *node);
     void processMesh(unsigned int meshId);
     void processMaterial(unsigned int materialId);
+    std::string normalizeTexturePath(aiString texture_path);
 };
 
 ModelData ModelLoaderImpl::process(const aiScene *sc) {
@@ -36,8 +39,6 @@ void ModelLoaderImpl::processMesh(unsigned int meshId) {
     aiVector3D *ai_normals = mesh->mNormals;
     aiVector3D **ai_text_coords = mesh->mTextureCoords;
 
-    MeshData mesh_data;
-
     graphics::vertex_array vertexes;
     std::span index_span(mesh->mFaces->mIndices, mesh->mFaces->mNumIndices);
     graphics::indexes_array indexes(index_span.begin(), index_span.end());
@@ -49,8 +50,8 @@ void ModelLoaderImpl::processMesh(unsigned int meshId) {
         vertexes.push_back(ai_normals[i].x);
         vertexes.push_back(ai_normals[i].y);
         vertexes.push_back(ai_normals[i].z);
-        vertexes.push_back(ai_text_coords[i]->x);
-        vertexes.push_back(ai_text_coords[i]->y);
+        vertexes.push_back(ai_text_coords[0][i].x);
+        vertexes.push_back(ai_text_coords[0][i].y);
     }
 
     data.mesh_data.push_back(std::make_tuple(vertexes, indexes));
@@ -63,20 +64,29 @@ void ModelLoaderImpl::processMaterial(unsigned int materialId) {
     unsigned int specular_cnt = material->GetTextureCount(aiTextureType_SPECULAR);
     unsigned int emissive_cnt = material->GetTextureCount(aiTextureType_EMISSIVE);
 
-    aiString diffuse_path{};
+    aiString ai_diffuse_path;
     if (diffuse_cnt)
-        material->GetTexture(aiTextureType_DIFFUSE, 0, &diffuse_path);
+        material->GetTexture(aiTextureType_DIFFUSE, 0, &ai_diffuse_path);
+    auto normalized_diffuse_path = normalizeTexturePath(ai_diffuse_path);
 
-    aiString emissive_path{};
-    if (specular_cnt)
-        material->GetTexture(aiTextureType_EMISSIVE, 0, &emissive_path);
-
-    aiString specular_path{};
+    aiString ai_specular_path;
     if (emissive_cnt)
-        material->GetTexture(aiTextureType_SPECULAR, 0, &specular_path);
+        material->GetTexture(aiTextureType_SPECULAR, 0, &ai_specular_path);
+    auto normalized_specular_path = normalizeTexturePath(ai_specular_path);
 
-    data.material_data.push_back(
-        std::vector{std::string{diffuse_path.data}, std::string{specular_path.data}, std::string{emissive_path.data}});
+    aiString ai_emissive_path;
+    if (specular_cnt)
+        material->GetTexture(aiTextureType_EMISSIVE, 0, &ai_emissive_path);
+    auto normalized_emissive_path = normalizeTexturePath(ai_emissive_path);
+
+    data.material_data.push_back(std::vector{normalized_diffuse_path, normalized_specular_path, normalized_emissive_path});
+};
+
+std::string ModelLoaderImpl::normalizeTexturePath(aiString texture_path) {
+    if (texture_path.Empty())
+        return "assets/black_pixel.png";
+
+    return model_root_path / texture_path.data;
 };
 
 void ModelLoaderImpl::processNode(aiNode *node) {
@@ -91,14 +101,15 @@ void ModelLoaderImpl::processNode(aiNode *node) {
 
 ModelData ModelLoader::loadFromFile(std::string src) {
     Assimp::Importer importer;
-    const aiScene *scene = importer.ReadFile(src, aiProcess_Triangulate | aiProcess_FlipUVs);
+
+    const aiScene *scene = importer.ReadFile(src, aiProcess_Triangulate);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         std::string error_msg{importer.GetErrorString()};
         throw std::runtime_error("ERROR::ASSIMP::" + error_msg);
     }
 
-    ModelLoaderImpl model_impl;
+    ModelLoaderImpl model_impl{src};
     return model_impl.process(scene);
 };
 

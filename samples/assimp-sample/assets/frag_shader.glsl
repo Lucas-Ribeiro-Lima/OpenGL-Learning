@@ -26,6 +26,9 @@ out vec4 FragColor;
 void main()
 {
   vec4 textel1 = texture(material.diffuse, TextCoord);
+  if(textel1.a < 0.1)
+    discard;
+
   vec4 textel2 = texture(material.specular, TextCoord);
 
   vec3 diffTextelRGB = textel1.rgb;

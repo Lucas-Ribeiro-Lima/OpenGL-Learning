@@ -26,12 +26,15 @@ void Model::deleteData(size_t index) {
 */
 void Model::draw() {
     for (size_t i = 0; i < meshes.size(); i++) {
-        glBindVertexArray(meshes[i]->getVAO());
+        auto &mesh = meshes[i];
+        auto &material = materials[i];
 
-        if (materials[i])
-            materials[i]->bindMaterial();
+        glBindVertexArray(mesh->getVAO());
 
-        glDrawElements(GL_TRIANGLES, meshes[i]->getIndexSize(), GL_UNSIGNED_INT, 0);
+        if (material)
+            material->bindMaterial();
+
+        glDrawElements(GL_TRIANGLES, mesh->getIndexSize(), GL_UNSIGNED_INT, 0);
 
         glBindVertexArray(0);
     }

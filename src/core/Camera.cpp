@@ -2,8 +2,13 @@
 #include <InputSystemForward.h>
 #include <glm/gtc/matrix_transform.hpp>
 
+namespace {
+constexpr const float aspect_ratio_array[] = {1920.0f / 1080.0f, 1280.0f / 920.0f};
+}
+
 namespace oriongl::core {
-Camera::Camera() {};
+Camera::Camera(float fovy, ratio::AspectRatio ratio, float near, float far)
+    : perspective(glm::perspective(fovy, aspect_ratio_array[ratio], near, far)) {};
 
 void Camera::setFront(float value) { pos += front * cameraSpeed * value; }
 

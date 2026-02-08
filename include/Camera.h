@@ -2,14 +2,19 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+namespace oriongl::ratio {
+enum AspectRatio : unsigned int { FullHD, HD };
+}
+
 namespace oriongl::core {
+
 class Camera {
     glm::vec3 pos{0.0f, 0.0f, 30.0f};
     glm::vec3 front{0.0f, 0.0f, -1.0f};
     glm::vec3 up{0.0f, 1.0f, 0.0f};
 
     glm::mat4 view = glm::lookAt(pos, pos + front, up);
-    glm::mat4 perspective = glm::perspective(45.0f, 1280.0f / 920.0f, 0.1f, 1000.f);
+    glm::mat4 perspective = glm::perspective(45.0f, 1920.0f / 1080.0f, 0.1f, 1000.f);
 
     float cameraSpeed = 50.0f;
 
@@ -43,7 +48,9 @@ class Camera {
     void lookAt(float x, float y);
 
   public:
-    Camera();
+    Camera() = default;
+
+    Camera(float fov, ratio::AspectRatio ratio, float near, float rear);
 
     glm::mat4 &getView();
 

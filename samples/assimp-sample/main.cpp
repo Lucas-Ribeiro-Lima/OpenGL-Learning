@@ -36,6 +36,8 @@ int main() {
     scene.entities.push_back(sea_keep_ent);
     scene.lights.directional = {0.0f, -0.45f, -0.45f};
 
+    scene.camera = {45.0f, oriongl::ratio::FullHD, 0.1f, 3000.0f};
+
     engine.setScene(scene);
     engine.run();
     return 0;

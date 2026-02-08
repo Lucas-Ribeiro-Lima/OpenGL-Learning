@@ -3,7 +3,6 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <iostream>
 
 #include <glad.h>
 
@@ -35,7 +34,7 @@ unsigned int Program::getId() { return ID; }
 
 void Program::resetModelMatrix() { model = glm::mat4(1.0f); }
 
-void Program::setModelMatrix() { setUniform4fv("model", model); }
+void Program::setModelMatrix() { setUniform4fm("model", model); }
 
 Program &Program::scale(glm::vec3 scaleProps) {
     model = glm::scale(model, scaleProps);
@@ -53,16 +52,36 @@ Program &Program::translate(glm::vec3 translateProps) {
 }
 
 void Program::setCamera(core::Camera &camera) {
-    setUniform4fv("view", camera.getView());
+    setUniform4fm("view", camera.getView());
     setUniform3fv("viewPos", camera.getViewPosition());
-    setUniform4fv("projection", camera.getPerspective());
+    setUniform4fm("projection", camera.getPerspective());
 }
 
-void Program::setLight(Light &light) {
-    setUniform3fv("light.position", light.position);
-    setUniform3fv("light.ambient", light.ambient);
-    setUniform3fv("light.diffuse", light.diffuse);
-    setUniform3fv("light.specular", light.specular);
+// Shader light structure
+// struct LightScaling {
+//  float ambient;
+//  float diffuse;
+//  float specular;
+//}
+// struct Light {
+//   vec4 position; position.w set to 0.0f when directional.
+//   vec4 direction; direction.w set to 0.0f when point light.
+//   vec3 color; default to white.
+//   float cutOff; 0.0f when not spotlight.
+// }
+void Program::setLights(graphics::Lighting &lights) {
+    auto &_direction = lights.directional._direction;
+    auto &_color = lights.directional._color;
+    auto &_scaling = lights.directional._scaling;
+
+    setUniform4fv("directional.position", glm::vec4(0.0f));
+    setUniform4fv("directional.direction", glm::vec4{_direction, 0.0f});
+    setUniform3fv("directional.color", glm::vec3(_color[0], _color[1], _color[2]));
+    setUniform1f("directional.cutOff", 0.0f);
+
+    setUniform1f("lightScaling.ambient", _scaling.ambient);
+    setUniform1f("lightScaling.diffuse", _scaling.diffuse);
+    setUniform1f("lightScaling.specular", _scaling.specular);
 }
 
 void Program::setTextures() {
@@ -77,11 +96,15 @@ void Program::setUniform1I(const char name[], GLint value) const { glUniform1i(g
 
 void Program::setUniform1f(const char name[], GLfloat value) const { glUniform1f(glGetUniformLocation(ID, name), value); }
 
-void Program::setUniform3fv(const char name[], glm::vec3 &vec) {
+void Program::setUniform3fv(const char name[], glm::vec3 vec) {
     glUniform3fv(glGetUniformLocation(ID, name), 1, glm::value_ptr(vec));
 }
 
-void Program::setUniform4fv(const char name[], glm::mat4 &mat) {
+void Program::setUniform4fv(const char name[], glm::vec4 vec) {
+    glUniform4fv(glGetUniformLocation(ID, name), 1, glm::value_ptr(vec));
+}
+
+void Program::setUniform4fm(const char name[], glm::mat4 mat) {
     glUniformMatrix4fv(glGetUniformLocation(ID, name), 1, GL_FALSE, glm::value_ptr(mat));
 }
 

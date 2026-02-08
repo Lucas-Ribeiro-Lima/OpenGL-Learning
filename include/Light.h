@@ -8,13 +8,38 @@
 #include "glm/vec3.hpp"
 
 namespace oriongl::graphics {
-    struct Light {
-        glm::vec3 position{0.0f};
-        glm::vec3 ambient{0.05f};
-        glm::vec3 diffuse{0.8f};
-        glm::vec3 specular{1.0f};
-    };
-}
 
+struct LightScale {
+    float ambient = 0.05f;
+    float diffuse = 0.8f;
+    float specular = 1.0f;
+};
 
-#endif //OPENGL_LEARNING_LIGHT_H
+struct Light {
+    std::array<float, 3> _color;
+    LightScale _scaling;
+};
+
+struct DirectionalLight : Light {
+    glm::vec3 _direction{0.0f, -0.45f, -0.45f};
+};
+
+struct PointLight : Light {
+    glm::vec3 _position;
+};
+
+struct SpotLight : Light {
+    glm::vec3 _position;
+    glm::vec3 _direction;
+    float cutOff;
+};
+
+struct Lighting {
+    graphics::DirectionalLight directional;
+    std::vector<graphics::PointLight> points;
+    std::vector<graphics::SpotLight> spotlights;
+};
+
+} // namespace oriongl::graphics
+
+#endif // OPENGL_LEARNING_LIGHT_H

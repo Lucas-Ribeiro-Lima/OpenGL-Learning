@@ -50,13 +50,23 @@ int main() {
     auto cube_material = resource_system.createMaterial(box_material);
     auto cube_model = resource_system.createModel("CUBE_MODEL_1", cube_program, cube_mesh, cube_material);
 
+    oriongl::core::Entity cube_ent;
+    cube_ent.model = cube_model;
+    cube_ent.instances = cube_positions;
+
     auto light_program = resource_system.createShader(vertex_shader, frag_light_shader, {});
     auto sphere_mesh = resource_system.createSphereMesh(5.0f);
     auto sphere_model = resource_system.createModel("SPHERE_MODEL_1", light_program, sphere_mesh);
 
-    engine.loadEntityToScene(cube_model, cube_positions);
-    engine.loadEntityToScene(sphere_model, light_positions);
+    oriongl::core::Entity sphere_ent;
+    sphere_ent.model = sphere_model;
+    sphere_ent.instances = light_positions;
 
+    oriongl::core::Scene scene;
+    scene.entities.insert(scene.entities.end(), {cube_ent, sphere_ent});
+    scene.lights.directional = {0.0f, -0.45f, -0.45f};
+
+    engine.setScene(scene);
     engine.run();
     return 0;
 }

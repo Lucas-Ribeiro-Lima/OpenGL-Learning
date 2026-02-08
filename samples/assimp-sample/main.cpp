@@ -1,5 +1,6 @@
 #include <Engine.h>
 #include <ResourceSystem.h>
+#include <Scene.h>
 
 const char vertex_shader[] = {
 #embed "assets/vertex_shader.glsl"
@@ -26,8 +27,16 @@ int main() {
     // engine.loadEntityToScene(backpack, std::vector<glm::vec3>{{0.0f, 0.0f, -500.0f}});
 
     auto sea_keep = resource_system.createModel("SEA_KEEP", program, sea_keep_src);
-    engine.loadEntityToScene(sea_keep, std::vector<glm::vec3>{{0.0f, -300.0f, -500.0f}});
 
+    oriongl::core::Entity sea_keep_ent;
+    sea_keep_ent.model = sea_keep;
+    sea_keep_ent.instances.push_back({0.0f, -300.0f, -500.0f});
+
+    oriongl::core::Scene scene;
+    scene.entities.push_back(sea_keep_ent);
+    scene.lights.directional = {0.0f, -0.45f, -0.45f};
+
+    engine.setScene(scene);
     engine.run();
     return 0;
 }

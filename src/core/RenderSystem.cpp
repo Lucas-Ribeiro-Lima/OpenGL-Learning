@@ -12,12 +12,12 @@ void RenderSystem::render(Scene &scene) {
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    auto &light = scene.light;
+    auto &lights = scene.lights;
     auto &camera = scene.camera;
 
     camera.processCommands();
 
-    for (auto &entitie : scene.data) {
+    for (auto &entitie : scene.entities) {
 
         auto &instances = entitie.instances;
         auto &model = entitie.model;
@@ -26,7 +26,7 @@ void RenderSystem::render(Scene &scene) {
 
         shader->use();
         shader->setCamera(camera);
-        shader->setLight(light);
+        shader->setLights(lights);
 
         for (auto &instance : instances) {
             shader->resetModelMatrix();

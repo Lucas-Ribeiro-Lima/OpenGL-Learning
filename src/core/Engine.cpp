@@ -26,11 +26,5 @@ void Engine::processCommands() {
     }
 }
 
-void Engine::loadEntityToScene(std::shared_ptr<graphics::Model> model, std::vector<glm::vec3> instances) {
-    core::Entity entity;
-    entity.model = std::move(model);
-    entity.instances = instances;
-    scene.data.push_back(std::move(entity));
-}
-
+void Engine::setScene(core::Scene &sc) { scene = sc; }
 } // namespace oriongl

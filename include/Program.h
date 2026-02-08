@@ -25,7 +25,7 @@ class Program {
 
     void setModelMatrix();
 
-    void setLight(Light &light);
+    void setLights(graphics::Lighting &lights);
 
     void setCamera(core::Camera &camera);
 
@@ -37,9 +37,11 @@ class Program {
 
     void setUniform1f(const char name[], float value) const;
 
-    void setUniform3fv(const char name[], glm::vec3 &vec);
+    void setUniform3fv(const char name[], glm::vec3 vec);
 
-    void setUniform4fv(const char name[], glm::mat4 &mat);
+    void setUniform4fv(const char name[], glm::vec4 vec);
+
+    void setUniform4fm(const char name[], glm::mat4 mat);
 
     void setUniform1i(const char name[], int value);
 

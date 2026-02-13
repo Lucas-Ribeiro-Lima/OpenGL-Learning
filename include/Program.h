@@ -25,7 +25,13 @@ class Program {
 
     void setModelMatrix();
 
-    void setLights(graphics::Lighting &lights);
+    void setLights(core::Lighting &lights);
+
+    void setLightScale(graphics::LightScale &scaling);
+
+    void setDirectionalLight(graphics::DirectionalLight &light);
+
+    void setPointLights(std::vector<graphics::PointLight> &lights);
 
     void setCamera(core::Camera &camera);
 

@@ -4,7 +4,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <algorithm>
+
 #include <glad.h>
+
+namespace {
+const size_t MAX_NUMBER_POINT_LIGHTS = 8;
+}
 
 namespace oriongl::graphics {
 Program::Program(std::shared_ptr<Shader> vertex, std::shared_ptr<Shader> fragment) {
@@ -69,19 +75,55 @@ void Program::setCamera(core::Camera &camera) {
 //   vec3 color; default to white.
 //   float cutOff; 0.0f when not spotlight.
 // }
-void Program::setLights(graphics::Lighting &lights) {
-    auto &_direction = lights.directional._direction;
-    auto &_color = lights.directional._color;
-    auto &_scaling = lights.directional._scaling;
+void Program::setLights(core::Lighting &lights) {
+    setLightScale(lights.getLightScaling());
 
-    setUniform4fv("directional.position", glm::vec4(0.0f));
-    setUniform4fv("directional.direction", glm::vec4{_direction, 0.0f});
+    bool _res = lights.hasDirectional();
+    setUniform1i("hasDirectional", _res);
+
+    if (_res)
+        setDirectionalLight(lights.getDirectionalLight());
+
+    setPointLights(lights.getPointLights());
+}
+
+void Program::setLightScale(graphics::LightScale &scaling) {
+    setUniform1f("lightScaling.ambient", scaling.ambient);
+    setUniform1f("lightScaling.diffuse", scaling.diffuse);
+    setUniform1f("lightScaling.specular", scaling.specular);
+}
+
+void Program::setDirectionalLight(graphics::DirectionalLight &light) {
+    auto &_direction = light._direction;
+    auto &_color = light._color;
+
+    setUniform3fv("directional.position", glm::vec3(0.0f));
+    setUniform3fv("directional.direction", _direction);
     setUniform3fv("directional.color", glm::vec3(_color[0], _color[1], _color[2]));
     setUniform1f("directional.cutOff", 0.0f);
+}
 
-    setUniform1f("lightScaling.ambient", _scaling.ambient);
-    setUniform1f("lightScaling.diffuse", _scaling.diffuse);
-    setUniform1f("lightScaling.specular", _scaling.specular);
+void Program::setPointLights(std::vector<graphics::PointLight> &lights) {
+    size_t n_lights = std::min(lights.size(), MAX_NUMBER_POINT_LIGHTS);
+
+    setUniform1i("nPointLights", n_lights);
+
+    for (size_t i = 0; i < n_lights; i++) {
+        auto &position = lights[i]._position;
+        auto &color = lights[i]._color;
+        auto &attenuation = lights[i]._attenuation;
+
+        std::string label = "pointLights[" + std::to_string(i) + "]";
+
+        setUniform3fv((label + ".position").c_str(), position);
+        setUniform3fv((label + ".direction").c_str(), glm::vec3(0.0f));
+        setUniform3fv((label + ".color").c_str(), glm::vec3(color[0], color[1], color[2]));
+        setUniform1f((label + ".cutOff").c_str(), 0.0f);
+
+        setUniform1f((label + ".attenuation.constant").c_str(), attenuation.constant);
+        setUniform1f((label + ".attenuation.linear").c_str(), attenuation.linear);
+        setUniform1f((label + ".attenuation.quadratic").c_str(), attenuation.quadratic);
+    }
 }
 
 void Program::setTextures() {

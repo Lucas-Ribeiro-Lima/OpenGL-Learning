@@ -30,10 +30,14 @@ const std::vector<glm::vec3> cube_positions = {
     { -17.5f, -20.0f, -30.3f }
 };
 
-const std::vector<glm::vec3> light_positions = {
-  { 0.0f, 0.0f, 0.0f },
+std::vector<oriongl::graphics::PointLight> point_light_positions = {
+  { { 0.0f, 0.0f, -50.0f }, { 1.0f, 1.8f, 1.0f } },
 };
 // clang-format on
+
+oriongl::graphics::DirectionalLight dir_light{
+    ._direction = {0.0f, -0.45f, -0.45f},
+};
 
 std::vector<std::string> box_material{
     "assets/container.png",
@@ -60,13 +64,15 @@ int main() {
 
     oriongl::core::Entity sphere_ent;
     sphere_ent.model = sphere_model;
-    sphere_ent.instances = light_positions;
+    sphere_ent.instances = std::vector{point_light_positions[0]._position};
 
-    oriongl::core::Scene scene;
+    oriongl::core::Lighting scene_lighting{point_light_positions};
+    oriongl::core::Scene scene{.lights = scene_lighting};
+
     scene.entities.insert(scene.entities.end(), {cube_ent, sphere_ent});
-    scene.lights.directional = {0.0f, -0.45f, -0.45f};
 
     engine.setScene(scene);
     engine.run();
+
     return 0;
 }

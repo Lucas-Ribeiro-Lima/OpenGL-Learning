@@ -3,15 +3,15 @@
 #include <vector>
 
 const char vertex_shader[] = {
-#embed "assets/vertex_shader.glsl"
+#embed "../../src/assets/vertex_shader.glsl"
     , '\0'};
 
 const char frag_shader[] = {
-#embed "assets/frag_shader.glsl"
+#embed "../../src/assets/frag_shader.glsl"
     , '\0'};
 
 const char frag_light_shader[] = {
-#embed "assets/frag_light_shader.glsl"
+#embed "../../src/assets/frag_light_shader.glsl"
     , '\0'};
 
 // clang-format off
@@ -29,15 +29,7 @@ const std::vector<glm::vec3> cube_positions = {
     {  17.5f,  20.0f,  30.3f },
     { -17.5f, -20.0f, -30.3f }
 };
-
-std::vector<oriongl::graphics::PointLight> point_light_positions = {
-  { { 0.0f, 0.0f, -50.0f }, { 1.0f, 1.8f, 1.0f } },
-};
 // clang-format on
-
-oriongl::graphics::DirectionalLight dir_light{
-    ._direction = {0.0f, -0.45f, -0.45f},
-};
 
 std::vector<std::string> box_material{
     "assets/container.png",
@@ -62,13 +54,21 @@ int main() {
     auto sphere_mesh = resource_system.createSphereMesh(5.0f);
     auto sphere_model = resource_system.createModel("SPHERE_MODEL_1", light_program, sphere_mesh);
 
+    std::vector<oriongl::graphics::PointLight> point_light_positions = {
+        {{0.0f, 0.0f, -50.0f}, {1.0f, 2.5f, 1.0f}},
+    };
+
+    oriongl::graphics::DirectionalLight dir_light{
+        {0.0f, -0.45f, -0.45f},
+        {1.0, 1.0, 1.0},
+    };
+    oriongl::core::Lighting scene_lighting{dir_light, point_light_positions};
+
     oriongl::core::Entity sphere_ent;
     sphere_ent.model = sphere_model;
     sphere_ent.instances = std::vector{point_light_positions[0]._position};
 
-    oriongl::core::Lighting scene_lighting{point_light_positions};
     oriongl::core::Scene scene{.lights = scene_lighting};
-
     scene.entities.insert(scene.entities.end(), {cube_ent, sphere_ent});
 
     engine.setScene(scene);

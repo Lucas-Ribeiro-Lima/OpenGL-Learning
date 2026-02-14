@@ -15,8 +15,8 @@ size_t Lighting::addPointLight(graphics::PointLight light) {
     return points.size() - 1;
 };
 
-size_t Lighting::addPointLight(glm::vec3 position) {
-    graphics::PointLight light{position};
+size_t Lighting::addPointLight(glm::vec3 position, graphics::LightColor color) {
+    graphics::PointLight light{position, color};
     points.push_back(light);
 
     return points.size() - 1;

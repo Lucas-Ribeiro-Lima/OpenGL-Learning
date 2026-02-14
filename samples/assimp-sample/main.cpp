@@ -3,11 +3,11 @@
 #include <Scene.h>
 
 const char vertex_shader[] = {
-#embed "assets/vertex_shader.glsl"
+#embed "../../src/assets/vertex_shader.glsl"
     , '\0'};
 
 const char frag_shader[] = {
-#embed "assets/frag_shader.glsl"
+#embed "../../src/assets/frag_shader.glsl"
     , '\0'};
 
 const char *backpack_src = "assets/survival_guitar_backpack/scene.gltf";
@@ -20,25 +20,24 @@ int main() {
 
     auto program = resource_system.createShader(vertex_shader, frag_shader);
 
-    // auto knight = resource_system.createModel("dark_knight", program, dark_knight_src);
-    // engine.loadEntityToScene(knight, std::vector<glm::vec3>{{0.0f, 100.0f, 150.0f}});
-
-    // auto backpack = resource_system.createModel("backpack", program, backpack_src);
-    // engine.loadEntityToScene(backpack, std::vector<glm::vec3>{{0.0f, 0.0f, -500.0f}});
-
     auto sea_keep = resource_system.createModel("SEA_KEEP", program, sea_keep_src);
-
     oriongl::core::Entity sea_keep_ent;
     sea_keep_ent.model = sea_keep;
     sea_keep_ent.instances.push_back({0.0f, -300.0f, -500.0f});
 
-    oriongl::core::Scene scene;
+    std::vector<oriongl::graphics::PointLight> point_light_positions = {
+        {{0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.4f}, {1.0f, 0.0f, 0.0f}},
+    };
+
+    oriongl::core::Lighting scene_lighting{point_light_positions};
+
+    oriongl::core::Scene scene{.lights = scene_lighting};
     scene.entities.push_back(sea_keep_ent);
-    scene.lights.directional = {0.0f, -0.45f, -0.45f};
 
     scene.camera = {45.0f, oriongl::ratio::FullHD, 0.1f, 3000.0f};
 
     engine.setScene(scene);
     engine.run();
+
     return 0;
 }

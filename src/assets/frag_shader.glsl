@@ -54,6 +54,9 @@ void main()
   vec4 textel1 = texture(material.diffuse, TextCoord);
   vec4 textel2 = texture(material.specular, TextCoord);
 
+  if(textel1.a < 0.1)
+    discard;
+
   vec3 normalVector = normalize(NormalPos);
   vec3 viewVector = normalize(viewPos - FragPos);
 

@@ -10,6 +10,8 @@
 
 namespace oriongl::graphics {
 
+typedef std::array<float, 3> LightColor;
+
 struct LightScale {
     float ambient = 0.05f;
     float diffuse = 0.8f;
@@ -23,18 +25,21 @@ struct LightAttenuation {
 };
 
 struct Light {
-    std::array<float, 3> _color{0.0f, 0.0f, 0.0f};
+    std::array<float, 3> _color{1.0f, 1.0f, 1.0f};
 };
 
 struct DirectionalLight : Light {
     glm::vec3 _direction{0.0f, 0.0f, 0.0f};
+
+    DirectionalLight(glm::vec3 dir, LightColor color = {1.0f, 1.0f, 1.0f}) : _direction(dir), Light(color) {};
 };
 
 struct PointLight : Light {
     glm::vec3 _position;
     LightAttenuation _attenuation;
 
-    PointLight(glm::vec3 pos, std::array<float, 3> color = {0.0f, 0.0f, 0.0f}) : _position(pos), Light(color) {}
+    PointLight(glm::vec3 pos, LightColor color, LightAttenuation att = LightAttenuation{})
+        : _position(pos), _attenuation(att), Light(color) {};
 };
 
 struct SpotLight : Light {
@@ -55,13 +60,14 @@ class Lighting {
   public:
     Lighting() = default;
     Lighting(std::vector<graphics::PointLight> &lights) : points(lights) {};
+    Lighting(graphics::DirectionalLight dir_light) : directional(dir_light) {};
     Lighting(graphics::DirectionalLight dir_light, std::vector<graphics::PointLight> &lights)
-        : points(lights), directional(dir_light) {};
+        : directional(dir_light), points(lights) {};
 
     bool hasDirectional() const;
     void setDirectional(glm::vec3 light);
 
-    size_t addPointLight(glm::vec3 position);
+    size_t addPointLight(glm::vec3 position, graphics::LightColor color);
     size_t addPointLight(graphics::PointLight light);
     void removePointLight(size_t idx);
 

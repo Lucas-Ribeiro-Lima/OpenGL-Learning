@@ -34,8 +34,9 @@ const std::vector<glm::vec3> cube_positions = {
 std::vector<std::string> box_material{
     "assets/container.png",
     "assets/container_specular.png",
-    "assets/black_pixel.png",
 };
+
+std::vector<std::string> lights_uniform_material{"assets/white_pixel.png"};
 
 int main() {
     oriongl::Engine engine;
@@ -52,24 +53,33 @@ int main() {
 
     auto light_program = resource_system.createShader(vertex_shader, frag_light_shader, {});
     auto sphere_mesh = resource_system.createSphereMesh(5.0f);
-    auto sphere_model = resource_system.createModel("SPHERE_MODEL_1", light_program, sphere_mesh);
+    auto sphere_material_green = resource_system.createMaterial(lights_uniform_material);
+    sphere_material_green->setColor({0.0f, 1.0f, 0.1f});
 
-    std::vector<oriongl::graphics::PointLight> point_light_positions = {
-        {{0.0f, 0.0f, -50.0f}, {1.0f, 2.5f, 1.0f}},
-    };
+    auto sphere_material_blue = resource_system.createMaterial(lights_uniform_material);
+    sphere_material_blue->setColor({0.0f, 0.7f, 1.0f});
 
-    oriongl::graphics::DirectionalLight dir_light{
-        {0.0f, -0.45f, -0.45f},
-        {1.0, 1.0, 1.0},
-    };
+    auto sphere_model_green =
+        resource_system.createModel("SPHERE_MODEL_GREEN", light_program, sphere_mesh, sphere_material_green);
+    auto sphere_model_blue =
+        resource_system.createModel("SPHERE_MODEL_BLUE", light_program, sphere_mesh, sphere_material_blue);
+
+    oriongl::core::Entity sphere_ent_green;
+    sphere_ent_green.model = sphere_model_green;
+    sphere_ent_green.instances = {{0.0f, 0.0f, -100.0f}};
+
+    oriongl::core::Entity sphere_ent_blue;
+    sphere_ent_blue.model = sphere_model_blue;
+    sphere_ent_blue.instances = {{-50.0f, 20.0f, 40.0f}};
+
+    std::vector<oriongl::graphics::PointLight> point_light_positions = {{{0.0f, 0.0f, -100.0f}, {0.0f, 0.5f, 0.0f}},
+                                                                        {{-50.0f, 20.0f, 40.0f}, {0.0f, 0.0f, 0.5f}}};
+    oriongl::graphics::DirectionalLight dir_light{{0.0f, -0.85f, -0.45f}, {0.5f, 0.5f, 0.5f}};
+
     oriongl::core::Lighting scene_lighting{dir_light, point_light_positions};
 
-    oriongl::core::Entity sphere_ent;
-    sphere_ent.model = sphere_model;
-    sphere_ent.instances = std::vector{point_light_positions[0]._position};
-
     oriongl::core::Scene scene{.lights = scene_lighting};
-    scene.entities.insert(scene.entities.end(), {cube_ent, sphere_ent});
+    scene.entities.insert(scene.entities.end(), {cube_ent, sphere_ent_green, sphere_ent_blue});
 
     engine.setScene(scene);
     engine.run();

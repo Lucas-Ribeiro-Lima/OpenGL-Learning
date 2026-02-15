@@ -26,6 +26,7 @@ This project is intended both as a learning tool and as a portfolio piece showca
 
 * GLFW window and input management
 * GLAD for OpenGL function loading
+* ASSIMP model loading
 * Fully custom rendering pipeline
 * Clean object-oriented design
 * Separation of concerns and clean architecture
@@ -49,7 +50,23 @@ This project is intended both as a learning tool and as a portfolio piece showca
 * **GLFW 3** — window and input handling
 * **GLAD** — OpenGL loader
 * **GLM** — mathematics library
+* **ASSIMP** - 3D model loader
 * **GoogleTest** — testing framework
+
+---
+## Samples Ilustrations
+
+### Sea Keep "Lonely Watcher"
+![Sea Keep "Lonely Watcher"](./screenshots/assimp_model.png)
+
+### Multiple point lights
+![boxes_1](./screenshots/boxes_1.png)
+
+---
+
+## Building from Source
+
+To build the project using CMake:
 
 ---
 
@@ -58,11 +75,11 @@ This project is intended both as a learning tool and as a portfolio piece showca
 To build the project using CMake:
 
 ```bash
-cmake -B build
-cmake --build build
+mkdir build
+cd build
+cmake .. -DCOMPILE_SAMPLES=ON
+cmake --build . --target assimp_sample_exec 
 ```
-
-A Debian package (`.deb`) is also provided for installation on supported systems.
 
 ---
 
@@ -76,10 +93,15 @@ You are free to use, modify, and distribute the software as long as the terms of
 
 ## Credits
 
-**Application Icon — "Black Hole"**
+### Assimp sample model
+* title:	Sea Keep "Lonely Watcher"
+* [source: sketchfab](https://sketchfab.com/3d-models/sea-keep-lonely-watcher-09a15a0c14cb4accaf060a92bc70413d)
+* [author:	Artjoms Horosilovs](https://sketchfab.com/Artjoms_Horosilovs)
 
-* Collection: *Space Hand Drawn Outline Vectors*
-* License: [CC Attribution License](https://www.svgrepo.com/page/licensing/#CC%20Attribution)
-* Author: [Good Stuff No Nonsense](https://goodstuffnononsense.com)
+---
+
+## References
+
+* [LearnOpengl](https://learnopengl.com) Learning OpenGL tutorial.
 
 ---

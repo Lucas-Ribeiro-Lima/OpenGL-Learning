@@ -68,12 +68,6 @@ This project is intended both as a learning tool and as a portfolio piece showca
 
 To build the project using CMake:
 
----
-
-## Building from Source
-
-To build the project using CMake:
-
 ```bash
 mkdir build
 cd build

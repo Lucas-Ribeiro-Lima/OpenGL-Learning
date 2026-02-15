@@ -72,11 +72,9 @@ int main() {
     sphere_ent_blue.model = sphere_model_blue;
     sphere_ent_blue.instances = {{-50.0f, 20.0f, 40.0f}};
 
-    std::vector<oriongl::graphics::PointLight> point_light_positions = {{{0.0f, 0.0f, -100.0f}, {0.0f, 0.5f, 0.0f}},
-                                                                        {{-50.0f, 20.0f, 40.0f}, {0.0f, 0.0f, 0.5f}}};
-    oriongl::graphics::DirectionalLight dir_light{{0.0f, -0.85f, -0.45f}, {0.5f, 0.5f, 0.5f}};
-
-    oriongl::core::Lighting scene_lighting{dir_light, point_light_positions};
+    std::vector<oriongl::graphics::PointLight> point_light_positions = {{{0.0f, 0.0f, -100.0f}, {0.5f, 1.0f, 0.5f}},
+                                                                        {{-50.0f, 20.0f, 40.0f}, {0.5f, 0.5f, 1.0f}}};
+    oriongl::core::Lighting scene_lighting{point_light_positions};
 
     oriongl::core::Scene scene{.lights = scene_lighting};
     scene.entities.insert(scene.entities.end(), {cube_ent, sphere_ent_green, sphere_ent_blue});

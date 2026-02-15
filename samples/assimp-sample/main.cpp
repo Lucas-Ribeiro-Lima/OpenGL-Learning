@@ -26,7 +26,7 @@ int main() {
     sea_keep_ent.instances.push_back({0.0f, -300.0f, -500.0f});
 
     std::vector<oriongl::graphics::PointLight> point_light_positions = {
-        {{0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.4f}, {1.0f, 0.0f, 0.0f}},
+        {{0.0f, 0.0f, 0.0f}, {0.7f, 0.7f, 1.0f}, {1.0f, 0.0f, 0.0f}},
     };
 
     oriongl::core::Lighting scene_lighting{point_light_positions};

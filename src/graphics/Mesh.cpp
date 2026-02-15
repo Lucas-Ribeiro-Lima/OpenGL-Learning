@@ -18,12 +18,12 @@ void Mesh::genVertexBufferObject(const vertex_array &vertexes) {
     glBufferData(GL_ARRAY_BUFFER, vertexesSize * sizeof(float), vertexes.data(), GL_STATIC_DRAW);
 }
 
-void Mesh::genElementBufferObject(const std::vector<uint> &indexes) {
+void Mesh::genElementBufferObject(const std::vector<unsigned int> &indexes) {
     indexesSize = indexes.size();
 
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexesSize * sizeof(uint), indexes.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexesSize * sizeof(unsigned int), indexes.data(), GL_STATIC_DRAW);
 }
 
 void Mesh::genVertexArrayBuffer() {

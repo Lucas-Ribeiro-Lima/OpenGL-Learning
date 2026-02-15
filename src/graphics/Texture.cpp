@@ -3,6 +3,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include <glad.h>
+#include <stdexcept>
 
 #define GL_STB_NULL_PLACEHOLDER 0
 // Map for the colors system of images of stb_images

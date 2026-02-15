@@ -9,7 +9,7 @@ namespace oriongl::core {
 class WindowSystem {
   private:
     class WindowSystemImpl;
-    std::unique_ptr<WindowSystemImpl> impl = nullptr;
+    std::unique_ptr<WindowSystemImpl> impl;
 
   public:
     WindowSystem();

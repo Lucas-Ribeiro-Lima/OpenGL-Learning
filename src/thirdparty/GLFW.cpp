@@ -34,6 +34,7 @@ constexpr auto state_buffer_lut = [] {
 
     return lut;
 }();
+
 } // namespace
 
 namespace oriongl::core {
@@ -41,6 +42,7 @@ namespace oriongl::core {
 Key KeyTranslationLayer::getKey(int key_code) {
     if (key_code > 0 || key_code < MAX_KEY_BUFFER_SIZE)
         return key_buffer_lut[key_code];
+    return Key::Unknown;
 }
 
 KeyState KeyTranslationLayer::getState(int state_code) { return state_buffer_lut[state_code]; }

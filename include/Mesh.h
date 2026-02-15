@@ -4,7 +4,7 @@
 namespace oriongl::graphics {
 
 typedef std::vector<float> vertex_array;
-typedef std::vector<uint> indexes_array;
+typedef std::vector<unsigned int> indexes_array;
 
 struct Vertex {
     float position[3];

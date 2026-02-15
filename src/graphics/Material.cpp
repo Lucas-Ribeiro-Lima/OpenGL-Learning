@@ -17,11 +17,15 @@ void Material::loadTexture(std::shared_ptr<oriongl::graphics::Texture> texture) 
     textures.push_back(std::move(texture));
 }
 
-void Material::bindMaterial() {
+void Material::bindMaterial(std::shared_ptr<Program> prg) {
     size_t number = 0;
     for (auto &texture : textures) {
         glActiveTexture(GL_TEXTURE0 + number++);
         glBindTexture(GL_TEXTURE_2D, texture->getTex());
     }
+
+    prg->setUniform3fv("material_color", glm::vec3(_color[0], _color[1], _color[2]));
 }
+
+void Material::setColor(MaterialColor color) { _color = color; }
 } // namespace oriongl::graphics

@@ -32,7 +32,7 @@ void Model::draw() {
         glBindVertexArray(mesh->getVAO());
 
         if (material)
-            material->bindMaterial();
+            material->bindMaterial(program);
 
         glDrawElements(GL_TRIANGLES, mesh->getIndexSize(), GL_UNSIGNED_INT, 0);
 
